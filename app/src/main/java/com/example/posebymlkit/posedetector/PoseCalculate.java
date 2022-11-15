@@ -101,7 +101,7 @@ public class PoseCalculate{
         leftKneeAngle = getAngle(leftHip,leftKnee, leftAnkle);
         rightElbowAngle = getAngle(rightShoulder,rightElbow,rightWrist);
         leftElbowAngle = getAngle(leftShoulder,leftElbow,leftWrist);
-        rightArmpitAngle = getAngle(rightEar,rightShoulder,rightHip);
+        rightArmpitAngle = getAngle(rightElbow,rightShoulder,rightHip);
         leftArmpitAngle = getAngle(leftElbow,leftShoulder,leftHip);
         rightShoulderAngle = getAngle(rightElbow,rightShoulder,leftShoulder);
         leftShoulderAngle = getAngle(leftElbow,leftShoulder,rightShoulder);
