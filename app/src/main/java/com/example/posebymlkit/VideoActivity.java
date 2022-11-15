@@ -15,7 +15,7 @@ public class VideoActivity extends AppCompatActivity {
     TextView poseIllustrate;
     VideoView videoView;
     MediaController mediaController;
-    String videoPath, illustrate;
+//    String videoPath, illustrate;
 
     Intent intent;
     Bundle bundle;
