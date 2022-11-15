@@ -28,6 +28,7 @@ public class PoseCalculate{
     static double rightChestAngle;
     static double leftChestAngle;
     static boolean bodyVertical;
+    static boolean aaa;
 
     PoseCalculate(
             Pose pose,
