@@ -241,18 +241,12 @@ public class PoseCalculate{
                     case 1 : System.out.println("leftHipAngle isn't horizontal => ");break;
                     case 2 : System.out.println("rightKneeAngle isn't horizontal => 右膝伸直");break;
                     case 3 : System.out.println("leftKneeAngle isn't horizontal => 左膝伸直");break;
-                    case 4 :
-                        System.out.println("rightElbowAngle isn't horizontal => 右臂伸直");break;
-                    case 5 :
-                        System.out.println("leftElbowAngle isn't horizontal => 左臂伸直");break;
-                    case 6 :
-                        System.out.println("rightArmpitAngle isn't horizontal => 右手不夠高");break;
-                    case 7 :
-                        System.out.println("leftArmpitAngle isn't horizontal => 左手不夠高");break;
-                    case 8 :
-                        System.out.println("rightShoulderAngle isn't horizontal => 右肩伸直");break;
-                    case 9 :
-                        System.out.println("lefttShoulderAngle isn't horizontal => 左肩伸直");break;
+                    case 4 : System.out.println("rightElbowAngle isn't horizontal => 右臂伸直");break;
+                    case 5 : System.out.println("leftElbowAngle isn't horizontal => 左臂伸直");break;
+                    case 6 : System.out.println("rightArmpitAngle isn't horizontal => 右手不夠高");break;
+                    case 7 : System.out.println("leftArmpitAngle isn't horizontal => 左手不夠高");break;
+                    case 8 : System.out.println("rightShoulderAngle isn't horizontal => 右肩伸直");break;
+                    case 9 : System.out.println("leftShoulderAngle isn't horizontal => 左肩伸直");break;
                 }
             }
         }
