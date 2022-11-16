@@ -45,7 +45,7 @@
                         android:layout_gravity="center"
                         android:layout_margin="5dp"
                         android:gravity="center"
-                        android:text="Warrior2"
+                        android:text="@string/warrior2"
                         android:textSize="30sp" />
                 </LinearLayout>
 
@@ -80,7 +80,7 @@
                         android:layout_gravity="center"
                         android:layout_margin="5dp"
                         android:gravity="center"
-                        android:text="Plank"
+                        android:text="@string/plank"
                         android:textSize="30sp" />
                 </LinearLayout>
 

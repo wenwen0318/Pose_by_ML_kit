@@ -50,7 +50,7 @@
                 android:layout_margin="10dp"
                 android:text="回主頁面" />
             <Button
-                android:id="@+id/btn_startPractise"
+                android:id="@+id/btn_startPractice"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
