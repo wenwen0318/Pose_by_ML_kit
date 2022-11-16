@@ -26,7 +26,7 @@ public class VideoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_video);
 
         Button btn_backToHome = findViewById(R.id.btn_backToHome);
-        Button btn_startPractise = findViewById(R.id.btn_startPractise);
+        Button btn_startPractice = findViewById(R.id.btn_startPractice);
 
         intent = new Intent();
         bundle = getIntent().getExtras();
@@ -36,7 +36,7 @@ public class VideoActivity extends AppCompatActivity {
         videoView = findViewById(R.id.videoView);
 
         //切換至練習頁面
-        btn_startPractise.setOnClickListener(new View.OnClickListener() {
+        btn_startPractice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 intent.setClass(VideoActivity.this, LivePreviewActivity.class);
