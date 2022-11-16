@@ -173,5 +173,6 @@
     <string name="pref_key_face_mesh_use_case">face_mesh_use_case</string>
 
     <!-- String in App-->
-    <string name="warrior2">warrior 2</string>
+    <string name="warrior2">Warrior 2</string>
+    <string name="plank">Plank</string>
 </resources>
