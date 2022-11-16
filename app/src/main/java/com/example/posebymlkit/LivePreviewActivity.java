@@ -47,6 +47,9 @@ public final class LivePreviewActivity extends AppCompatActivity {
     private GraphicOverlay graphicOverlay;
     private String selectedModel = POSE_DETECTION;
 
+    Bundle bundle;
+    String cardView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +73,8 @@ public final class LivePreviewActivity extends AppCompatActivity {
             Log.d(TAG, "graphicOverlay is null");
         }
 
+        bundle = getIntent().getExtras();
+        cardView = bundle.getString("cardView");
         createCameraSource(selectedModel);
     }
 
@@ -88,7 +93,7 @@ public final class LivePreviewActivity extends AppCompatActivity {
             boolean visualizeZ = PreferenceUtils.shouldPoseDetectionVisualizeZ(this);
             boolean rescaleZ = PreferenceUtils.shouldPoseDetectionRescaleZForVisualization(this);
             boolean runClassification = PreferenceUtils.shouldPoseDetectionRunClassification(this);
-            String poseName = "";
+//            String poseName = "";
             int userLevel = 2;
             cameraSource.setMachineLearningFrameProcessor(
                     new PoseDetectorProcessor(
@@ -99,7 +104,7 @@ public final class LivePreviewActivity extends AppCompatActivity {
                             rescaleZ,
                             runClassification,
                             /* isStreamMode = */ true,
-                            poseName,
+                            cardView,
                             userLevel));
         } catch (RuntimeException e) {
             Log.e(TAG, "Can not create image processor: " + model, e);

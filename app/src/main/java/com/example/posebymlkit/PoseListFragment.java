@@ -87,7 +87,7 @@ public class PoseListFragment extends Fragment {
                 @Override
                 public void onClick(View view) {
                     intent.setClass(PoseListFragment.this.getContext(), VideoActivity.class);
-                    bundle.putString("poseName", poseName.getText().toString());
+                    bundle.putString("cardView", cardView.getTransitionName());
                     intent.putExtras(bundle);
                     startActivity(intent);
                 }

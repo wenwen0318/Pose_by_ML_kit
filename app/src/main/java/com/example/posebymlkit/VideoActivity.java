@@ -30,6 +30,7 @@ public class VideoActivity extends AppCompatActivity {
 
         intent = new Intent();
         bundle = getIntent().getExtras();
+        String cardView = bundle.getString("cardView");
         mediaController = new MediaController(this);
 
         poseIllustrate = findViewById(R.id.poseIllustrate);
@@ -40,6 +41,8 @@ public class VideoActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 intent.setClass(VideoActivity.this, LivePreviewActivity.class);
+                bundle.putString("cardView", cardView);
+                intent.putExtras(bundle);
                 startActivity(intent);
             }
         });

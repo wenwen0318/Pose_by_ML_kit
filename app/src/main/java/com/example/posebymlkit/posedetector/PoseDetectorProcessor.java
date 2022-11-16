@@ -30,7 +30,7 @@ public class PoseDetectorProcessor
     private final boolean rescaleZForVisualization;
     private final boolean runClassification;
     private final boolean isStreamMode;
-    private final String poseName;
+    private final String cardView;
     private final int userLevel;
     private final Context context;
     private final Executor classificationExecutor;
@@ -73,7 +73,7 @@ public class PoseDetectorProcessor
             boolean rescaleZForVisualization,
             boolean runClassification,
             boolean isStreamMode,
-            String poseName,
+            String cardView,
             int userLevel) {
         super(context);
         this.showInFrameLikelihood = showInFrameLikelihood;
@@ -82,7 +82,7 @@ public class PoseDetectorProcessor
         detector = PoseDetection.getClient(options);
         this.runClassification = runClassification;
         this.isStreamMode = isStreamMode;
-        this.poseName = poseName;
+        this.cardView = cardView;
         this.userLevel = userLevel;
         this.context = context;
         classificationExecutor = Executors.newSingleThreadExecutor();
@@ -128,7 +128,7 @@ public class PoseDetectorProcessor
 //                        poseWithClassification.classificationResult
         new PoseCalculate(
                 getPose.getPose(),
-                poseName,
+                cardView,
                 userLevel);
     }
 
