@@ -49,6 +49,8 @@ public final class LivePreviewActivity extends AppCompatActivity {
 
     Bundle bundle;
     String cardView;
+    int userLevel;
+    int time;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +77,11 @@ public final class LivePreviewActivity extends AppCompatActivity {
 
         bundle = getIntent().getExtras();
         cardView = bundle.getString("cardView");
+        userLevel = bundle.getInt("userLevel");
+        time = bundle.getInt("time");
+
+        System.out.println("pose:"+ cardView+ " userLevel:"+ userLevel+ " time:"+ time);
+
         createCameraSource(selectedModel);
     }
 
@@ -83,7 +90,7 @@ public final class LivePreviewActivity extends AppCompatActivity {
         if (cameraSource == null) {
             cameraSource = new CameraSource(this, graphicOverlay);
         }
-
+        cameraSource.setFacing(CameraSource.CAMERA_FACING_FRONT);
         try {
             PoseDetectorOptionsBase poseDetectorOptions =
                     PreferenceUtils.getPoseDetectorOptionsForLivePreview(this);
@@ -94,7 +101,6 @@ public final class LivePreviewActivity extends AppCompatActivity {
             boolean rescaleZ = PreferenceUtils.shouldPoseDetectionRescaleZForVisualization(this);
             boolean runClassification = PreferenceUtils.shouldPoseDetectionRunClassification(this);
 //            String poseName = "";
-            int userLevel = 2;
             cameraSource.setMachineLearningFrameProcessor(
                     new PoseDetectorProcessor(
                             this,
