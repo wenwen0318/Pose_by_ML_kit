@@ -26,6 +26,8 @@ import com.example.posebymlkit.CameraSourcePreview;
 import com.example.posebymlkit.GraphicOverlay;
 import com.example.posebymlkit.preference.PreferenceUtils;
 import com.example.posebymlkit.R;
+import com.google.mlkit.vision.objects.custom.CustomObjectDetectorOptions;
+import com.example.posebymlkit.objectdetector.ObjectDetectorProcessor;
 
 import com.example.posebymlkit.posedetector.PoseDetectorProcessor;
 
@@ -84,7 +86,6 @@ public class LivePreviewActivity extends AppCompatActivity {
 
         createCameraSource(selectedModel);
     }
-
     private void createCameraSource(String model) {
         // If there's no existing cameraSource, create one.
         if (cameraSource == null) {
@@ -92,26 +93,37 @@ public class LivePreviewActivity extends AppCompatActivity {
         }
         cameraSource.setFacing(CameraSource.CAMERA_FACING_FRONT);
         try {
-            PoseDetectorOptionsBase poseDetectorOptions =
-                    PreferenceUtils.getPoseDetectorOptionsForLivePreview(this);
-            Log.i(TAG, "Using Pose Detector with options " + poseDetectorOptions);
-            boolean shouldShowInFrameLikelihood =
-                    PreferenceUtils.shouldShowPoseDetectionInFrameLikelihoodLivePreview(this);
-            boolean visualizeZ = PreferenceUtils.shouldPoseDetectionVisualizeZ(this);
-            boolean rescaleZ = PreferenceUtils.shouldPoseDetectionRescaleZForVisualization(this);
-            boolean runClassification = PreferenceUtils.shouldPoseDetectionRunClassification(this);
-//            String poseName = "";
+            // object detection
+            Log.i(TAG, "Using Custom Object Detector Processor");
+            LocalModel localModel =
+                    new LocalModel.Builder()
+                            .setAssetFilePath("custom_models/object_labeler.tflite")
+                            .build();
+            CustomObjectDetectorOptions customObjectDetectorOptions =
+                    PreferenceUtils.getCustomObjectDetectorOptionsForLivePreview(this, localModel);
             cameraSource.setMachineLearningFrameProcessor(
-                    new PoseDetectorProcessor(
-                            this,
-                            poseDetectorOptions,
-                            shouldShowInFrameLikelihood,
-                            visualizeZ,
-                            rescaleZ,
-                            runClassification,
-                            /* isStreamMode = */ true,
-                            cardView,
-                            userLevel));
+                    new ObjectDetectorProcessor(this, customObjectDetectorOptions,cameraSource, graphicOverlay, preview, cardView, userLevel));
+            // pose detection
+//            PoseDetectorOptionsBase poseDetectorOptions =
+//                    PreferenceUtils.getPoseDetectorOptionsForLivePreview(this);
+//            Log.i(TAG, "Using Pose Detector with options " + poseDetectorOptions);
+//            boolean shouldShowInFrameLikelihood =
+//                    PreferenceUtils.shouldShowPoseDetectionInFrameLikelihoodLivePreview(this);
+//            boolean visualizeZ = PreferenceUtils.shouldPoseDetectionVisualizeZ(this);
+//            boolean rescaleZ = PreferenceUtils.shouldPoseDetectionRescaleZForVisualization(this);
+//            boolean runClassification = PreferenceUtils.shouldPoseDetectionRunClassification(this);
+////            String poseName = "";
+//            cameraSource.setMachineLearningFrameProcessor(
+//                    new PoseDetectorProcessor(
+//                            this,
+//                            poseDetectorOptions,
+//                            shouldShowInFrameLikelihood,
+//                            visualizeZ,
+//                            rescaleZ,
+//                            runClassification,
+//                            /* isStreamMode = */ true,
+//                            cardView,
+//                            userLevel));
         } catch (RuntimeException e) {
             Log.e(TAG, "Can not create image processor: " + model, e);
             Toast.makeText(

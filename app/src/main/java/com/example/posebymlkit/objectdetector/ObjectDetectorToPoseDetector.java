@@ -31,6 +31,10 @@ public class ObjectDetectorToPoseDetector extends LivePreviewActivity
     String cardView;
     int userLevel;
     private static final String TAG = "Transform";
+<<<<<<< HEAD
+=======
+    String s;
+>>>>>>> a1a9df0 (test)
 
     public ObjectDetectorToPoseDetector(Context context, CameraSource cameraSource, GraphicOverlay graphicOverlay, CameraSourcePreview preview, String cardView, int userLevel){
 
