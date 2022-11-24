@@ -1,10 +1,13 @@
 package com.example.posebymlkit.posedetector;
 
+import com.example.posebymlkit.R;
 import com.google.mlkit.vision.pose.Pose;
 import com.google.mlkit.vision.pose.PoseLandmark;
 import java.util.List;
 
 import static java.lang.Math.atan2;
+
+import android.os.Bundle;
 
 /** Draw the detected pose in preview. */
 public class PoseCalculate{
@@ -193,6 +196,7 @@ public class PoseCalculate{
             return false;
         }
     }
+
     static void warrior2(){
         // standard 1 : rightKneeAngle==90°
         if(rightKneeAngle > (90+5*level)){
@@ -730,19 +734,45 @@ public class PoseCalculate{
         for(int i=0;i<11;i++){
             if(output[i]==1){
                 switch(i){
-                    case 0 : System.out.println("rightHipAngle is small => 右身太下去");break;
-                    case 1 : System.out.println("leftHipAngle is small => 左身太下去");break;
-                    case 2 : System.out.println("rightKneeAngle is small => 右膝蹲太低");break;
-                    case 3 : System.out.println("leftKneeAngle is small => 左膝蹲太低");break;
-                    case 4 : System.out.println("rightElbowAngle is small => ");break;
-                    case 5 : System.out.println("leftElbowAngle is small => ");break;
-                    case 6 : System.out.println("rightArmpitAngle is small => 右腋下太收");break;
-                    case 7 : System.out.println("leftArmpitAngle is small => 左腋下太收");break;
-                    case 8 : System.out.println("rightShoulderAngle is small => ");break;
-                    case 9 : System.out.println("leftShoulderAngle is small => ");break;
-                    case 10 : System.out.println("Body isn't vertical => 身體保持垂直");break;
-                    case 11 : System.out.println("rightKneeToeAngle is small => 左蹲不夠下去");break;
-                    case 12 : System.out.println("leftKneeToeAngle is small => 右蹲不夠下去");break;
+                    case 0 :
+                        System.out.println("rightHipAngle is small => 右身太下去");
+                        break;
+                    case 1 :
+                        System.out.println("leftHipAngle is small => 左身太下去");
+                        break;
+                    case 2 :
+                        System.out.println("rightKneeAngle is small => 右膝蹲太低");
+                        break;
+                    case 3 :
+                        System.out.println("leftKneeAngle is small => 左膝蹲太低");
+                        break;
+                    case 4 :
+                        System.out.println("rightElbowAngle is small => ");
+                        break;
+                    case 5 :
+                        System.out.println("leftElbowAngle is small => ");
+                        break;
+                    case 6 :
+                        System.out.println("rightArmpitAngle is small => 右腋下太收");
+                        break;
+                    case 7 :
+                        System.out.println("leftArmpitAngle is small => 左腋下太收");
+                        break;
+                    case 8 :
+                        System.out.println("rightShoulderAngle is small => ");
+                        break;
+                    case 9 :
+                        System.out.println("leftShoulderAngle is small => ");
+                        break;
+                    case 10 :
+                        System.out.println("Body isn't vertical => 身體保持垂直");
+                        break;
+                    case 11 :
+                        System.out.println("rightKneeToeAngle is small => 左蹲不夠下去");
+                        break;
+                    case 12 :
+                        System.out.println("leftKneeToeAngle is small => 右蹲不夠下去");
+                        break;
                 }
             }
             if(output[i]==2){
@@ -776,5 +806,8 @@ public class PoseCalculate{
         }
     }
 
+    public int[] wrong(){
+        return output;
+    }
 
 }

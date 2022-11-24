@@ -3,6 +3,7 @@ package com.example.posebymlkit.posedetector;
 import android.content.Context;
 import android.util.Log;
 import androidx.annotation.NonNull;
+
 import com.google.android.gms.tasks.Task;
 import com.google.android.odml.image.MlImage;
 import com.google.mlkit.vision.common.InputImage;
@@ -13,8 +14,7 @@ import com.google.mlkit.vision.pose.Pose;
 import com.google.mlkit.vision.pose.PoseDetection;
 import com.google.mlkit.vision.pose.PoseDetector;
 import com.google.mlkit.vision.pose.PoseDetectorOptionsBase;
-import java.util.ArrayList;
-import java.util.List;
+
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -35,24 +35,10 @@ public class PoseDetectorProcessor
     private final Context context;
     private final Executor classificationExecutor;
 
+    int[] wrongHint;
+
     /** Internal class to hold Pose and classification results. */
-//    protected static class PoseWithClassification {
-//        private final Pose pose;
-//        private final List<String> classificationResult;
-//
-//        public PoseWithClassification(Pose pose, List<String> classificationResult) {
-//            this.pose = pose;
-//            this.classificationResult = classificationResult;
-//        }
-//
-//        public Pose getPose() {
-//            return pose;
-//        }
-//
-//        public List<String> getClassificationResult() {
-//            return classificationResult;
-//        }
-//    }
+
     protected static class GetPose {
         private final Pose pose;
 
@@ -126,10 +112,16 @@ public class PoseDetectorProcessor
                         visualizeZ,
                         rescaleZForVisualization));
 //                        poseWithClassification.classificationResult
-        new PoseCalculate(
+        PoseCalculate Calculate = new PoseCalculate(
                 getPose.getPose(),
                 cardView,
                 userLevel);
+        wrongHint = Calculate.wrong();
+        System.out.print("Status in PoseDetectorProcessor:");
+        for (int status:wrongHint){
+            System.out.print(status);
+        }
+        System.out.println();
     }
 
     @Override
@@ -141,5 +133,9 @@ public class PoseDetectorProcessor
     protected boolean isMlImageEnabled(Context context) {
         // Use MlImage in Pose Detection by default, change it to OFF to switch to InputImage.
         return true;
+    }
+
+    public int[] wrong(){
+        return wrongHint;
     }
 }
