@@ -13,6 +13,9 @@ import com.google.common.base.Preconditions;
 import com.example.posebymlkit.CameraSource;
 import com.example.posebymlkit.CameraSource.SizePair;
 import com.example.posebymlkit.R;
+import com.google.mlkit.common.model.LocalModel;
+import com.google.mlkit.vision.objects.ObjectDetectorOptionsBase;
+import com.google.mlkit.vision.objects.custom.CustomObjectDetectorOptions;
 import com.google.mlkit.vision.pose.PoseDetectorOptionsBase;
 import com.google.mlkit.vision.pose.accurate.AccuratePoseDetectorOptions;
 import com.google.mlkit.vision.pose.defaults.PoseDetectorOptions;
@@ -126,6 +129,40 @@ public class PreferenceUtils {
             }
             return builder.build();
         }
+    }
+    public static CustomObjectDetectorOptions getCustomObjectDetectorOptionsForLivePreview(
+            Context context, LocalModel localModel) {
+        return getCustomObjectDetectorOptions(
+                context,
+                localModel,
+                R.string.pref_key_live_preview_object_detector_enable_multiple_objects,
+                R.string.pref_key_live_preview_object_detector_enable_classification,
+                CustomObjectDetectorOptions.STREAM_MODE);
+    }
+
+    private static CustomObjectDetectorOptions getCustomObjectDetectorOptions(
+            Context context,
+            LocalModel localModel,
+            @StringRes int prefKeyForMultipleObjects,
+            @StringRes int prefKeyForClassification,
+            @ObjectDetectorOptionsBase.DetectorMode int mode) {
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+
+        boolean enableMultipleObjects =
+                sharedPreferences.getBoolean(context.getString(prefKeyForMultipleObjects), false);
+        boolean enableClassification =
+                sharedPreferences.getBoolean(context.getString(prefKeyForClassification), true);
+
+        CustomObjectDetectorOptions.Builder builder =
+                new CustomObjectDetectorOptions.Builder(localModel).setDetectorMode(mode);
+        if (enableMultipleObjects) {
+            builder.enableMultipleObjects();
+        }
+        if (enableClassification) {
+            builder.enableClassification().setMaxPerObjectLabelCount(1);
+        }
+        return builder.build();
     }
 
     public static boolean preferGPUForPoseDetection(Context context) {
