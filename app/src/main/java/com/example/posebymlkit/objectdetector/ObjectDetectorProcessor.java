@@ -38,23 +38,11 @@ public class ObjectDetectorProcessor extends VisionProcessorBase<List<DetectedOb
     private static final String TAG = "ObjectDetectorProcessor";
 
     private final ObjectDetector detector;
-    public CameraSource cameraSource = null;
 
-    Context context;
-    GraphicOverlay graphicOverlay;
-    CameraSourcePreview preview;
-    String cardView;
-    int userLevel;
+    String objectLabel;
 
-    public ObjectDetectorProcessor(Context context, ObjectDetectorOptionsBase options,CameraSource cameraSource, GraphicOverlay graphicOverlay, CameraSourcePreview preview,
-                                   String cardView, int userLevel) {
+    public ObjectDetectorProcessor(Context context, ObjectDetectorOptionsBase options) {
         super(context);
-        this.context = context;
-        this.graphicOverlay = graphicOverlay;
-        this.preview = preview;
-        this.cameraSource = cameraSource;
-        this.cardView = cardView;
-        this.userLevel = userLevel;
         detector = ObjectDetection.getClient(options);
     }
 
@@ -74,9 +62,7 @@ public class ObjectDetectorProcessor extends VisionProcessorBase<List<DetectedOb
             @NonNull List<DetectedObject> results, @NonNull GraphicOverlay graphicOverlay) {
         for (DetectedObject object : results) {
             for (DetectedObject.Label label : object.getLabels()) {
-                if (label.getText().equals("Person")) {
-                    new ObjectDetectorToPoseDetector(context, cameraSource, graphicOverlay, preview, cardView, userLevel);
-                }
+                objectLabel = label.getText();
             }
             graphicOverlay.add(new ObjectGraphic(graphicOverlay, object));
         }
@@ -85,5 +71,9 @@ public class ObjectDetectorProcessor extends VisionProcessorBase<List<DetectedOb
     @Override
     protected void onFailure(@NonNull Exception e) {
         Log.e(TAG, "Object detection failed!", e);
+    }
+
+    public String getLabel() {
+        return objectLabel;
     }
 }

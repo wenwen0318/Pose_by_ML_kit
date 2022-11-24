@@ -45,22 +45,27 @@ import java.util.List;
 public class LivePreviewActivity extends AppCompatActivity {
 
     private static final String POSE_DETECTION = "Pose Detection";
+    private static final String OBJECT_DETECTION = "Object Detection";
+
+    private String model = OBJECT_DETECTION;
 
     private static final String TAG = "LivePreviewActivity";
 
     private CameraSource cameraSource = null;
     private CameraSourcePreview preview;
     private GraphicOverlay graphicOverlay;
-    private String selectedModel = POSE_DETECTION;
 
     private TextToSpeech tts = null;
     private Handler handler = new Handler();
-    PoseDetectorProcessor PoseDetector;
+    PoseDetectorProcessor pdp;
+    ObjectDetectorProcessor odp;
 
     Bundle bundle;
     String cardView;
     int userLevel;
     int time;
+
+    String label = "";
     int[] wrongHint = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
     @Override
@@ -93,11 +98,13 @@ public class LivePreviewActivity extends AppCompatActivity {
 
         System.out.println("pose:"+ cardView+ " userLevel:"+ userLevel+ " time:"+ time);
 
-        createCameraSource(selectedModel);
+        createCameraSource(OBJECT_DETECTION);
 
         createTTSSource();
 
-        handler.postDelayed(runnable, 5000);
+        handler.postDelayed(personDetection,100);
+
+        //handler.postDelayed(runnable, 5000);
     }
     private void createCameraSource(String model) {
         // If there's no existing cameraSource, create one.
@@ -105,40 +112,44 @@ public class LivePreviewActivity extends AppCompatActivity {
             cameraSource = new CameraSource(this, graphicOverlay);
         }
         cameraSource.setFacing(CameraSource.CAMERA_FACING_BACK);
+
         try {
-            // object detection
-            Log.i(TAG, "Using Custom Object Detector Processor");
-            LocalModel localModel =
-                    new LocalModel.Builder()
-                            .setAssetFilePath("custom_models/object_labeler.tflite")
-                            .build();
-            CustomObjectDetectorOptions customObjectDetectorOptions =
-                    PreferenceUtils.getCustomObjectDetectorOptionsForLivePreview(this, localModel);
-            cameraSource.setMachineLearningFrameProcessor(
-                    new ObjectDetectorProcessor(this, customObjectDetectorOptions,cameraSource, graphicOverlay, preview, cardView, userLevel));
-            // pose detection
-//            PoseDetectorOptionsBase poseDetectorOptions =
-//                    PreferenceUtils.getPoseDetectorOptionsForLivePreview(this);
-//            Log.i(TAG, "Using Pose Detector with options " + poseDetectorOptions);
-//            boolean shouldShowInFrameLikelihood =
-//                    PreferenceUtils.shouldShowPoseDetectionInFrameLikelihoodLivePreview(this);
-//            boolean visualizeZ = PreferenceUtils.shouldPoseDetectionVisualizeZ(this);
-//            boolean rescaleZ = PreferenceUtils.shouldPoseDetectionRescaleZForVisualization(this);
-//            boolean runClassification = PreferenceUtils.shouldPoseDetectionRunClassification(this);
-////            String poseName = "";
-//            cameraSource.setMachineLearningFrameProcessor(
-//                    new PoseDetectorProcessor(
-//                            this,
-//                            poseDetectorOptions,
-//                            shouldShowInFrameLikelihood,
-//                            visualizeZ,
-//                            rescaleZ,
-//                            runClassification,
-//                            /* isStreamMode = */ true,
-//                            cardView,
-//                            userLevel));
+            switch (model) {
+                case OBJECT_DETECTION:
+                    LocalModel localModel =
+                            new LocalModel.Builder()
+                                    .setAssetFilePath("custom_models/object_labeler.tflite")
+                                    .build();
+                    CustomObjectDetectorOptions customObjectDetectorOptions =
+                            PreferenceUtils.getCustomObjectDetectorOptionsForLivePreview(this, localModel);
+                    cameraSource.setMachineLearningFrameProcessor(
+                            odp = new ObjectDetectorProcessor(this, customObjectDetectorOptions));
+                    handler.postDelayed(personDetection,100);
+                    break;
+                case POSE_DETECTION:
+                    PoseDetectorOptionsBase poseDetectorOptions =
+                            PreferenceUtils.getPoseDetectorOptionsForLivePreview(this);
+                    Log.i(TAG, "Using Pose Detector with options " + poseDetectorOptions);
+                    boolean shouldShowInFrameLikelihood =
+                            PreferenceUtils.shouldShowPoseDetectionInFrameLikelihoodLivePreview(this);
+                    boolean visualizeZ = PreferenceUtils.shouldPoseDetectionVisualizeZ(this);
+                    boolean rescaleZ = PreferenceUtils.shouldPoseDetectionRescaleZForVisualization(this);
+                    boolean runClassification = PreferenceUtils.shouldPoseDetectionRunClassification(this);
+                    cameraSource.setMachineLearningFrameProcessor(
+                            pdp = new PoseDetectorProcessor(
+                                    this,
+                                    poseDetectorOptions,
+                                    shouldShowInFrameLikelihood,
+                                    visualizeZ,
+                                    rescaleZ,
+                                    runClassification,
+                                    /* isStreamMode = */ true,
+                                    cardView,
+                                    userLevel));
+                    handler.postDelayed(poseDetection,100);
+                    break;
+            }
         } catch (RuntimeException e) {
-            Log.e(TAG, "Can not create image processor: " + model, e);
             Toast.makeText(
                             getApplicationContext(),
                             "Can not create image processor: " + e.getMessage(),
@@ -147,11 +158,6 @@ public class LivePreviewActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * Starts or restarts the camera source, if it exists. If the camera source doesn't exist yet
-     * (e.g., because onResume was called before the camera source was created), this will be called
-     * again when the camera source is created.
-     */
     private void startCameraSource() {
         if (cameraSource != null) {
             try {
@@ -306,18 +312,34 @@ public class LivePreviewActivity extends AppCompatActivity {
         }
     }
 
-    Runnable runnable = new Runnable() {
+    Runnable personDetection = new Runnable() {
         @Override
         public void run() {
-            handler.postDelayed(this, 5000);
-            wrongHint = PoseDetector.wrong();
+            handler.postDelayed(this, 100);
+            label = odp.getLabel();
+            if (label != null){
+                System.out.println("Label:" + label);
+                if (label.equals("Person")){
+                    model = POSE_DETECTION;
+                    createCameraSource(model);
+                    handler.removeCallbacks(personDetection);
+                }
+            }
+        }
+    };
+
+    Runnable poseDetection = new Runnable() {
+        @Override
+        public void run() {
+            handler.postDelayed(this, 100);
+            wrongHint = pdp.wrong();
             System.out.print("status in Activity:" );
             if (wrongHint == null) System.out.println("null");
             else {
                 for (int status:wrongHint){
                     System.out.print(status);
                 }
-                startTTS();
+                //startTTS();
             }
             System.out.println();
         }
@@ -327,7 +349,7 @@ public class LivePreviewActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
         Log.d(TAG, "onResume");
-        createCameraSource(selectedModel);
+        createCameraSource(model);
         startCameraSource();
         createTTSSource();
     }
@@ -337,7 +359,6 @@ public class LivePreviewActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         preview.stop();
-        handler.removeCallbacks(runnable);
         tts.stop();
     }
 
@@ -347,7 +368,6 @@ public class LivePreviewActivity extends AppCompatActivity {
         if (cameraSource != null) {
             cameraSource.release();
         }
-        handler.removeCallbacks(runnable);
         tts.shutdown();
     }
 }
