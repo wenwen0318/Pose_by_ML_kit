@@ -22,7 +22,7 @@ import java.util.Locale;
 
 /** Live preview demo for ML Kit APIs. */
 @KeepName
-public final class LivePreviewActivity extends AppCompatActivity {
+public class LivePreviewActivity extends AppCompatActivity {
 
     private static final String POSE_DETECTION = "Pose Detection";
 
