@@ -333,7 +333,7 @@ public class LivePreviewActivity extends AppCompatActivity {
         public void run() {
             handler.postDelayed(this, 100);
             wrongHint = pdp.wrong();
-            System.out.print("status in Activity:" );
+            System.out.print(cardView + " status in Activity:" );
             if (wrongHint == null) System.out.println("null");
             else {
                 for (int status:wrongHint){

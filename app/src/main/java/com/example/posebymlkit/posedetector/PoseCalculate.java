@@ -236,8 +236,6 @@ public class PoseCalculate{
         else {
             output[10] = 1;
         }
-
-        output();
     }
     static void plank(){
         // standard 1 : rightElbowAngle==180°
@@ -278,8 +276,6 @@ public class PoseCalculate{
         else {
             output[10] = 1;
         }
-
-        output();
     }
     static void goddess(){
         // standard 1 : rightKneeAngle==90°
@@ -343,8 +339,6 @@ public class PoseCalculate{
         else {
             output[10] = 1;
         }
-
-        output();
     }
     static void chair(){
         // standard 1 : rightElbowAngle==90° and leftElbowAngle==90°
@@ -458,8 +452,6 @@ public class PoseCalculate{
             output[11] = 0;
             output[12] = 0;
         }
-
-        output();
     }
     static void downdog(){
         // standard 1 : rightElbowAngle==180° and leftElbowAngle==180°
@@ -499,7 +491,6 @@ public class PoseCalculate{
         // standard 3 :
         // standard 4 :
 
-        output();
     }
     static void four_limbed_staff(){
         // standard 1 : rightKneeAngle==180° and leftKneeAngle==180°
@@ -556,8 +547,6 @@ public class PoseCalculate{
             output[4] = 0;
             output[5] = 0;
         }
-
-        output();
     }
     static void boat(){
         // standard 1 : rightKneeAngle==180° and leftKneeAngle==180°
@@ -596,8 +585,6 @@ public class PoseCalculate{
         }
         // standard 3 :
         // standard 4 :
-
-        output();
     }
     static void rejuvenation(){
         // standard 1 : rightKneeAngle==180° and leftKneeAngle==180°
@@ -654,8 +641,6 @@ public class PoseCalculate{
             output[0] = 0;
             output[1] = 0;
         }
-
-        output();
     }
     static void star(){
         // standard 1 : rightElbowAngle==180°
@@ -708,8 +693,6 @@ public class PoseCalculate{
         else {
             output[10] = 1;
         }
-
-        output();
     }
     static void tree(){
         // standard 1 : rightKneeAngle==180°
@@ -725,84 +708,6 @@ public class PoseCalculate{
         }
         else {
             output[10] = 1;
-        }
-
-        output();
-    }
-
-    static void output(){
-        for(int i=0;i<11;i++){
-            if(output[i]==1){
-                switch(i){
-                    case 0 :
-                        System.out.println("rightHipAngle is small => 右身太下去");
-                        break;
-                    case 1 :
-                        System.out.println("leftHipAngle is small => 左身太下去");
-                        break;
-                    case 2 :
-                        System.out.println("rightKneeAngle is small => 右膝蹲太低");
-                        break;
-                    case 3 :
-                        System.out.println("leftKneeAngle is small => 左膝蹲太低");
-                        break;
-                    case 4 :
-                        System.out.println("rightElbowAngle is small => ");
-                        break;
-                    case 5 :
-                        System.out.println("leftElbowAngle is small => ");
-                        break;
-                    case 6 :
-                        System.out.println("rightArmpitAngle is small => 右腋下太收");
-                        break;
-                    case 7 :
-                        System.out.println("leftArmpitAngle is small => 左腋下太收");
-                        break;
-                    case 8 :
-                        System.out.println("rightShoulderAngle is small => ");
-                        break;
-                    case 9 :
-                        System.out.println("leftShoulderAngle is small => ");
-                        break;
-                    case 10 :
-                        System.out.println("Body isn't vertical => 身體保持垂直");
-                        break;
-                    case 11 :
-                        System.out.println("rightKneeToeAngle is small => 左蹲不夠下去");
-                        break;
-                    case 12 :
-                        System.out.println("leftKneeToeAngle is small => 右蹲不夠下去");
-                        break;
-                }
-            }
-            if(output[i]==2){
-                switch(i){
-                    case 0 : System.out.println("rightHipAngle is big => 右身不夠下去");break;
-                    case 1 : System.out.println("leftHipAngle is big => 左身不夠下去");break;
-                    case 2 : System.out.println("rightKneeAngle is big => 右膝不夠低");break;
-                    case 3 : System.out.println("leftKneeAngle is big => 左膝不夠低");break;
-                    case 4 : System.out.println("rightElbowAngle is big => ");break;
-                    case 5 : System.out.println("leftElbowAngle is big => ");break;
-                    case 6 : System.out.println("rightArmpitAngle is big => 右腋下太開");break;
-                    case 7 : System.out.println("leftArmpitAngle is big => 左腋下太開");break;
-                    case 8 : System.out.println("rightShoulderAngle is big => ");break;
-                    case 9 : System.out.println("leftShoulderAngle is big => ");break;
-                }
-            }
-            if(output[i]==3){
-                switch(i){
-                    case 0 : System.out.println("rightHipAngle isn't horizontal => ");break;
-                    case 1 : System.out.println("leftHipAngle isn't horizontal => ");break;
-                    case 2 : System.out.println("rightKneeAngle isn't horizontal => 右膝伸直");break;
-                    case 3 : System.out.println("leftKneeAngle isn't horizontal => 左膝伸直");break;
-                    case 4 : System.out.println("rightElbowAngle isn't horizontal => 右臂伸直");break;
-                    case 5 : System.out.println("leftElbowAngle isn't horizontal => 左臂伸直");break;
-                    case 6 : System.out.println("rightArmpitAngle isn't horizontal => 右手不夠高");break;
-                    case 7 : System.out.println("leftArmpitAngle isn't horizontal => 左手不夠高");break;
-                    case 8 : System.out.println("rightShoulderAngle isn't horizontal => 右肩伸直");break;
-                    case 9 : System.out.println("leftShoulderAngle isn't horizontal => 左肩伸直");break;
-                }
-            }
         }
     }
 
