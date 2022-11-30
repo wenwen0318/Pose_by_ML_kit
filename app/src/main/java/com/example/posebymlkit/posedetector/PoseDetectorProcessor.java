@@ -36,6 +36,10 @@ public class PoseDetectorProcessor
     private final Executor classificationExecutor;
 
     int[] wrongHint;
+    int[][] wrongFre = {{0, 0, 0, 0},{0, 0, 0, 0},{0, 0, 0, 0},{0, 0, 0, 0},
+            {0, 0, 0, 0},{0, 0, 0, 0},{0, 0, 0, 0},{0, 0, 0, 0},
+            {0, 0, 0, 0},{0, 0, 0, 0},{0, 0},{0, 0, 0, 0},
+            {0, 0, 0, 0}};
 
     /** Internal class to hold Pose and classification results. */
 
@@ -117,11 +121,14 @@ public class PoseDetectorProcessor
                 cardView,
                 userLevel);
         wrongHint = Calculate.wrong();
-        System.out.print("Status in PoseDetectorProcessor:");
-        for (int status:wrongHint){
-            System.out.print(status);
-        }
-        System.out.println();
+        wrongFrequency(wrongHint);
+//        System.out.print("Status in PoseDetectorProcessor:");
+//        for (int[] parts:wrongHint){
+//            for(int status : parts) {
+//                System.out.print("wrongHint:"+parts+" "+status);
+//            }
+//        }
+//        System.out.println();
     }
 
     @Override
@@ -135,7 +142,41 @@ public class PoseDetectorProcessor
         return true;
     }
 
-    public int[] wrong(){
-        return wrongHint;
+    public int[][] wrong(){
+        int[][] finalWrong = {{0, 0}};
+        int max = 0;
+//        int sec = 0;
+//        int thi = 0;
+        for(int i=0;i<wrongFre.length;i++){
+            for(int j=0;j<wrongFre[i].length;j++){
+                if(wrongFre[i][j] > max){
+                    max = wrongFre[i][j];
+                    finalWrong[0][0] = i;
+                    finalWrong[0][1] = j;
+                }
+
+            }
+        }
+        return finalWrong;
+    }
+
+    public void wrongFrequency(int[] arr){
+        for(int i=0;i<arr.length;i++){
+            if(arr[i] != 0){
+                switch (arr[i]){
+                    case 1: wrongFre[i][1] += 1;break;
+                    case 2: wrongFre[i][2] += 1;break;
+                    case 3: wrongFre[i][3] += 1;break;
+                }
+            }
+        }
+    }
+
+    public void clear(){
+        for(int i=0;i<wrongFre.length;i++){
+            for(int j=0;j<wrongFre[i].length;j++){
+                wrongFre[i][j] = 0;
+            }
+        }
     }
 }
