@@ -16,6 +16,7 @@ import com.google.mlkit.vision.pose.PoseDetector;
 import com.google.mlkit.vision.pose.PoseDetectorOptionsBase;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -139,20 +140,12 @@ public class PoseDetectorProcessor
                         showInFrameLikelihood,
                         visualizeZ,
                         rescaleZForVisualization));
-//                        poseWithClassification.classificationResult
         PoseCalculate Calculate = new PoseCalculate(
                 getPose.getPose(),
                 cardView,
                 userLevel);
         wrongHint = Calculate.wrong();
         wrongFrequency(wrongHint);
-//        System.out.print("Status in PoseDetectorProcessor:");
-//        for (int[] parts:wrongHint){
-//            for(int status : parts) {
-//                System.out.print("wrongHint:"+parts+" "+status);
-//            }
-//        }
-//        System.out.println();
     }
 
     @Override
@@ -162,15 +155,12 @@ public class PoseDetectorProcessor
 
     @Override
     protected boolean isMlImageEnabled(Context context) {
-        // Use MlImage in Pose Detection by default, change it to OFF to switch to InputImage.
         return true;
     }
 
     public int[][] wrong(){
         int[][] finalWrong = {{0, 0}};
         int max = 0;
-//        int sec = 0;
-//        int thi = 0;
         for(int i=0;i<wrongFre.length;i++){
             for(int j=0;j<wrongFre[i].length;j++){
                 if(wrongFre[i][j] > max){
@@ -197,10 +187,8 @@ public class PoseDetectorProcessor
     }
 
     public void clear(){
-        for(int i=0;i<wrongFre.length;i++){
-            for(int j=0;j<wrongFre[i].length;j++){
-                wrongFre[i][j] = 0;
-            }
+        for (int[] ints : wrongFre) {
+            Arrays.fill(ints, 0);
         }
     }
 }

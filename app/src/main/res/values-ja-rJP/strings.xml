@@ -173,4 +173,5 @@
     <string name="pref_key_face_mesh_use_case" translatable="false">face_mesh_use_case</string>
     <string name="warrior2">ヴィラバドラーサナ2</string>
     <string name="plank">プランク</string>
+    <string name="goddess">女神</string>
 </resources>

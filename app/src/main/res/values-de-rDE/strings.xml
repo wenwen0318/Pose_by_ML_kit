@@ -172,5 +172,6 @@
     <string name="pref_title_face_mesh_use_case" translatable="false">Use Case</string>
     <string name="pref_key_face_mesh_use_case" translatable="false">face_mesh_use_case</string>
     <string name="warrior2">Krieger 2</string>
-    <string name="plank">" Planke"</string>
+    <string name="plank">Planke</string>
+    <string name="goddess">Göttin</string>
 </resources>

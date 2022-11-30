@@ -146,7 +146,6 @@ public class LivePreviewActivity extends AppCompatActivity {
                                     /* isStreamMode = */ true,
                                     cardView,
                                     userLevel));
-                    handler.postDelayed(poseDetection,100);
                     handler.postDelayed(TTSWrongHint,5000);
                     break;
             }
@@ -194,7 +193,7 @@ public class LivePreviewActivity extends AppCompatActivity {
         if(wrongHint[0][0] == 0){
             switch(wrongHint[0][1]){
                 case 1 :
-                    wrongStr += "右身太下去";
+                    wrongStr += this.getString(R.string.app_name);
                     break;
                 case 2 :
                     wrongStr += "右身不夠下去";
@@ -233,7 +232,7 @@ public class LivePreviewActivity extends AppCompatActivity {
                     wrongStr = "左膝不夠低";
                     break;
                 case 3 :
-                    wrongStr = "左膝伸直";
+                    wrongStr = "@+id/";
                     break;
             }
         }
@@ -337,128 +336,6 @@ public class LivePreviewActivity extends AppCompatActivity {
             }
         }
         tts.speak(wrongStr,TextToSpeech.QUEUE_ADD,null,null);
-//        tts.speak(wrongStr,TextToSpeech.QUEUE_ADD,null,null);
-
-//        switch(wrongHint[0]){
-//            case 1 :
-//                wrongStr += "右身太下去";
-//                break;
-//            case 2 :
-//                wrongStr += "右身不夠下去";
-//                break;
-//        }
-//        switch(wrongHint[1]){
-//            case 1 :
-//                wrongStr += "左身太下去";
-//                break;
-//            case 2 :
-//                wrongStr += "左身不夠下去";
-//                break;
-//        }
-//        tts.speak(wrongStr,TextToSpeech.QUEUE_ADD,null,null);
-//        switch(wrongHint[2]){
-//            case 1 :
-//                tts.speak("右膝蹲太低", TextToSpeech.QUEUE_ADD, null,null);
-//                break;
-//            case 2 :
-//                tts.speak("右膝不夠低", TextToSpeech.QUEUE_ADD, null,null);
-//                break;
-//            case 3 :
-//                tts.speak("右膝伸直", TextToSpeech.QUEUE_ADD, null,null);
-//                break;
-//        }
-//        switch(wrongHint[3]){
-//            case 1 :
-//                tts.speak("左膝蹲太低", TextToSpeech.QUEUE_ADD, null,null);
-//                break;
-//            case 2 :
-//                tts.speak("左膝不夠低", TextToSpeech.QUEUE_ADD, null,null);
-//                break;
-//            case 3 :
-//                tts.speak("左膝伸直", TextToSpeech.QUEUE_ADD, null,null);
-//                break;
-//        }
-//        switch(wrongHint[4]){
-//            case 1 :
-//                tts.speak("", TextToSpeech.QUEUE_ADD, null,null);
-//                break;
-//            case 2 :
-//                tts.speak(" ", TextToSpeech.QUEUE_ADD, null,null);
-//                break;
-//            case 3 :
-//                tts.speak("右臂伸直", TextToSpeech.QUEUE_ADD, null,null);
-//                break;
-//        }
-//        switch(wrongHint[5]){
-//            case 1 :
-//                tts.speak("", TextToSpeech.QUEUE_ADD, null,null);
-//                break;
-//            case 2 :
-//                tts.speak(" ", TextToSpeech.QUEUE_ADD, null,null);
-//                break;
-//            case 3 :
-//                tts.speak("左臂伸直", TextToSpeech.QUEUE_ADD, null,null);
-//                break;
-//        }
-//        switch(wrongHint[6]){
-//            case 1 :
-//                tts.speak("右腋下太收", TextToSpeech.QUEUE_ADD, null,null);
-//                break;
-//            case 2 :
-//                tts.speak("右腋下太開", TextToSpeech.QUEUE_ADD, null,null);
-//                break;
-//            case 3 :
-//                tts.speak("右手不夠高", TextToSpeech.QUEUE_ADD, null,null);
-//                break;
-//        }
-//        switch(wrongHint[7]){
-//            case 1 :
-//                tts.speak("左腋下太收", TextToSpeech.QUEUE_ADD, null,null);
-//                break;
-//            case 2 :
-//                tts.speak("左腋下太開", TextToSpeech.QUEUE_ADD, null,null);
-//                break;
-//            case 3 :
-//                tts.speak("左手不夠高", TextToSpeech.QUEUE_ADD, null,null);
-//                break;
-//        }
-//        switch(wrongHint[8]){
-//            case 1 :
-//                tts.speak("", TextToSpeech.QUEUE_ADD, null,null);
-//                break;
-//            case 2 :
-//                tts.speak(" ", TextToSpeech.QUEUE_ADD, null,null);
-//                break;
-//            case 3 :
-//                tts.speak("右肩伸直", TextToSpeech.QUEUE_ADD, null,null);
-//                break;
-//        }
-//        switch(wrongHint[9]){
-//            case 1 :
-//                tts.speak("", TextToSpeech.QUEUE_ADD, null,null);
-//                break;
-//            case 2 :
-//                tts.speak(" ", TextToSpeech.QUEUE_ADD, null,null);
-//                break;
-//            case 3 :
-//                tts.speak("左肩伸直", TextToSpeech.QUEUE_ADD, null,null);
-//                break;
-//        }
-//        switch(wrongHint[10]){
-//            case 1 :
-//                tts.speak("身體保持垂直", TextToSpeech.QUEUE_ADD, null,null);
-//                break;
-//        }
-//        switch(wrongHint[11]){
-//            case 1 :
-//                tts.speak("右蹲不夠下去", TextToSpeech.QUEUE_ADD, null,null);
-//                break;
-//        }
-//        switch(wrongHint[12]){
-//            case 1 :
-//                tts.speak("左蹲不夠下去", TextToSpeech.QUEUE_ADD, null,null);
-//                break;
-//        }
     }
 
     Runnable personDetection = new Runnable() {
@@ -477,50 +354,13 @@ public class LivePreviewActivity extends AppCompatActivity {
         }
     };
 
-    Runnable poseDetection = new Runnable() {
-        @Override
-        public void run() {
-            handler.postDelayed(this, 100);
-            wrongHint = pdp.wrong();
-            System.out.print(cardView + " status in Activity:" );
-            if (wrongHint == null) System.out.println("null");
-            else {
-//                for(int[] part : wrongHint) {
-//                    for(int status : part){
-//                        System.out.print("wrongHint:"+part+" "+status);
-//                    }
-//                }
-//                startTTS();
-            }
-            System.out.println();
-        }
-    };
-
     Runnable TTSWrongHint = new Runnable() {
         @Override
         public void run() {
             handler.postDelayed(this, 5000);
-
-//            if(tts != null){
-//                System.out.println("TTS action" );
+            wrongHint = pdp.wrong();
             startTTS();
-//            }
-//            else{
-//                System.out.println("TTS failed" );
-//            }
-            System.out.println("TTS action" );
             pdp.clear();
-            System.out.println("cleared wrongHint" );
-            if (wrongHint == null) System.out.println("null");
-            else {
-                for (int[] parts:wrongHint){
-                    for(int status : parts) {
-                        System.out.print("wrongHint:"+parts+" "+status);
-                    }
-                }
-                //startTTS();
-            }
-            System.out.println();
         }
     };
 
