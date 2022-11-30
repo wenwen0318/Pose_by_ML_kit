@@ -1,13 +1,12 @@
 package com.example.posebymlkit.posedetector;
 
-import com.example.posebymlkit.R;
 import com.google.mlkit.vision.pose.Pose;
 import com.google.mlkit.vision.pose.PoseLandmark;
+
+import java.util.Arrays;
 import java.util.List;
 
 import static java.lang.Math.atan2;
-
-import android.os.Bundle;
 
 /** Draw the detected pose in preview. */
 public class PoseCalculate{
@@ -17,7 +16,7 @@ public class PoseCalculate{
     private final int userLevel;
     static int level;
     static Boolean getPose;
-    static int[] output = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+    static int[] status = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}; //各角度狀態 0:正確 1:<90 2:>90 3:!=180
     static double rightHipAngle;
     static double leftHipAngle;
     static double rightKneeAngle;
@@ -84,11 +83,12 @@ public class PoseCalculate{
 
     public void angle(){
         List<PoseLandmark> landmarks = pose.getAllPoseLandmarks();
+        Arrays.fill(status,0);
         if (landmarks.isEmpty()) {
             getPose = false;
             return;
         }
-        else {getPose = true;}
+        else { getPose = true; }
         PoseLandmark nose = pose.getPoseLandmark(PoseLandmark.NOSE);
         PoseLandmark leftEyeInner = pose.getPoseLandmark(PoseLandmark.LEFT_EYE_INNER);
         PoseLandmark leftEye = pose.getPoseLandmark(PoseLandmark.LEFT_EYE);
@@ -143,8 +143,6 @@ public class PoseCalculate{
         // others
         rightChestAngle = getAngle(leftShoulder,rightShoulder,rightHip);
         leftChestAngle = getAngle(rightShoulder,leftShoulder,leftHip);
-
-
     }
     static double getAngle(PoseLandmark firstPoint, PoseLandmark midPoint, PoseLandmark lastPoint) {
         double result =
@@ -199,293 +197,293 @@ public class PoseCalculate{
     static void warrior2(){
         // standard 1 : rightKneeAngle==90°
         if(rightKneeAngle > (90+5*level)){
-            output[2] = 2;
+            status[2] = 2;
         }
         else if(rightKneeAngle < (90-5*level)){
-            output[2] = 1;
+            status[2] = 1;
         }
         else{
-            output[2] = 0;
+            status[2] = 0;
         }
         // standard 2 : leftKneeAngle==180°
         if(leftKneeAngle < (180-5*level)){
-            output[3] = 3;
+            status[3] = 3;
         }
         else{
-            output[3] = 0;
+            status[3] = 0;
         }
         // standard 3 : rightShoulderAngle==180°
         if(rightShoulderAngle < (180-5*level)){
-            output[8] = 3;
+            status[8] = 3;
         }
         else{
-            output[8] = 0;
+            status[8] = 0;
         }
         // standard 4 : leftShoulderAngle==180°
         if(leftShoulderAngle < (180-5*level)){
-            output[9] = 3;
+            status[9] = 3;
         }
         else{
-            output[9] = 0;
+            status[9] = 0;
         }
         // standard 5 : whether body vertical is
         if(bodyVertical){
-            output[10] = 0;
+            status[10] = 0;
         }
         else {
-            output[10] = 1;
+            status[10] = 1;
         }
     }
     static void plank(){
         // standard 1 : rightElbowAngle==180°
         if(rightKneeAngle < (180-5*level)){
-            output[4] = 3;
+            status[4] = 3;
         }
         else{
-            output[4] = 0;
+            status[4] = 0;
         }
         // standard 2 : leftElbowAngle==180°
         if(leftKneeAngle < (180-5*level)){
-            output[5] = 3;
+            status[5] = 3;
         }
         else{
-            output[5] = 0;
+            status[5] = 0;
         }
         // standard 3 : rightKneeAngle==180° and leftKneeAngle==180°
         if((rightKneeAngle < (180-5*level))&&(leftKneeAngle < (180-5*level))){
-            output[2] = 3;
-            output[3] = 3;
+            status[2] = 3;
+            status[3] = 3;
         }
         else if(rightKneeAngle < (180-5*level)){
-            output[2] = 3;
-            output[3] = 0;
+            status[2] = 3;
+            status[3] = 0;
         }
         else if(leftKneeAngle < (180-5*level)){
-            output[2] = 0;
-            output[3] = 3;
+            status[2] = 0;
+            status[3] = 3;
         }
         else{
-            output[2] = 0;
-            output[3] = 0;
+            status[2] = 0;
+            status[3] = 0;
         }
         // standard 4 : whether body vertical is
         if(bodyVertical){
-            output[10] = 0;
+            status[10] = 0;
         }
         else {
-            output[10] = 1;
+            status[10] = 1;
         }
     }
     static void goddess(){
         // standard 1 : rightKneeAngle==90°
         if(rightKneeAngle > (90+5*level)){
-            output[2] = 2;
+            status[2] = 2;
         }
         else if(rightKneeAngle < (90-5*level)){
-            output[2] = 1;
+            status[2] = 1;
         }
         else{
-            output[2] = 0;
+            status[2] = 0;
         }
         // standard 2 : leftKneeAngle==90°
         if(leftKneeAngle > (90+5*level)){
-            output[3] = 2;
+            status[3] = 2;
         }
         else if(leftKneeAngle < (90-5*level)){
-            output[3] = 1;
+            status[3] = 1;
         }
         else{
-            output[3] = 0;
+            status[3] = 0;
         }
         // standard 3 : rightShoulderAngle==180°
         if(rightShoulderAngle < (180-5*level)){
-            output[8] = 3;
+            status[8] = 3;
         }
         else{
-            output[8] = 0;
+            status[8] = 0;
         }
         // standard 4 : leftShoulderAngle==180°
         if(leftShoulderAngle < (180-5*level)){
-            output[9] = 3;
+            status[9] = 3;
         }
         else{
-            output[9] = 0;
+            status[9] = 0;
         }
         // standard 5 : rightElbowAngle==90°
         if(rightElbowAngle > (90+5*level)){
-            output[4] = 2;
+            status[4] = 2;
         }
         else if(rightElbowAngle < (90-5*level)){
-            output[4] = 1;
+            status[4] = 1;
         }
         else{
-            output[4] = 0;
+            status[4] = 0;
         }
         // standard 6 : leftElbowAngle==90°
         if(leftElbowAngle > (90+5*level)){
-            output[5] = 2;
+            status[5] = 2;
         }
         else if(leftElbowAngle < (90-5*level)){
-            output[5] = 1;
+            status[5] = 1;
         }
         else{
-            output[5] = 0;
+            status[5] = 0;
         }
         // standard 7 : whether body vertical is
         if(bodyVertical){
-            output[10] = 0;
+            status[10] = 0;
         }
         else {
-            output[10] = 1;
+            status[10] = 1;
         }
     }
     static void chair(){
         // standard 1 : rightElbowAngle==90° and leftElbowAngle==90°
         if((rightElbowAngle > (90+5*level))&&(leftElbowAngle > (90+5*level))){
-            output[4] = 2;
-            output[5] = 2;
+            status[4] = 2;
+            status[5] = 2;
         }
         else if((rightElbowAngle < (90-5*level))&&(leftElbowAngle < (90-5*level))){
-            output[4] = 1;
-            output[5] = 1;
+            status[4] = 1;
+            status[5] = 1;
         }
         else if((rightElbowAngle > (90+5*level))&&(leftElbowAngle < (90-5*level))){
-            output[4] = 2;
-            output[5] = 1;
+            status[4] = 2;
+            status[5] = 1;
         }
         else if((rightElbowAngle < (90-5*level))&&(leftElbowAngle > (90+5*level))){
-            output[4] = 1;
-            output[5] = 2;
+            status[4] = 1;
+            status[5] = 2;
         }
         else if(rightElbowAngle > (90+5*level)){
-            output[4] = 2;
-            output[5] = 0;
+            status[4] = 2;
+            status[5] = 0;
         }
         else if(rightElbowAngle < (90-5*level)){
-            output[4] = 1;
-            output[5] = 0;
+            status[4] = 1;
+            status[5] = 0;
         }
         else if(leftElbowAngle > (90+5*level)){
-            output[4] = 0;
-            output[5] = 2;
+            status[4] = 0;
+            status[5] = 2;
         }
         else if(leftElbowAngle < (90-5*level)){
-            output[4] = 0;
-            output[5] = 1;
+            status[4] = 0;
+            status[5] = 1;
         }
         else{
-            output[4] = 0;
-            output[5] = 0;
+            status[4] = 0;
+            status[5] = 0;
         }
         // standard 2 : rightArmpitAngle==90° and leftArmpitAngle==90°
         if((rightArmpitAngle > (90+5*level))&&(leftArmpitAngle > (90+5*level))){
-            output[6] = 2;
-            output[7] = 2;
+            status[6] = 2;
+            status[7] = 2;
         }
         else if((rightArmpitAngle < (90-5*level))&&(leftArmpitAngle < (90-5*level))){
-            output[6] = 1;
-            output[7] = 1;
+            status[6] = 1;
+            status[7] = 1;
         }
         else if((rightArmpitAngle > (90+5*level))&&(leftArmpitAngle < (90-5*level))){
-            output[6] = 2;
-            output[7] = 1;
+            status[6] = 2;
+            status[7] = 1;
         }
         else if((rightArmpitAngle < (90-5*level))&&(leftArmpitAngle > (90+5*level))){
-            output[6] = 1;
-            output[7] = 2;
+            status[6] = 1;
+            status[7] = 2;
         }
         else if(rightArmpitAngle > (90+5*level)){
-            output[6] = 2;
-            output[7] = 0;
+            status[6] = 2;
+            status[7] = 0;
         }
         else if(rightArmpitAngle < (90-5*level)){
-            output[6] = 1;
-            output[7] = 0;
+            status[6] = 1;
+            status[7] = 0;
         }
         else if(leftArmpitAngle > (90+5*level)){
-            output[6] = 0;
-            output[7] = 2;
+            status[6] = 0;
+            status[7] = 2;
         }
         else if(leftArmpitAngle < (90-5*level)){
-            output[6] = 0;
-            output[7] = 1;
+            status[6] = 0;
+            status[7] = 1;
         }
         else{
-            output[6] = 0;
-            output[7] = 0;
+            status[6] = 0;
+            status[7] = 0;
         }
         // standard 3 : rightKneeToeAngle==90° and leftKneeToeAngle==90°
         if((rightKneeToeAngle > (90+5*level))&&(leftKneeToeAngle > (90+5*level))){
-            output[11] = 2;
-            output[12] = 2;
+            status[11] = 2;
+            status[12] = 2;
         }
         else if((rightKneeToeAngle < (90-5*level))&&(leftKneeToeAngle < (90-5*level))){
-            output[11] = 1;
-            output[12] = 1;
+            status[11] = 1;
+            status[12] = 1;
         }
         else if((rightKneeToeAngle > (90+5*level))&&(leftKneeToeAngle < (90-5*level))){
-            output[11] = 2;
-            output[12] = 1;
+            status[11] = 2;
+            status[12] = 1;
         }
         else if((rightKneeToeAngle < (90-5*level))&&(leftKneeToeAngle > (90+5*level))){
-            output[11] = 1;
-            output[12] = 2;
+            status[11] = 1;
+            status[12] = 2;
         }
         else if(rightKneeToeAngle > (90+5*level)){
-            output[11] = 2;
-            output[12] = 0;
+            status[11] = 2;
+            status[12] = 0;
         }
         else if(rightKneeToeAngle < (90-5*level)){
-            output[11] = 1;
-            output[12] = 0;
+            status[11] = 1;
+            status[12] = 0;
         }
         else if(leftKneeToeAngle > (90+5*level)){
-            output[11] = 0;
-            output[12] = 2;
+            status[11] = 0;
+            status[12] = 2;
         }
         else if(leftKneeToeAngle < (90-5*level)){
-            output[11] = 0;
-            output[12] = 1;
+            status[11] = 0;
+            status[12] = 1;
         }
         else{
-            output[11] = 0;
-            output[12] = 0;
+            status[11] = 0;
+            status[12] = 0;
         }
     }
     static void downdog(){
         // standard 1 : rightElbowAngle==180° and leftElbowAngle==180°
         if((rightElbowAngle < (180-5*level))&&(leftElbowAngle < (180-5*level))){
-            output[4] = 3;
-            output[5] = 3;
+            status[4] = 3;
+            status[5] = 3;
         }
         else if(rightElbowAngle < (180-5*level)){
-            output[4] = 3;
-            output[5] = 0;
+            status[4] = 3;
+            status[5] = 0;
         }
         else if(leftElbowAngle < (180-5*level)){
-            output[4] = 0;
-            output[5] = 3;
+            status[4] = 0;
+            status[5] = 3;
         }
         else{
-            output[4] = 0;
-            output[5] = 0;
+            status[4] = 0;
+            status[5] = 0;
         }
         // standard 2 : rightKneeAngle==180° and leftKneeAngle==180°
         if((rightKneeAngle < (180-5*level))&&(leftKneeAngle < (180-5*level))){
-            output[2] = 3;
-            output[3] = 3;
+            status[2] = 3;
+            status[3] = 3;
         }
         else if(rightKneeAngle < (180-5*level)){
-            output[2] = 3;
-            output[3] = 0;
+            status[2] = 3;
+            status[3] = 0;
         }
         else if(leftKneeAngle < (180-5*level)){
-            output[2] = 0;
-            output[3] = 3;
+            status[2] = 0;
+            status[3] = 3;
         }
         else{
-            output[2] = 0;
-            output[3] = 0;
+            status[2] = 0;
+            status[3] = 0;
         }
         // standard 3 :
         // standard 4 :
@@ -493,93 +491,93 @@ public class PoseCalculate{
     static void four_limbed_staff(){
         // standard 1 : rightKneeAngle==180° and leftKneeAngle==180°
         if((rightKneeAngle < (180-5*level))&&(leftKneeAngle < (180-5*level))){
-            output[2] = 3;
-            output[3] = 3;
+            status[2] = 3;
+            status[3] = 3;
         }
         else if(rightKneeAngle < (180-5*level)){
-            output[2] = 3;
-            output[3] = 0;
+            status[2] = 3;
+            status[3] = 0;
         }
         else if(leftKneeAngle < (180-5*level)){
-            output[2] = 0;
-            output[3] = 3;
+            status[2] = 0;
+            status[3] = 3;
         }
         else{
-            output[2] = 0;
-            output[3] = 0;
+            status[2] = 0;
+            status[3] = 0;
         }
         // standard 2 : rightElbowAngle==90° and leftElbowAngle==90°
         if((rightElbowAngle > (90+5*level))&&(leftElbowAngle > (90+5*level))){
-            output[4] = 2;
-            output[5] = 2;
+            status[4] = 2;
+            status[5] = 2;
         }
         else if((rightElbowAngle < (90-5*level))&&(leftElbowAngle < (90-5*level))){
-            output[4] = 1;
-            output[5] = 1;
+            status[4] = 1;
+            status[5] = 1;
         }
         else if((rightElbowAngle > (90+5*level))&&(leftElbowAngle < (90-5*level))){
-            output[4] = 2;
-            output[5] = 1;
+            status[4] = 2;
+            status[5] = 1;
         }
         else if((rightElbowAngle < (90-5*level))&&(leftElbowAngle > (90+5*level))){
-            output[4] = 1;
-            output[5] = 2;
+            status[4] = 1;
+            status[5] = 2;
         }
         else if(rightElbowAngle > (90+5*level)){
-            output[4] = 2;
-            output[5] = 0;
+            status[4] = 2;
+            status[5] = 0;
         }
         else if(rightElbowAngle < (90-5*level)){
-            output[4] = 1;
-            output[5] = 0;
+            status[4] = 1;
+            status[5] = 0;
         }
         else if(leftElbowAngle > (90+5*level)){
-            output[4] = 0;
-            output[5] = 2;
+            status[4] = 0;
+            status[5] = 2;
         }
         else if(leftElbowAngle < (90-5*level)){
-            output[4] = 0;
-            output[5] = 1;
+            status[4] = 0;
+            status[5] = 1;
         }
         else{
-            output[4] = 0;
-            output[5] = 0;
+            status[4] = 0;
+            status[5] = 0;
         }
     }
     static void boat(){
         // standard 1 : rightKneeAngle==180° and leftKneeAngle==180°
         if((rightKneeAngle < (180-5*level))&&(leftKneeAngle < (180-5*level))){
-            output[2] = 3;
-            output[3] = 3;
+            status[2] = 3;
+            status[3] = 3;
         }
         else if(rightKneeAngle < (180-5*level)){
-            output[2] = 3;
-            output[3] = 0;
+            status[2] = 3;
+            status[3] = 0;
         }
         else if(leftKneeAngle < (180-5*level)){
-            output[2] = 0;
-            output[3] = 3;
+            status[2] = 0;
+            status[3] = 3;
         }
         else{
-            output[2] = 0;
-            output[3] = 0;
+            status[2] = 0;
+            status[3] = 0;
         }
         // standard 2 : rightElbowAngle==180° and leftElbowAngle==180°
         if((rightElbowAngle < (180-5*level))&&(leftElbowAngle < (180-5*level))){
-            output[4] = 3;
-            output[5] = 3;
+            status[4] = 3;
+            status[5] = 3;
         }
         else if(rightElbowAngle < (180-5*level)){
-            output[4] = 3;
-            output[5] = 0;
+            status[4] = 3;
+            status[5] = 0;
         }
         else if(leftElbowAngle < (180-5*level)){
-            output[4] = 0;
-            output[5] = 3;
+            status[4] = 0;
+            status[5] = 3;
         }
         else{
-            output[4] = 0;
-            output[5] = 0;
+            status[4] = 0;
+            status[5] = 0;
         }
         // standard 3 :
         // standard 4 :
@@ -587,139 +585,130 @@ public class PoseCalculate{
     static void rejuvenation(){
         // standard 1 : rightKneeAngle==180° and leftKneeAngle==180°
         if((rightKneeAngle < (180-5*level))&&(leftKneeAngle < (180-5*level))){
-            output[2] = 3;
-            output[3] = 3;
+            status[2] = 3;
+            status[3] = 3;
         }
         else if(rightKneeAngle < (180-5*level)){
-            output[2] = 3;
-            output[3] = 0;
+            status[2] = 3;
+            status[3] = 0;
         }
         else if(leftKneeAngle < (180-5*level)){
-            output[2] = 0;
-            output[3] = 3;
+            status[2] = 0;
+            status[3] = 3;
         }
         else{
-            output[2] = 0;
-            output[3] = 0;
+            status[2] = 0;
+            status[3] = 0;
         }
         // standard 2 : rightHipAngle==90° and leftHipAngle==90°
         if((rightHipAngle > (90+5*level))&&(leftHipAngle > (90+5*level))){
-            output[0] = 2;
-            output[1] = 2;
+            status[0] = 2;
+            status[1] = 2;
         }
         else if((rightHipAngle < (90-5*level))&&(leftHipAngle < (90-5*level))){
-            output[0] = 1;
-            output[1] = 1;
+            status[0] = 1;
+            status[1] = 1;
         }
         else if((rightHipAngle > (90+5*level))&&(leftHipAngle < (90-5*level))){
-            output[0] = 2;
-            output[1] = 1;
+            status[0] = 2;
+            status[1] = 1;
         }
         else if((rightHipAngle < (90-5*level))&&(leftHipAngle > (90+5*level))){
-            output[0] = 1;
-            output[1] = 2;
+            status[0] = 1;
+            status[1] = 2;
         }
         else if(rightHipAngle > (90+5*level)){
-            output[0] = 2;
-            output[1] = 0;
+            status[0] = 2;
+            status[1] = 0;
         }
         else if(rightHipAngle < (90-5*level)){
-            output[0] = 1;
-            output[1] = 0;
+            status[0] = 1;
+            status[1] = 0;
         }
         else if(leftHipAngle > (90+5*level)){
-            output[0] = 0;
-            output[1] = 2;
+            status[0] = 0;
+            status[1] = 2;
         }
         else if(leftHipAngle < (90-5*level)){
-            output[0] = 0;
-            output[1] = 1;
+            status[0] = 0;
+            status[1] = 1;
         }
         else{
-            output[0] = 0;
-            output[1] = 0;
+            status[0] = 0;
+            status[1] = 0;
         }
     }
     static void star(){
         // standard 1 : rightElbowAngle==180°
         if(rightElbowAngle < (180-5*level)){
-            output[4] = 3;
+            status[4] = 3;
         }
         else{
-            output[4] = 0;
+            status[4] = 0;
         }
         // standard 2 : leftElbowAngle==180°
         if(leftElbowAngle < (180-5*level)){
-            output[5] = 3;
+            status[5] = 3;
         }
         else{
-            output[5] = 0;
+            status[5] = 0;
         }
         // standard 3 : rightShoulderAngle==180°
         if(rightShoulderAngle < (180-5*level)){
-            output[8] = 3;
+            status[8] = 3;
         }
         else{
-            output[8] = 0;
+            status[8] = 0;
         }
         // standard 4 : leftShoulderAngle==180°
         if(leftShoulderAngle < (180-5*level)){
-            output[9] = 3;
+            status[9] = 3;
         }
         else{
-            output[9] = 0;
+            status[9] = 0;
         }
         // standard 5 : rightKneeAngle==180°
         if(rightKneeAngle < (180-5*level)){
-            output[2] = 3;
+            status[2] = 3;
         }
         else{
-            output[2] = 0;
+            status[2] = 0;
         }
         // standard 6 : leftKneeAngle==180°
         if(leftKneeAngle > (180-5*level)){
-            output[3] = 3;
+            status[3] = 3;
         }
         else{
-            output[3] = 0;
+            status[3] = 0;
         }
 
         // standard 9 : whether body vertical is
         if(bodyVertical){
-            output[10] = 0;
+            status[10] = 0;
         }
         else {
-            output[10] = 1;
+            status[10] = 1;
         }
     }
     static void tree(){
         // standard 1 : rightKneeAngle==180°
         if(rightKneeAngle > (180-5*level)){
-            output[2] = 3;
+            status[2] = 3;
         }
         else{
-            output[2] = 0;
+            status[2] = 0;
         }
         // standard 2 : whether body vertical is
         if(bodyVertical){
-            output[10] = 0;
+            status[10] = 0;
         }
         else {
-            output[10] = 1;
+            status[10] = 1;
         }
     }
 
-    public int[] wrong(){
-        return output;
+    public int[] getAngleStatus(){
+        return status;
     }
-
-//    public int[][] clear(){
-//        for(int i=0;i<wrongFre.length;i++){
-//            for(int j=0;j<wrongFre[i].length;j++){
-//                wrongFre[i][j] = 0;
-//            }
-//        }
-//        return wrongFre;
-//    }
 
 }

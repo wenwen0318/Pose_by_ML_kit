@@ -94,7 +94,7 @@ public class LivePreviewActivity extends AppCompatActivity {
         bundle = getIntent().getExtras();
         cardView = bundle.getString("cardView");
         userLevel = bundle.getInt("userLevel");
-        time = bundle.getInt("time");
+        time = bundle.getInt("time")*1000;
 
         System.out.println("pose:"+ cardView+ " userLevel:"+ userLevel+ " time:"+ time);
 
@@ -147,6 +147,7 @@ public class LivePreviewActivity extends AppCompatActivity {
                                     cardView,
                                     userLevel));
                     handler.postDelayed(TTSWrongHint,5000);
+                    handler.postDelayed(timeCountdown,time);
                     break;
             }
         } catch (RuntimeException e) {
@@ -193,7 +194,7 @@ public class LivePreviewActivity extends AppCompatActivity {
         if(wrongHint[0][0] == 0){
             switch(wrongHint[0][1]){
                 case 1 :
-                    wrongStr += this.getString(R.string.app_name);
+                    wrongStr += "右身太下去";
                     break;
                 case 2 :
                     wrongStr += "右身不夠下去";
@@ -232,7 +233,7 @@ public class LivePreviewActivity extends AppCompatActivity {
                     wrongStr = "左膝不夠低";
                     break;
                 case 3 :
-                    wrongStr = "@+id/";
+                    wrongStr = "左膝伸直";
                     break;
             }
         }
@@ -364,6 +365,20 @@ public class LivePreviewActivity extends AppCompatActivity {
         }
     };
 
+    Runnable timeCountdown = new Runnable() {
+        @Override
+        public void run() {
+            handler.postDelayed(this, time);
+            if (cameraSource != null) {
+                cameraSource.release();
+            }
+            tts.shutdown();
+            handler.removeCallbacks(personDetection);
+            handler.removeCallbacks(TTSWrongHint);
+            handler.removeCallbacks(timeCountdown);
+        }
+    };
+
     @Override
     public void onResume() {
         super.onResume();
@@ -388,5 +403,8 @@ public class LivePreviewActivity extends AppCompatActivity {
             cameraSource.release();
         }
         tts.shutdown();
+        handler.removeCallbacks(personDetection);
+        handler.removeCallbacks(TTSWrongHint);
+        handler.removeCallbacks(timeCountdown);
     }
 }

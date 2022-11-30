@@ -16,7 +16,6 @@ import com.google.mlkit.vision.pose.PoseDetector;
 import com.google.mlkit.vision.pose.PoseDetectorOptionsBase;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -144,7 +143,7 @@ public class PoseDetectorProcessor
                 getPose.getPose(),
                 cardView,
                 userLevel);
-        wrongHint = Calculate.wrong();
+        wrongHint = Calculate.getAngleStatus();
         wrongFrequency(wrongHint);
     }
 
@@ -159,7 +158,7 @@ public class PoseDetectorProcessor
     }
 
     public int[][] wrong(){
-        int[][] finalWrong = {{0, 0}};
+        int[][] finalWrong = {{0, 0}}; //{部位,錯誤資訊 1:<90,2:>90,3:!=180}
         int max = 0;
         for(int i=0;i<wrongFre.length;i++){
             for(int j=0;j<wrongFre[i].length;j++){
@@ -187,8 +186,11 @@ public class PoseDetectorProcessor
     }
 
     public void clear(){
-        for (int[] ints : wrongFre) {
-            Arrays.fill(ints, 0);
+        System.out.println("WrongHint Clear");
+        for(int i=0;i<wrongFre.length;i++){
+            for(int j=0;j<wrongFre[i].length;j++){
+                wrongFre[i][j] = 0;
+            }
         }
     }
 }
