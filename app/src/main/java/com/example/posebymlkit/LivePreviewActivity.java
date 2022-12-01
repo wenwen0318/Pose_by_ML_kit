@@ -1,7 +1,9 @@
 package com.example.posebymlkit;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import android.os.Handler;
@@ -182,8 +184,31 @@ public class LivePreviewActivity extends AppCompatActivity {
             tts = new TextToSpeech(this, arg0 -> {
                 // TTS 初始化成功
                 if( arg0 == TextToSpeech.SUCCESS ) {
-                    tts.setLanguage(Locale.CHINESE);
-                    System.out.println("TTS success");
+                    switch (getString(R.string.language)){
+                        case "English":
+                            tts.setLanguage(Locale.ENGLISH);
+                            tts.speak("Hello",TextToSpeech.QUEUE_ADD,null,null);
+                            break;
+                        case "简体中文":
+                            tts.setLanguage(Locale.CHINA);
+                            break;
+                        case "繁體中文":
+                            tts.setLanguage(Locale.CHINESE);
+                            tts.speak("你好",TextToSpeech.QUEUE_ADD,null,null);
+                            break;
+                        case "Deutsch":
+                            tts.setLanguage(Locale.GERMAN);
+                            tts.speak("Guten Tag",TextToSpeech.QUEUE_ADD,null,null);
+                            break;
+                        case "日本語":
+                            tts.setLanguage(Locale.JAPANESE);
+                            tts.speak("こにちは",TextToSpeech.QUEUE_ADD,null,null);
+                            break;
+                        default :
+                            tts.setLanguage(Locale.ENGLISH);
+                            tts.speak("Hi",TextToSpeech.QUEUE_ADD,null,null);
+                            break;
+                    }
                 }
             });
         }
@@ -339,6 +364,26 @@ public class LivePreviewActivity extends AppCompatActivity {
         tts.speak(wrongStr,TextToSpeech.QUEUE_ADD,null,null);
     }
 
+    private void getResultDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(LivePreviewActivity.this);
+        builder.setCancelable(false);
+        builder.setTitle("練習結束");
+        builder.setMessage("總體正確率");
+        builder.setNegativeButton("回主頁面", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+        builder.setPositiveButton("詳細數據", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+        builder.create().show();
+    }
+
     Runnable personDetection = new Runnable() {
         @Override
         public void run() {
@@ -368,14 +413,15 @@ public class LivePreviewActivity extends AppCompatActivity {
     Runnable timeCountdown = new Runnable() {
         @Override
         public void run() {
+            tts.speak("練習結束",TextToSpeech.QUEUE_ADD,null,null);
             handler.postDelayed(this, time);
             if (cameraSource != null) {
                 cameraSource.release();
             }
-            tts.shutdown();
             handler.removeCallbacks(personDetection);
             handler.removeCallbacks(TTSWrongHint);
             handler.removeCallbacks(timeCountdown);
+            getResultDialog();
         }
     };
 
