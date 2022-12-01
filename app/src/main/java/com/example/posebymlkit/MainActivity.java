@@ -28,11 +28,17 @@ public class MainActivity extends AppCompatActivity {
 
         tvRes = findViewById(R.id.textView_PermissionResult);
 
-        boolean cameraHasGone = checkSelfPermission(Manifest.permission.CAMERA)
-                == PackageManager.PERMISSION_GRANTED;
+        boolean cameraHasGone = false;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            cameraHasGone = checkSelfPermission(Manifest.permission.CAMERA)
+                    == PackageManager.PERMISSION_GRANTED;
+        }
 
-        boolean externalHasGone = checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                == PackageManager.PERMISSION_GRANTED;
+        boolean externalHasGone = false;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            externalHasGone = checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    == PackageManager.PERMISSION_GRANTED;
+        }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             String[] permissions;
