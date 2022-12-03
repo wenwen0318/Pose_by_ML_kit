@@ -40,7 +40,12 @@ public class PoseDetectorProcessor
     private PoseClassifierProcessor poseClassifierProcessor;
 
     int[] wrongHint;
+    double frameNum = 0;
     int[][] wrongFre = {{0, 0, 0, 0},{0, 0, 0, 0},{0, 0, 0, 0},{0, 0, 0, 0},
+            {0, 0, 0, 0},{0, 0, 0, 0},{0, 0, 0, 0},{0, 0, 0, 0},
+            {0, 0, 0, 0},{0, 0, 0, 0},{0, 0},{0, 0, 0, 0},
+            {0, 0, 0, 0}};
+    double[][] wrongSum = {{0, 0, 0, 0},{0, 0, 0, 0},{0, 0, 0, 0},{0, 0, 0, 0},
             {0, 0, 0, 0},{0, 0, 0, 0},{0, 0, 0, 0},{0, 0, 0, 0},
             {0, 0, 0, 0},{0, 0, 0, 0},{0, 0},{0, 0, 0, 0},
             {0, 0, 0, 0}};
@@ -192,5 +197,49 @@ public class PoseDetectorProcessor
                 wrongFre[i][j] = 0;
             }
         }
+    }
+
+    public int getOverallCompleteness(){
+        double allWrong = 0;
+        double standardNum = 0;
+        switch (cardView){
+            case "Warrior2": standardNum = 5;break;
+            case "Plank": standardNum = 4;break;
+            case "Goddess": standardNum = 7;break;
+            case "Chair": standardNum = 6;break;
+            case "DownDog": standardNum = 4;break;
+            case "Four-limbed_Staff": standardNum = 4;break;
+            case "Boat": standardNum = 4;break;
+            case "Rejuvenation": standardNum = 4;break;
+            case "Star": standardNum = 7;break;
+            case "Tree": standardNum = 2;break;
+        }
+        for(double tem[] : wrongSum){
+            for(double num : tem){
+                if(num != 0){
+                    allWrong += num;
+                }
+            }
+        }
+        System.out.println("allWrong :　"+allWrong);
+        System.out.println("myFrame : "+frameNum);
+        double unCompleteness = allWrong/(frameNum*standardNum);
+        unCompleteness = Math.round(unCompleteness*100.0)/100.0;
+        int completeness = 100 - (int)(unCompleteness*100);
+        return completeness;
+    }
+
+    public int[] getJointsCompleteness(){
+        double[] unCompleteness = new double[13];
+        int[] completeness = new int[13];
+        for(int i=0;i<wrongSum.length;i++){
+            for(int j=0;j<wrongSum[i].length;j++){
+                unCompleteness[i] += wrongSum[i][j];
+            }
+            unCompleteness[i] = (unCompleteness[i]/frameNum);
+            unCompleteness[i] = Math.round(unCompleteness[i]*100.0)/100.0;
+            completeness[i] = 100 - (int)(unCompleteness[i]*100);
+        }
+        return completeness;
     }
 }
