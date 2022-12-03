@@ -675,14 +675,14 @@ public class PoseCalculate{
             status[2] = 0;
         }
         // standard 6 : leftKneeAngle==180°
-        if(leftKneeAngle > (180-5*level)){
+        if(leftKneeAngle < (180-5*level)){
             status[3] = 3;
         }
         else{
             status[3] = 0;
         }
 
-        // standard 9 : whether body vertical is
+        // standard 7 : whether body vertical is
         if(bodyVertical){
             status[10] = 0;
         }
