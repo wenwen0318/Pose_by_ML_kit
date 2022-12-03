@@ -69,8 +69,6 @@ public class LivePreviewActivity extends AppCompatActivity {
 
     String label = "";
     int[][] wrongHint = {{0, 0}};
-    int overallCompleteness;
-    int[] jointCompleteness;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -370,7 +368,7 @@ public class LivePreviewActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(LivePreviewActivity.this);
         builder.setCancelable(false);
         builder.setTitle("練習結束");
-        builder.setMessage("總體正確率"+overallCompleteness+"%");
+        builder.setMessage("總體正確率");
         builder.setNegativeButton("回主頁面", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
@@ -417,13 +415,6 @@ public class LivePreviewActivity extends AppCompatActivity {
         public void run() {
             tts.speak("練習結束",TextToSpeech.QUEUE_ADD,null,null);
             handler.postDelayed(this, time);
-            overallCompleteness = pdp.getOverallCompleteness();
-            jointCompleteness = pdp.getJointsCompleteness();
-            System.out.println("overallCom : "+overallCompleteness+"%");
-            for(float num : jointCompleteness){
-                System.out.print(" "+num+"%");
-            }
-            System.out.println();
             if (cameraSource != null) {
                 cameraSource.release();
             }
