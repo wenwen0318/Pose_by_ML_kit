@@ -182,9 +182,18 @@ public class PoseDetectorProcessor
         for(int i=0;i<arr.length;i++){
             if(arr[i] != 0){
                 switch (arr[i]){
-                    case 1: wrongFre[i][1] += 1;break;
-                    case 2: wrongFre[i][2] += 1;break;
-                    case 3: wrongFre[i][3] += 1;break;
+                    case 1:
+                        wrongFre[i][1] += 1;
+                        wrongSum[i][1] += 1;
+                        break;
+                    case 2:
+                        wrongFre[i][2] += 1;
+                        wrongSum[i][2] += 1;
+                        break;
+                    case 3:
+                        wrongFre[i][3] += 1;
+                        wrongSum[i][3] += 1;
+                        break;
                 }
             }
         }
