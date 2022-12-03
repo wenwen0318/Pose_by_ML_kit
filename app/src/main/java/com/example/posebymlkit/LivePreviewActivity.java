@@ -418,7 +418,6 @@ public class LivePreviewActivity extends AppCompatActivity {
         }
     };
 
-
     Runnable timeCountdown = new Runnable() {
         @Override
         public void run() {
@@ -437,6 +436,24 @@ public class LivePreviewActivity extends AppCompatActivity {
             handler.removeCallbacks(TTSWrongHint);
             handler.removeCallbacks(timeCountdown);
             getResultDialog();
+        }
+    };
+
+    Runnable poseClassify = new Runnable() {
+        @Override
+        public void run() {
+            handler.postDelayed(this, 1000);
+//            cameraSource.setMachineLearningFrameProcessor(
+//                    pdp = new PoseDetectorProcessor(
+//                            this,
+//                            poseDetectorOptions,
+//                            shouldShowInFrameLikelihood,
+//                            visualizeZ,
+//                            rescaleZ,
+//                            runClassification,
+//                            /* isStreamMode = */ true,
+//                            cardView,
+//                            userLevel));
         }
     };
 
