@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
+import android.preference.PreferenceFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,6 +49,8 @@ public class SettingFragment extends Fragment {
         return fragment;
     }
 
+    Intent intent = new Intent();
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,5 +67,14 @@ public class SettingFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_setting, container, false);
 
         return view;
+    }
+
+    public void userIllustrate(View view) {
+
+    }
+
+    public void history(View view) {
+        intent.setClass(SettingFragment.this.getContext(), PracticeResultActivity.class);
+        startActivity(intent);
     }
 }
