@@ -62,7 +62,8 @@ public class LivePreviewActivity extends AppCompatActivity {
     PoseDetectorProcessor pdp;
     ObjectDetectorProcessor odp;
 
-    Bundle bundle;
+    Intent intent = new Intent();
+    Bundle bundle = new Bundle();
     String cardView;
     int userLevel;
     int time;
@@ -71,6 +72,8 @@ public class LivePreviewActivity extends AppCompatActivity {
     int[][] wrongHint = {{0, 0}};
     int overallCompleteness;
     int[] jointCompleteness;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -370,7 +373,7 @@ public class LivePreviewActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(LivePreviewActivity.this);
         builder.setCancelable(false);
         builder.setTitle("練習結束");
-        builder.setMessage("總體正確率"+overallCompleteness+"%");
+        builder.setMessage("總體正確率： "+overallCompleteness+"%");
         builder.setNegativeButton("回主頁面", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
@@ -380,7 +383,10 @@ public class LivePreviewActivity extends AppCompatActivity {
         builder.setPositiveButton("詳細數據", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                dialogInterface.dismiss();
+                intent.setClass(LivePreviewActivity.this, PracticeResultActivity.class);
+                bundle.putIntArray("jointResult",jointCompleteness);
+                intent.putExtras(bundle);
+                startActivity(intent);
             }
         });
         builder.create().show();

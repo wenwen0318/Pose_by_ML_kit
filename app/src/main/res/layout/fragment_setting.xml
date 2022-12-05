@@ -33,6 +33,17 @@
             android:onClick="userIllustrate"
             android:text="userIllustrate"
             android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/historyBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:padding="10dp"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:text="\n history \n"
+            android:background="@drawable/roundbtn" />
     </LinearLayout>
 
 </FrameLayout>

@@ -10,6 +10,7 @@ import android.preference.PreferenceFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -50,6 +51,7 @@ public class SettingFragment extends Fragment {
     }
 
     Intent intent = new Intent();
+    Button historyBtn;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -66,15 +68,16 @@ public class SettingFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_setting, container, false);
 
+        historyBtn = view.findViewById(R.id.historyBtn);
+        historyBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                intent.setClass(SettingFragment.this.getContext(), PracticeResultActivity.class);
+//                startActivity(intent);
+            }
+        });
+
         return view;
     }
 
-    public void userIllustrate(View view) {
-
-    }
-
-    public void history(View view) {
-        intent.setClass(SettingFragment.this.getContext(), PracticeResultActivity.class);
-        startActivity(intent);
-    }
 }

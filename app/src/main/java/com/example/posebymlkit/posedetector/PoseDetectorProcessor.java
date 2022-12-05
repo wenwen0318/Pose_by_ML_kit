@@ -137,6 +137,7 @@ public class PoseDetectorProcessor
     protected void onSuccess(
             @NonNull GetPose getPose,
             @NonNull GraphicOverlay graphicOverlay) {
+        frameNum += 1;
         graphicOverlay.add(
                 new PoseGraphic(
                         graphicOverlay,
