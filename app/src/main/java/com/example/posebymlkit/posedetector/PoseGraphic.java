@@ -121,6 +121,13 @@ public class PoseGraphic extends Graphic {
                 translateX((rightHip.getPosition().x+leftHip.getPosition().x)/2),
                 translateY((rightHip.getPosition().y+leftHip.getPosition().y)/2),
                 whitePaint);
+        drawLine(canvas, rightFootIndex, leftFootIndex, whitePaint);
+        canvas.drawLine(
+                translateX(rightKnee.getPosition().x),
+                translateY(rightKnee.getPosition().y),
+                translateX(rightKnee.getPosition().x),
+                translateY(rightFootIndex.getPosition().y),
+                whitePaint);
 
         // Face
         drawLine(canvas, nose, leftEyeInner, whitePaint);

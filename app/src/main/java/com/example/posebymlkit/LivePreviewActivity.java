@@ -142,7 +142,6 @@ public class LivePreviewActivity extends AppCompatActivity {
                     boolean visualizeZ = PreferenceUtils.shouldPoseDetectionVisualizeZ(this);
                     boolean rescaleZ = PreferenceUtils.shouldPoseDetectionRescaleZForVisualization(this);
                     boolean runClassification = PreferenceUtils.shouldPoseDetectionRunClassification(this);
-                    runClassification = true;
                     cameraSource.setMachineLearningFrameProcessor(
                             pdp = new PoseDetectorProcessor(
                                     this,

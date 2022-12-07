@@ -35,7 +35,7 @@ public class PoseDetectorProcessor
     private final Context context;
     private final String cardView;
     private final int userLevel;
-    private final Executor classificationExecutor;
+//    private final Executor classificationExecutor;
 
     private PoseClassifierProcessor poseClassifierProcessor;
 
@@ -92,7 +92,7 @@ public class PoseDetectorProcessor
         this.context = context;
         this.cardView = cardView;
         this.userLevel = userLevel;
-        classificationExecutor = Executors.newSingleThreadExecutor();
+//        classificationExecutor = Executors.newSingleThreadExecutor();
     }
 
     @Override
@@ -122,7 +122,7 @@ public class PoseDetectorProcessor
         return detector
                 .process(image)
                 .continueWith(
-                        classificationExecutor,
+//                        classificationExecutor,
                         task -> {
                             Pose pose = task.getResult();
                             String classificationResult = "";
@@ -149,7 +149,7 @@ public class PoseDetectorProcessor
                         showInFrameLikelihood,
                         visualizeZ,
                         rescaleZForVisualization));
-        classificationResult = getPose.classificationResult;
+//        classificationResult = getPose.classificationResult;
 //        if(classificationResult.equals(cardView)){
 //            isCorrectPose = true;
 //        }
