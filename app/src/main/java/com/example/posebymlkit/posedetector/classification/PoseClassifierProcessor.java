@@ -20,15 +20,20 @@ import java.util.Locale;
 
 public class PoseClassifierProcessor {
     private static final String TAG = "PoseClassifierProcessor";
-    private static final String POSE_SAMPLES_FILE = "pose/fitness_pose_samples.csv";
+    private static final String POSE_SAMPLES_FILE = "pose/pose_classifier.csv";
 
     // Specify classes for which we want rep counting.
     // These are the labels in the given {@code POSE_SAMPLES_FILE}. You can set your own class labels
     // for your pose samples.
-    private static final String PUSHUPS_CLASS = "pushups_down";
-    private static final String SQUATS_CLASS = "squats_down";
+    private static final String BOAT = "Boat";
+    private static final String CHAIR = "Chair";
+    private static final String DOWNDOG = "Downdog";
+    private static final String FOUR_LIMBED_STAFF = "Four-limbed_Staff";
+    private static final String PLANK = "Plank";
+    private static final String TREE = "Tree";
+    private static final String WARRIOR2 = "Warrior2";
     private static final String[] POSE_CLASSES = {
-            PUSHUPS_CLASS, SQUATS_CLASS
+            BOAT, CHAIR, DOWNDOG, FOUR_LIMBED_STAFF, PLANK, TREE, WARRIOR2
     };
 
     private final boolean isStreamMode;
@@ -76,7 +81,7 @@ public class PoseClassifierProcessor {
     }
 
     @WorkerThread
-    public List<String> getPoseResult(Pose pose) {
+    public String getPoseResult(Pose pose) {
         Preconditions.checkState(Looper.myLooper() != Looper.getMainLooper());
         List<String> result = new ArrayList<>();
         ClassificationResult classification = poseClassifier.classify(pose);
@@ -87,10 +92,10 @@ public class PoseClassifierProcessor {
             classification = emaSmoothing.getSmoothedResult(classification);
 
             // Return early without updating repCounter if no pose found.
-            if (pose.getAllPoseLandmarks().isEmpty()) {
-                result.add(lastRepResult);
-                return result;
-            }
+//            if (pose.getAllPoseLandmarks().isEmpty()) {
+//                result.add(lastRepResult);
+//                return result;
+//            }
 
             for (RepetitionCounter repCounter : repCounters) {
                 int repsBefore = repCounter.getNumRepeats();
@@ -119,6 +124,6 @@ public class PoseClassifierProcessor {
             result.add(maxConfidenceClassResult);
         }
 
-        return result;
+        return classification.getMaxConfidenceClass();
     }
 }

@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
         if (itemId == R.id.home) {
             selectedFragment = new PoseListFragment();
         } else if (itemId == R.id.userData) {
-            selectedFragment = new UserDataFragment();
+            selectedFragment = new TrainMenuFragment();
         } else if (itemId == R.id.set) {
             selectedFragment = new SettingFragment();
         }

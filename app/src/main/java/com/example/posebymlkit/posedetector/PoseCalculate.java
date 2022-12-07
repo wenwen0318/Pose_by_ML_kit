@@ -692,7 +692,7 @@ public class PoseCalculate{
     }
     static void tree(){
         // standard 1 : rightKneeAngle==180°
-        if(rightKneeAngle > (180-5*level)){
+        if(rightKneeAngle < (180-5*level)){
             status[2] = 3;
         }
         else{

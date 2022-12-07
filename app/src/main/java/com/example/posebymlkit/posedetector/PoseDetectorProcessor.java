@@ -49,14 +49,16 @@ public class PoseDetectorProcessor
             {0, 0, 0, 0},{0, 0, 0, 0},{0, 0, 0, 0},{0, 0, 0, 0},
             {0, 0, 0, 0},{0, 0, 0, 0},{0, 0},{0, 0, 0, 0},
             {0, 0, 0, 0}};
+    String classificationResult ;
+    Boolean isCorrectPose;
 
     /** Internal class to hold Pose and classification results. */
 
     protected static class GetPose {
         private final Pose pose;
-        private final List<String> classificationResult;
+        private final String classificationResult;
 
-        public GetPose(Pose pose, List<String> classificationResult) {
+        public GetPose(Pose pose, String classificationResult) {
             this.pose = pose;
             this.classificationResult = classificationResult;
         }
@@ -65,7 +67,7 @@ public class PoseDetectorProcessor
             return pose;
         }
 
-        public List<String> getClassificationResult(){
+        public String getClassificationResult(){
             return classificationResult;
         }
     }
@@ -105,7 +107,7 @@ public class PoseDetectorProcessor
                 .continueWith(
                         task -> {
                             Pose pose = task.getResult();
-                            List<String> classificationResult = new ArrayList<>();
+                            String classificationResult = "";
                             if (runClassification) {
                                 if (poseClassifierProcessor == null) {
                                     poseClassifierProcessor = new PoseClassifierProcessor(context, isStreamMode);
@@ -120,10 +122,12 @@ public class PoseDetectorProcessor
         return detector
                 .process(image)
                 .continueWith(
+                        classificationExecutor,
                         task -> {
                             Pose pose = task.getResult();
-                            List<String> classificationResult = new ArrayList<>();
+                            String classificationResult = "";
                             if (runClassification) {
+                                System.out.println("hasInRunClassification");
                                 if (poseClassifierProcessor == null) {
                                     poseClassifierProcessor = new PoseClassifierProcessor(context, isStreamMode);
                                 }
@@ -145,12 +149,21 @@ public class PoseDetectorProcessor
                         showInFrameLikelihood,
                         visualizeZ,
                         rescaleZForVisualization));
+        classificationResult = getPose.classificationResult;
+//        if(classificationResult.equals(cardView)){
+//            isCorrectPose = true;
+//        }
+//        else{
+//            isCorrectPose = false;
+//        }
         PoseCalculate Calculate = new PoseCalculate(
                 getPose.getPose(),
                 cardView,
                 userLevel);
         wrongHint = Calculate.getAngleStatus();
         wrongFrequency(wrongHint);
+
+//        System.out.println("mypose : "+classificationResult);
     }
 
     @Override

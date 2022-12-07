@@ -1,7 +1,9 @@
 package com.example.posebymlkit;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -10,10 +12,10 @@ import android.view.ViewGroup;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link UserDataFragment#newInstance} factory method to
+ * Use the {@link TrainMenuFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class UserDataFragment extends Fragment {
+public class TrainMenuFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -24,7 +26,7 @@ public class UserDataFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public UserDataFragment() {
+    public TrainMenuFragment() {
         // Required empty public constructor
     }
 
@@ -37,8 +39,8 @@ public class UserDataFragment extends Fragment {
      * @return A new instance of fragment UserDataFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static UserDataFragment newInstance(String param1, String param2) {
-        UserDataFragment fragment = new UserDataFragment();
+    public static TrainMenuFragment newInstance(String param1, String param2) {
+        TrainMenuFragment fragment = new TrainMenuFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -55,10 +57,32 @@ public class UserDataFragment extends Fragment {
         }
     }
 
+    int[] menuList = {
+            R.id.customMenuCardView,
+            R.id.suggestMenuCardView1
+    };
+    Intent intent = new Intent();
+    Bundle bundle = new Bundle();
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_user_data, container, false);
+        View view = inflater.inflate(R.layout.fragment_train_menu, container, false);
+        for(int menu : menuList){
+            CardView cardView = view.findViewById(menu);
+            cardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    intent.setClass(TrainMenuFragment.this.getContext(), VideoActivity.class);
+                    bundle.putString("cardView", cardView.getTransitionName());
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }
+            });
+        }
+
+        return view;
     }
+
 }

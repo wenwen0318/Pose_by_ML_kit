@@ -142,6 +142,7 @@ public class LivePreviewActivity extends AppCompatActivity {
                     boolean visualizeZ = PreferenceUtils.shouldPoseDetectionVisualizeZ(this);
                     boolean rescaleZ = PreferenceUtils.shouldPoseDetectionRescaleZForVisualization(this);
                     boolean runClassification = PreferenceUtils.shouldPoseDetectionRunClassification(this);
+                    runClassification = true;
                     cameraSource.setMachineLearningFrameProcessor(
                             pdp = new PoseDetectorProcessor(
                                     this,
@@ -425,7 +426,8 @@ public class LivePreviewActivity extends AppCompatActivity {
             handler.postDelayed(this, time);
             overallCompleteness = pdp.getOverallCompleteness();
             jointCompleteness = pdp.getJointsCompleteness();
-            for(float num : jointCompleteness){
+            System.out.print("jointCompleteness : ");
+            for(int num : jointCompleteness){
                 System.out.print(" "+num+"%");
             }
             System.out.println();
