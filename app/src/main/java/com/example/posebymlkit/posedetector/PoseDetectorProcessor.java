@@ -157,6 +157,7 @@ public class PoseDetectorProcessor
 //            isCorrectPose = false;
 //        }
         PoseCalculate Calculate = new PoseCalculate(
+                context,
                 getPose.getPose(),
                 cardView,
                 userLevel);

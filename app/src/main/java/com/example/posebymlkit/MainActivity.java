@@ -8,9 +8,14 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 
+import com.example.posebymlkit.database.DatabaseHandler;
+import com.example.posebymlkit.database.PoseStandard;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -57,6 +62,25 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
             requestPermissions(permissions, 100);
+        }
+
+        DatabaseHandler db = new DatabaseHandler(this);
+        db.addPoseStandard(new PoseStandard("Warrior2",
+                null,null,
+                null,"180",
+                "180","180",
+                null,null,
+                "180","180",
+                "0",
+                "90",null));
+
+//        顯示資料庫
+        List<PoseStandard> poseStandardList = db.getAllPoseStandard();
+
+        for (PoseStandard ps : poseStandardList) {
+            String log = "PoseName: " + ps.getPoseName() + " ,RightKnee: " + ps.getRKnee() + " ,LeftKnee: " + ps.getLKnee();
+            // Writing Contacts to log
+            Log.d("DB: ", log);
         }
     }
 
