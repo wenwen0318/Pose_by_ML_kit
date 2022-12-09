@@ -11,10 +11,14 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
-import com.example.posebymlkit.database.DatabaseHandler;
+import com.example.posebymlkit.database.HistoricalRecord;
+import com.example.posebymlkit.database.HistoricalRecordDBHandler;
+import com.example.posebymlkit.database.PoseStandardDBHandler;
 import com.example.posebymlkit.database.PoseStandard;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 
@@ -64,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
             requestPermissions(permissions, 100);
         }
 
-        DatabaseHandler db = new DatabaseHandler(this);
+        PoseStandardDBHandler db = new PoseStandardDBHandler(this);
         db.addPoseStandard(new PoseStandard("Warrior2",
                 null,null,
                 null,"180",
@@ -72,16 +76,47 @@ public class MainActivity extends AppCompatActivity {
                 null,null,
                 "180","180",
                 "0",
-                "90",null));
+                "90",null,
+                "180",
+                "45"));
 
-//        顯示資料庫
-        List<PoseStandard> poseStandardList = db.getAllPoseStandard();
+        HistoricalRecordDBHandler hr = new HistoricalRecordDBHandler(this);
 
-        for (PoseStandard ps : poseStandardList) {
-            String log = "PoseName: " + ps.getPoseName() + " ,RightKnee: " + ps.getRKnee() + " ,LeftKnee: " + ps.getLKnee();
-            // Writing Contacts to log
-            Log.d("DB: ", log);
-        }
+        // Inserting Contacts
+        Log.d("Insert: ", "Inserting ..");
+
+//        Calendar calendar= Calendar.getInstance();
+//        SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+//        System.out.println(dateFormat.format(calendar.getTime()));
+//
+//        hr.addHistoricalRecord(new HistoricalRecord(
+//                "Warrior2",
+//                dateFormat.format(calendar.getTime()),
+//                2,
+//                98,
+//                "100","100",
+//                "100","100",
+//                "100","100",
+//                "100","100",
+//                "100","100",
+//                "100",
+//                "100","100",
+//                "95",
+//                "100"));
+//
+//        // Reading all contacts
+//        Log.d("Reading: ", "Reading all contacts..");
+//
+//        List<HistoricalRecord> historicalRecord = hr.getAllHistoricalRecord();
+//
+//        for (HistoricalRecord h : historicalRecord) {
+//            String log = "Id: " + h.getDate() + " ,Name: " + h.getPoseName() + " ,Phone: " +
+//                    h.getBodyVertical();
+//            // Writing Contacts to log
+//            Log.d("Name: ", log);
+//        }
+
+
     }
 
     private final BottomNavigationView.OnItemSelectedListener navListener = item -> {

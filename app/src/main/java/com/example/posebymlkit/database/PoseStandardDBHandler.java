@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class DatabaseHandler extends SQLiteOpenHelper {
+public class PoseStandardDBHandler extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "poseStandard.db";
     private static final String TABLE_POSE_STANDARD = "poseStandard";
@@ -28,8 +28,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String KEY_BODY_VERTICAL = "bodyVertical";
     private static final String KEY_RIGHT_KNEE_TOE = "RKneeToe";
     private static final String KEY_LEFT_KNEE_TOE = "LKneeToe";
+    private static final String KEY_THIGH_HORIZONTAL = "thighHorizontal";
+    private static final String KEY_CROTCH = "crotch";
 
-    public DatabaseHandler(Context context) {
+    public PoseStandardDBHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
@@ -50,7 +52,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 + KEY_LEFT_SHOULDER + " TEXT,"
                 + KEY_BODY_VERTICAL + " TEXT,"
                 + KEY_RIGHT_KNEE_TOE + " TEXT,"
-                + KEY_LEFT_KNEE_TOE + " TEXT"
+                + KEY_LEFT_KNEE_TOE + " TEXT,"
+                + KEY_THIGH_HORIZONTAL + " TEXT,"
+                + KEY_CROTCH + " TEXT"
                 + ")";
         db.execSQL(CREATE_CONTACTS_TABLE);
     }
@@ -84,6 +88,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_BODY_VERTICAL, poseStandard.getBodyVertical());
         values.put(KEY_RIGHT_KNEE_TOE, poseStandard.getRKneeToe());
         values.put(KEY_LEFT_KNEE_TOE, poseStandard.getLKneeToe());
+        values.put(KEY_THIGH_HORIZONTAL, poseStandard.getThighHorizontal());
+        values.put(KEY_CROTCH, poseStandard.getCrotch());
 
         // Inserting Row
         db.insert(TABLE_POSE_STANDARD, null, values);
@@ -102,27 +108,30 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                         KEY_RIGHT_ARMPIT, KEY_LEFT_ARMPIT,
                         KEY_RIGHT_SHOULDER, KEY_LEFT_SHOULDER,
                         KEY_BODY_VERTICAL,
-                        KEY_RIGHT_KNEE_TOE, KEY_LEFT_KNEE_TOE
+                        KEY_RIGHT_KNEE_TOE, KEY_LEFT_KNEE_TOE,
+                        KEY_THIGH_HORIZONTAL,
+                        KEY_CROTCH
                 }, KEY_POSE_NAME + "=?",
                 new String[] { String.valueOf(poseName) }, null, null, null, null);
         if (cursor != null)
             cursor.moveToFirst();
-
-        PoseStandard poseStandard = new PoseStandard(
-                cursor.getString(0),
-                cursor.getString(1),
-                cursor.getString(2),
-                cursor.getString(3),
-                cursor.getString(4),
-                cursor.getString(5),
-                cursor.getString(6),
-                cursor.getString(7),
-                cursor.getString(8),
-                cursor.getString(9),
-                cursor.getString(10),
-                cursor.getString(11),
-                cursor.getString(12),
-                cursor.getString(13)
+            PoseStandard poseStandard = new PoseStandard(
+                    cursor.getString(0),
+                    cursor.getString(1),
+                    cursor.getString(2),
+                    cursor.getString(3),
+                    cursor.getString(4),
+                    cursor.getString(5),
+                    cursor.getString(6),
+                    cursor.getString(7),
+                    cursor.getString(8),
+                    cursor.getString(9),
+                    cursor.getString(10),
+                    cursor.getString(11),
+                    cursor.getString(12),
+                    cursor.getString(13),
+                    cursor.getString(14),
+                    cursor.getString(15)
         );
         // return contact
         return poseStandard;
@@ -155,6 +164,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 poseStandard.setBodyVertical(cursor.getString(11));
                 poseStandard.setRKneeToe(cursor.getString(12));
                 poseStandard.setLKneeToe(cursor.getString(13));
+                poseStandard.setThighHorizontal(cursor.getString(14));
+                poseStandard.setCrotch(cursor.getString(15));
                 // Adding contact to list
                 poseStandardList.add(poseStandard);
             } while (cursor.moveToNext());
@@ -183,6 +194,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_BODY_VERTICAL, poseStandard.getBodyVertical());
         values.put(KEY_RIGHT_KNEE_TOE, poseStandard.getRKneeToe());
         values.put(KEY_LEFT_KNEE_TOE, poseStandard.getLKneeToe());
+        values.put(KEY_THIGH_HORIZONTAL, poseStandard.getThighHorizontal());
+        values.put(KEY_CROTCH, poseStandard.getCrotch());
 
         // updating row
         return db.update(TABLE_POSE_STANDARD, values, KEY_POSE_NAME + " = ?",

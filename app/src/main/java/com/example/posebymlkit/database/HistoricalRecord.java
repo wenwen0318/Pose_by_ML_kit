@@ -1,9 +1,10 @@
 package com.example.posebymlkit.database;
 
-import java.util.ArrayList;
-
-public class PoseStandard {
+public class HistoricalRecord {
     String poseName;
+    String date;
+    int level;
+    int allComplete;
     String RHip;
     String LHip;
     String RKnee;
@@ -19,9 +20,13 @@ public class PoseStandard {
     String LKneeToe;
     String thighHorizontal;
     String crotch;
-    public PoseStandard(){}
-    public PoseStandard(
+
+    public HistoricalRecord(){}
+    public HistoricalRecord(
             String poseName,
+            String date,
+            int level,
+            int allComplete,
             String RHip, String LHip,
             String RKnee, String LKnee,
             String RElbow, String LElbow,
@@ -30,8 +35,12 @@ public class PoseStandard {
             String bodyVertical,
             String RKneeToe, String LKneeToe,
             String thighHorizontal,
-            String crotch){
+            String crotch
+    ){
         this.poseName = poseName;
+        this.date = date;
+        this.level = level;
+        this.allComplete = allComplete;
         this.RHip = RHip;
         this.LHip = LHip;
         this.RKnee = RKnee;
@@ -49,28 +58,17 @@ public class PoseStandard {
         this.crotch = crotch;
     }
 
-    public ArrayList<String> getPoseStandard(){
-        ArrayList<String> standard = new ArrayList<>();
-        standard.add(this.RHip);
-        standard.add(this.LHip);
-        standard.add(this.RKnee);
-        standard.add(this.LKnee);
-        standard.add(this.RElbow);
-        standard.add(this.LElbow);
-        standard.add(this.RArmpit);
-        standard.add(this.LArmpit);
-        standard.add(this.RShoulder);
-        standard.add(this.LShoulder);
-        standard.add(this.bodyVertical);
-        standard.add(this.RKneeToe);
-        standard.add(this.LKneeToe);
-        standard.add(this.thighHorizontal);
-        standard.add(this.crotch);
-        return standard;
-    }
-
     public String getPoseName(){ return this.poseName;}
     public void setPoseName(String poseName){ this.poseName = poseName;}
+
+    public String getDate(){ return this.date;}
+    public void setDate(String date){ this.date = date;}
+
+    public int getLevel(){ return this.level;}
+    public void setLevel(int level){ this.level = level;}
+
+    public int getAllComplete(){ return this.allComplete;}
+    public void setAllComplete(int allComplete){ this.allComplete = allComplete;}
 
     public String getRHip(){ return this.RHip;}
     public void setRHip(String rHip){ this.RHip = rHip;}
