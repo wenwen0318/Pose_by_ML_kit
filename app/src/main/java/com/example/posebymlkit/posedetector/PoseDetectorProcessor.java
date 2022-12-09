@@ -15,11 +15,6 @@ import com.google.mlkit.vision.pose.PoseDetection;
 import com.google.mlkit.vision.pose.PoseDetector;
 import com.google.mlkit.vision.pose.PoseDetectorOptionsBase;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
-
 /** A processor to run pose detector. */
 public class PoseDetectorProcessor
         extends VisionProcessorBase<PoseDetectorProcessor.GetPose> {
@@ -39,16 +34,13 @@ public class PoseDetectorProcessor
 
     private PoseClassifierProcessor poseClassifierProcessor;
 
-    int[] wrongHint;
+    int[] angleStatus;
     double frameNum = 0;
-    int[][] wrongFre = {{0, 0, 0, 0},{0, 0, 0, 0},{0, 0, 0, 0},{0, 0, 0, 0},
-            {0, 0, 0, 0},{0, 0, 0, 0},{0, 0, 0, 0},{0, 0, 0, 0},
-            {0, 0, 0, 0},{0, 0, 0, 0},{0, 0},{0, 0, 0, 0},
-            {0, 0, 0, 0}};
-    double[][] wrongSum = {{0, 0, 0, 0},{0, 0, 0, 0},{0, 0, 0, 0},{0, 0, 0, 0},
-            {0, 0, 0, 0},{0, 0, 0, 0},{0, 0, 0, 0},{0, 0, 0, 0},
-            {0, 0, 0, 0},{0, 0, 0, 0},{0, 0},{0, 0, 0, 0},
-            {0, 0, 0, 0}};
+    int[][] wrongFre =  {{0, 0, 0},{0, 0, 0},{0, 0, 0},{0, 0, 0},
+            {0, 0, 0},{0, 0, 0},{0, 0, 0},{0, 0, 0},
+            {0, 0, 0},{0, 0, 0},{0, 0},{0, 0, 0},
+            {0, 0, 0}, {0, 0, 0}, {0, 0, 0}};
+    double[] wrongSum = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
     String classificationResult ;
     Boolean isCorrectPose;
 
@@ -161,10 +153,9 @@ public class PoseDetectorProcessor
                 getPose.getPose(),
                 cardView,
                 userLevel);
-        wrongHint = Calculate.getAngleStatus();
-        wrongFrequency(wrongHint);
-
-//        System.out.println("mypose : "+classificationResult);
+        angleStatus = Calculate.getAngleStatus();
+        calWrongSum();
+        calWrongTem();
     }
 
     @Override
@@ -177,45 +168,25 @@ public class PoseDetectorProcessor
         return true;
     }
 
-    public int[][] wrong(){
-        int[][] finalWrong = {{0, 0}}; //{部位,錯誤資訊 1:<90,2:>90,3:!=180}
-        int max = 0;
+    public void calWrongSum(){
+        for(int i=0;i<angleStatus.length;i++){
+            if(angleStatus[i] != 0){
+                wrongSum[i] += 1;
+            }
+        }
+    }
+
+    public void calWrongTem(){
         for(int i=0;i<wrongFre.length;i++){
-            for(int j=0;j<wrongFre[i].length;j++){
-                if(wrongFre[i][j] > max){
-                    max = wrongFre[i][j];
-                    finalWrong[0][0] = i;
-                    finalWrong[0][1] = j;
-                }
-
-            }
-        }
-        return finalWrong;
-    }
-
-    public void wrongFrequency(int[] arr){
-        for(int i=0;i<arr.length;i++){
-            if(arr[i] != 0){
-                switch (arr[i]){
-                    case 1:
-                        wrongFre[i][1] += 1;
-                        wrongSum[i][1] += 1;
-                        break;
-                    case 2:
-                        wrongFre[i][2] += 1;
-                        wrongSum[i][2] += 1;
-                        break;
-                    case 3:
-                        wrongFre[i][3] += 1;
-                        wrongSum[i][3] += 1;
-                        break;
+            for(int j=1;j<wrongFre[i].length;j++){
+                if(angleStatus[i] == j){
+                    wrongFre[i][j] += 1;
                 }
             }
         }
     }
 
-    public void clear(){
-        System.out.println("WrongHint Clear");
+    public void clearWrongTem(){
         for(int i=0;i<wrongFre.length;i++){
             for(int j=0;j<wrongFre[i].length;j++){
                 wrongFre[i][j] = 0;
@@ -223,11 +194,27 @@ public class PoseDetectorProcessor
         }
     }
 
+    public int[] getWrongForTTS(){
+        int max = wrongFre[0][0];
+        // wrongAngle wrongStatus;
+        int[] wrongInf = new int[2];
+        for(int i=0;i<wrongFre.length;i++){
+            for(int j=0;j<wrongFre[i].length;j++){
+                if(wrongFre[i][j] >= max){
+                    max = wrongFre[i][j];
+                    wrongInf[0] = i;// wrongAngle
+                    wrongInf[1] = j;// wrongStatus
+                }
+            }
+        }
+        return wrongInf;
+    }
+
     public int getOverallCompleteness(){
         double allWrong = 0;
         double standardNum = 0;
         switch (cardView){
-            case "Warrior2": standardNum = 5;break;
+            case "Warrior2": standardNum = 9;break;
             case "Plank": standardNum = 4;break;
             case "Goddess": standardNum = 7;break;
             case "Chair": standardNum = 6;break;
@@ -238,12 +225,8 @@ public class PoseDetectorProcessor
             case "Star": standardNum = 7;break;
             case "Tree": standardNum = 2;break;
         }
-        for(double tem[] : wrongSum){
-            for(double num : tem){
-                if(num != 0){
-                    allWrong += num;
-                }
-            }
+        for(double num : wrongSum){
+            allWrong += num;
         }
         System.out.println("allWrong :　"+allWrong);
         System.out.println("myFrame : "+frameNum);
@@ -254,13 +237,10 @@ public class PoseDetectorProcessor
     }
 
     public int[] getJointsCompleteness(){
-        double[] unCompleteness = new double[13];
-        int[] completeness = new int[13];
+        double[] unCompleteness = new double[15];
+        int[] completeness = new int[15];
         for(int i=0;i<wrongSum.length;i++){
-            for(int j=0;j<wrongSum[i].length;j++){
-                unCompleteness[i] += wrongSum[i][j];
-            }
-            unCompleteness[i] = (unCompleteness[i]/frameNum);
+            unCompleteness[i] = (wrongSum[i]/frameNum);
             unCompleteness[i] = Math.round(unCompleteness[i]*100.0)/100.0;
             completeness[i] = 100 - (int)(unCompleteness[i]*100);
         }
