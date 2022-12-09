@@ -8,6 +8,8 @@ import java.util.List;
 
 import static java.lang.Math.atan2;
 
+import android.graphics.PointF;
+
 /** Draw the detected pose in preview. */
 public class PoseCalculate{
 
@@ -16,7 +18,7 @@ public class PoseCalculate{
     private final int userLevel;
     static int level;
     static Boolean getPose;
-    static int[] status = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}; //各角度狀態 0:正確 1:<90 2:>90 3:!=180
+    static int[] status = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}; //各角度狀態 0:正確 1:小於 2:大於
     static double rightHipAngle;
     static double leftHipAngle;
     static double rightKneeAngle;
@@ -31,7 +33,23 @@ public class PoseCalculate{
     static double leftChestAngle;
     static double rightKneeToeAngle;
     static double leftKneeToeAngle;
-    static boolean bodyVertical;
+    static double bodyVertical;
+    static PoseLandmark leftShoulder;
+    static PoseLandmark rightShoulder;
+    static PoseLandmark leftElbow;
+    static PoseLandmark rightElbow;
+    static PoseLandmark leftWrist;
+    static PoseLandmark rightWrist;
+    static PoseLandmark leftHip;
+    static PoseLandmark rightHip;
+    static PoseLandmark leftKnee;
+    static PoseLandmark rightKnee;
+    static PoseLandmark leftAnkle;
+    static PoseLandmark rightAnkle;
+    static PoseLandmark leftHeel;
+    static PoseLandmark rightHeel;
+    static PoseLandmark leftFootIndex;
+    static PoseLandmark rightFootIndex;
 
     PoseCalculate(
             Pose pose,
@@ -101,18 +119,18 @@ public class PoseCalculate{
         PoseLandmark leftMouth = pose.getPoseLandmark(PoseLandmark.LEFT_MOUTH);
         PoseLandmark rightMouth = pose.getPoseLandmark(PoseLandmark.RIGHT_MOUTH);
 
-        PoseLandmark leftShoulder = pose.getPoseLandmark(PoseLandmark.LEFT_SHOULDER);
-        PoseLandmark rightShoulder = pose.getPoseLandmark(PoseLandmark.RIGHT_SHOULDER);
-        PoseLandmark leftElbow = pose.getPoseLandmark(PoseLandmark.LEFT_ELBOW);
-        PoseLandmark rightElbow = pose.getPoseLandmark(PoseLandmark.RIGHT_ELBOW);
-        PoseLandmark leftWrist = pose.getPoseLandmark(PoseLandmark.LEFT_WRIST);
-        PoseLandmark rightWrist = pose.getPoseLandmark(PoseLandmark.RIGHT_WRIST);
-        PoseLandmark leftHip = pose.getPoseLandmark(PoseLandmark.LEFT_HIP);
-        PoseLandmark rightHip = pose.getPoseLandmark(PoseLandmark.RIGHT_HIP);
-        PoseLandmark leftKnee = pose.getPoseLandmark(PoseLandmark.LEFT_KNEE);
-        PoseLandmark rightKnee = pose.getPoseLandmark(PoseLandmark.RIGHT_KNEE);
-        PoseLandmark leftAnkle = pose.getPoseLandmark(PoseLandmark.LEFT_ANKLE);
-        PoseLandmark rightAnkle = pose.getPoseLandmark(PoseLandmark.RIGHT_ANKLE);
+        leftShoulder = pose.getPoseLandmark(PoseLandmark.LEFT_SHOULDER);
+        rightShoulder = pose.getPoseLandmark(PoseLandmark.RIGHT_SHOULDER);
+        leftElbow = pose.getPoseLandmark(PoseLandmark.LEFT_ELBOW);
+        rightElbow = pose.getPoseLandmark(PoseLandmark.RIGHT_ELBOW);
+        leftWrist = pose.getPoseLandmark(PoseLandmark.LEFT_WRIST);
+        rightWrist = pose.getPoseLandmark(PoseLandmark.RIGHT_WRIST);
+        leftHip = pose.getPoseLandmark(PoseLandmark.LEFT_HIP);
+        rightHip = pose.getPoseLandmark(PoseLandmark.RIGHT_HIP);
+        leftKnee = pose.getPoseLandmark(PoseLandmark.LEFT_KNEE);
+        rightKnee = pose.getPoseLandmark(PoseLandmark.RIGHT_KNEE);
+        leftAnkle = pose.getPoseLandmark(PoseLandmark.LEFT_ANKLE);
+        rightAnkle = pose.getPoseLandmark(PoseLandmark.RIGHT_ANKLE);
 
         PoseLandmark leftPinky = pose.getPoseLandmark(PoseLandmark.LEFT_PINKY);
         PoseLandmark rightPinky = pose.getPoseLandmark(PoseLandmark.RIGHT_PINKY);
@@ -120,10 +138,11 @@ public class PoseCalculate{
         PoseLandmark rightIndex = pose.getPoseLandmark(PoseLandmark.RIGHT_INDEX);
         PoseLandmark leftThumb = pose.getPoseLandmark(PoseLandmark.LEFT_THUMB);
         PoseLandmark rightThumb = pose.getPoseLandmark(PoseLandmark.RIGHT_THUMB);
-        PoseLandmark leftHeel = pose.getPoseLandmark(PoseLandmark.LEFT_HEEL);
-        PoseLandmark rightHeel = pose.getPoseLandmark(PoseLandmark.RIGHT_HEEL);
-        PoseLandmark leftFootIndex = pose.getPoseLandmark(PoseLandmark.LEFT_FOOT_INDEX);
-        PoseLandmark rightFootIndex = pose.getPoseLandmark(PoseLandmark.RIGHT_FOOT_INDEX);
+        leftHeel = pose.getPoseLandmark(PoseLandmark.LEFT_HEEL);
+        rightHeel = pose.getPoseLandmark(PoseLandmark.RIGHT_HEEL);
+        leftFootIndex = pose.getPoseLandmark(PoseLandmark.LEFT_FOOT_INDEX);
+        rightFootIndex = pose.getPoseLandmark(PoseLandmark.RIGHT_FOOT_INDEX);
+
         // output[0] ~ output[9]
         rightHipAngle = getAngle(rightShoulder,rightHip,rightKnee);
         leftHipAngle = getAngle(leftShoulder,leftHip,leftKnee);
@@ -136,7 +155,7 @@ public class PoseCalculate{
         rightShoulderAngle = getAngle(rightElbow,rightShoulder,leftShoulder);
         leftShoulderAngle = getAngle(leftElbow,leftShoulder,rightShoulder);
         // output[10]
-        bodyVertical = bodyVertical(leftShoulder,rightShoulder,rightHip,leftHip);
+        bodyVertical = bodyVertical();
         // output[11] ~ [12]
         rightKneeToeAngle = getAngle(rightKnee, rightFootIndex, rightHeel);
         leftKneeToeAngle = getAngle(leftKnee, leftFootIndex, leftHeel);
@@ -158,80 +177,166 @@ public class PoseCalculate{
         return result;
     }
     // 0 ist genau, 1 ist falsch
-    static boolean bodyVertical(PoseLandmark firstPoint, PoseLandmark secPoint, PoseLandmark thiPoint, PoseLandmark lastPoint){
-        double upMiddleX = (firstPoint.getPosition().x + secPoint.getPosition().x)/2;
-        double upMiddleY = (firstPoint.getPosition().y + secPoint.getPosition().y)/2;
-        double downMiddleX = (thiPoint.getPosition().x + lastPoint.getPosition().x)/2;
-        double downMiddleY = (thiPoint.getPosition().y + lastPoint.getPosition().y)/2;
-        double upResult =
+    static double bodyVertical(){
+        // 鎖骨
+        double clavicleMidX = (rightShoulder.getPosition().x + leftShoulder.getPosition().x)/2;
+        double clavicleMidY = (rightShoulder.getPosition().y + leftShoulder.getPosition().y)/2;
+        double clavicleToGroundX = clavicleMidX;
+        double rightClavicleToGroundY = rightFootIndex.getPosition().y;
+        double leftClavicleToGroundY = rightFootIndex.getPosition().y;
+        double rightClavicleToGroundAngle =
                 Math.toDegrees(
-                        atan2(firstPoint.getPosition().y - upMiddleY,
-                                firstPoint.getPosition().x - upMiddleX)
-                                - atan2(downMiddleY -  upMiddleY,
-                                downMiddleX - upMiddleX));
-        upResult = Math.abs(upResult);
-        if (upResult > 180) {
-            upResult = (360.0 - upResult);
+                        atan2(clavicleMidY - rightClavicleToGroundY,
+                                clavicleMidX - clavicleToGroundX)
+                                - atan2(rightFootIndex.getPosition().y - rightClavicleToGroundY,
+                                rightFootIndex.getPosition().x - clavicleToGroundX));
+        rightClavicleToGroundAngle = Math.abs(rightClavicleToGroundAngle);
+        if (rightClavicleToGroundAngle > 180) {
+            rightClavicleToGroundAngle = (360.0 - rightClavicleToGroundAngle);
         }
-        double downResult =
+        double leftClavicleToGroundAngle =
                 Math.toDegrees(
-                        atan2(thiPoint.getPosition().y - downMiddleY,
-                                thiPoint.getPosition().x - downMiddleX)
-                                - atan2(upMiddleY -  downMiddleY,
-                                upMiddleX - downMiddleX));
-        downResult = Math.abs(downResult);
-        if (downResult > 180) {
-            downResult = (360.0 - downResult);
+                        atan2(clavicleMidY - leftClavicleToGroundY,
+                                clavicleMidX - clavicleToGroundX)
+                                - atan2(leftFootIndex.getPosition().y - leftClavicleToGroundY ,
+                                leftFootIndex.getPosition().x - clavicleToGroundX));
+        leftClavicleToGroundAngle = Math.abs(leftClavicleToGroundAngle);
+        if (leftClavicleToGroundAngle > 180) {
+            leftClavicleToGroundAngle = (360.0 - leftClavicleToGroundAngle);
         }
+        double clavicleToGroundAngle = rightClavicleToGroundAngle + leftClavicleToGroundAngle;
 
-        System.out.println(upResult+" "+downResult);
-
-        if((upResult < 90+(5*level)||upResult > 90-(5*level))&&(downResult < 90+(5*level)||downResult > 90-(5*level))){
-            return true;
+        System.out.println("clavicleToGroundAngle : "+clavicleToGroundAngle);
+        return clavicleToGroundAngle;
+    }
+    static double getSpecialAngle(String angle){
+        if(angle.equals("rightHipKneeGroundAngle")) {
+            double rightKneeToGroundX = rightKnee.getPosition().x;
+            double rightKneeToGroundY = rightFootIndex.getPosition().y;
+            double rightHipKneeGroundAngle =
+                    Math.toDegrees(
+                            atan2(rightHip.getPosition().y - rightKnee.getPosition().y,
+                                    rightHip.getPosition().x - rightKnee.getPosition().x)
+                                    - atan2(rightKneeToGroundY - rightKnee.getPosition().y,
+                                    rightKneeToGroundX - rightKnee.getPosition().x)
+                    );
+            rightHipKneeGroundAngle = Math.abs(rightHipKneeGroundAngle);
+            if (rightHipKneeGroundAngle > 180) {
+                rightHipKneeGroundAngle = (360.0 - rightHipKneeGroundAngle);
+            }
+            return rightHipKneeGroundAngle;
         }
-        else{
-            return false;
+        else if(angle.equals("rightKneeGroundAngle")){
+            double rightKneeToGroundX = rightKnee.getPosition().x;
+            double rightKneeToGroundY = rightFootIndex.getPosition().y;
+            double rightKneeGroundAngle =
+                    Math.toDegrees(
+                            atan2(rightKnee.getPosition().y - rightKneeToGroundY,
+                                    rightKnee.getPosition().x - rightKneeToGroundX)
+                                    - atan2(leftFootIndex.getPosition().y - rightKneeToGroundY,
+                                    leftFootIndex.getPosition().x - rightKneeToGroundX)
+                    );
+            rightKneeGroundAngle = Math.abs(rightKneeGroundAngle);
+            if (rightKneeGroundAngle > 180) {
+                rightKneeGroundAngle = (360.0 - rightKneeGroundAngle);
+            }
+            return rightKneeGroundAngle;
         }
+        else if(angle.equals("leftCrotchAngle")){
+            double leftHipToGroundX = leftHip.getPosition().x;
+            double leftHipToGroundY = rightFootIndex.getPosition().y;
+            double leftCrotchAngle =
+                    Math.toDegrees(
+                            atan2(leftHipToGroundY - leftHip.getPosition().y,
+                                    leftHipToGroundX - leftHip.getPosition().x)
+                                    - atan2(leftKnee.getPosition().y - leftHip.getPosition().y,
+                                    leftKnee.getPosition().x - leftHip.getPosition().x)
+                    );
+            leftCrotchAngle = Math.abs(leftCrotchAngle);
+            if (leftCrotchAngle > 180) {
+                leftCrotchAngle = (360.0 - leftCrotchAngle);
+            }
+            return leftCrotchAngle;
+        }
+        return 0;
     }
 
     static void warrior2(){
-        // standard 1 : rightKneeAngle==90°
-        if(rightKneeAngle > (90+5*level)){
-            status[2] = 2;
-        }
-        else if(rightKneeAngle < (90-5*level)){
-            status[2] = 1;
+        // standard 1 : whether rightThigh(大腿) horizontal with ground
+        if((getSpecialAngle("rightHipKneeGroundAngle")+getSpecialAngle("rightKneeGroundAngle"))<(180-5*level) ||
+                (getSpecialAngle("rightHipKneeGroundAngle")+getSpecialAngle("rightKneeGroundAngle"))>(180+5*level)){
+            status[13] = 1;
         }
         else{
-            status[2] = 0;
+            status[13] = 0;
         }
-        // standard 2 : leftKneeAngle==180°
+        // standard 2 : rightFoot facing right
+        double rightAnkleHeelFootIndexAngle = getAngle(rightAnkle, rightHeel, rightFootIndex);
+        System.out.println("rightAnkleHeelFootIndexAngle : "+rightAnkleHeelFootIndexAngle);
+        // standard 3 : leftKneeAngle == 180°
         if(leftKneeAngle < (180-5*level)){
-            status[3] = 3;
+            status[3] = 1;
         }
         else{
             status[3] = 0;
         }
-        // standard 3 : rightShoulderAngle==180°
+        // standard 4 : leftCrotch(胯下) == 45°
+        if(getSpecialAngle("leftCrotchAngle")<(50-5*level)){
+            status[14] = 1;
+            System.out.println("leftCrotchAngle : "+getSpecialAngle("leftCrotchAngle"));
+        }
+        else if(getSpecialAngle("leftCrotchAngle")>(50+5*level)){
+            status[14] = 2;
+            System.out.println("leftCrotchAngle : "+getSpecialAngle("leftCrotchAngle"));
+        }
+        else{
+            status[14] = 0;
+            System.out.println("leftCrotchAngle : "+getSpecialAngle("leftCrotchAngle"));
+        }
+        // standard 5 : leftFoot facing forward
+        double leftAnkleHeelFootIndexAngle = getAngle(leftAnkle, leftHeel, leftFootIndex);
+        System.out.println("leftAnkleHeelFootIndexAngle : "+leftAnkleHeelFootIndexAngle);
+        // standard 6 : rightKnee don't exceed rightToe
+        if(rightKneeToeAngle>(90+5*level)){
+            status[11] = 2;
+        }
+        else{
+            status[11] = 0;
+        }
+        // standard 7 : rightShoulder == 180°
         if(rightShoulderAngle < (180-5*level)){
-            status[8] = 3;
+            status[8] = 1;
         }
         else{
             status[8] = 0;
         }
-        // standard 4 : leftShoulderAngle==180°
+        // standard 8 : leftShoulderAngle == 180°
         if(leftShoulderAngle < (180-5*level)){
-            status[9] = 3;
+            status[9] = 1;
         }
         else{
             status[9] = 0;
         }
-        // standard 5 : whether body vertical is
-        if(bodyVertical){
-            status[10] = 0;
+        // standard 9 : rightElbow == 180°
+        if(rightElbowAngle < (180-5*level)){
+            status[4] = 1;
         }
-        else {
+        else{
+            status[4] = 0;
+        }
+        // standard 10 : leftElbowAngle == 180°
+        if(leftElbowAngle < (180-5*level)){
+            status[5] = 1;
+        }
+        else{
+            status[5] = 0;
+        }
+        // standard 11 : bodyVertical
+        if(bodyVertical < (180-5*level) || bodyVertical > (180+5*level)){
             status[10] = 1;
+        }
+        else{
+            status[10] = 0;
         }
     }
     static void plank(){
@@ -267,12 +372,12 @@ public class PoseCalculate{
             status[3] = 0;
         }
         // standard 4 : whether body vertical is
-        if(bodyVertical){
-            status[10] = 0;
-        }
-        else {
-            status[10] = 1;
-        }
+//        if(bodyVertical){
+//            status[10] = 0;
+//        }
+//        else {
+//            status[10] = 1;
+//        }
     }
     static void goddess(){
         // standard 1 : rightKneeAngle==90°
@@ -330,12 +435,12 @@ public class PoseCalculate{
             status[5] = 0;
         }
         // standard 7 : whether body vertical is
-        if(bodyVertical){
-            status[10] = 0;
-        }
-        else {
-            status[10] = 1;
-        }
+//        if(bodyVertical){
+//            status[10] = 0;
+//        }
+//        else {
+//            status[10] = 1;
+//        }
     }
     static void chair(){
         // standard 1 : rightElbowAngle==90° and leftElbowAngle==90°
@@ -682,13 +787,13 @@ public class PoseCalculate{
             status[3] = 0;
         }
 
-        // standard 9 : whether body vertical is
-        if(bodyVertical){
-            status[10] = 0;
-        }
-        else {
-            status[10] = 1;
-        }
+//        // standard 9 : whether body vertical is
+//        if(bodyVertical){
+//            status[10] = 0;
+//        }
+//        else {
+//            status[10] = 1;
+//        }
     }
     static void tree(){
         // standard 1 : rightKneeAngle==180°
@@ -699,12 +804,12 @@ public class PoseCalculate{
             status[2] = 0;
         }
         // standard 2 : whether body vertical is
-        if(bodyVertical){
-            status[10] = 0;
-        }
-        else {
-            status[10] = 1;
-        }
+//        if(bodyVertical){
+//            status[10] = 0;
+//        }
+//        else {
+//            status[10] = 1;
+//        }
     }
 
     public int[] getAngleStatus(){
