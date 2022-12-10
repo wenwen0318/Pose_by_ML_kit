@@ -242,7 +242,7 @@ public class LivePreviewActivity extends AppCompatActivity {
                         wrongStr += "左腳張開往下坐";
                         break;
                     }
-                    else{
+                    else if(wrongHint[1] == 2){
                         wrongStr += "左腳張太開";
                         break;
                     }

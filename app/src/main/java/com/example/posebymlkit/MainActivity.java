@@ -75,10 +75,10 @@ public class MainActivity extends AppCompatActivity {
                 "180","180",
                 null,null,
                 "180","180",
-                "0",
+                "180",
                 "90",null,
                 "180",
-                "45"));
+                "55"));
 
     }
 
