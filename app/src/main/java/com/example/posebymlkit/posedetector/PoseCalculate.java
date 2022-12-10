@@ -23,38 +23,6 @@ public class PoseCalculate{
     static int level;
     static Boolean getPose;
     static int[] status = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}; //各角度狀態 0:正確 1:小於 2:大於
-    static double rightHipAngle;
-    static double leftHipAngle;
-    static double rightKneeAngle;
-    static double leftKneeAngle;
-    static double rightElbowAngle;
-    static double leftElbowAngle;
-    static double rightArmpitAngle;
-    static double leftArmpitAngle;
-    static double rightShoulderAngle;
-    static double leftShoulderAngle;
-    static double rightChestAngle;
-    static double leftChestAngle;
-    static double rightKneeToeAngle;
-    static double leftKneeToeAngle;
-    static double bodyVertical;
-    static PoseLandmark leftShoulder;
-    static PoseLandmark rightShoulder;
-    static PoseLandmark leftElbow;
-    static PoseLandmark rightElbow;
-    static PoseLandmark leftWrist;
-    static PoseLandmark rightWrist;
-    static PoseLandmark leftHip;
-    static PoseLandmark rightHip;
-    static PoseLandmark leftKnee;
-    static PoseLandmark rightKnee;
-    static PoseLandmark leftAnkle;
-    static PoseLandmark rightAnkle;
-    static PoseLandmark leftHeel;
-    static PoseLandmark rightHeel;
-    static PoseLandmark leftFootIndex;
-    static PoseLandmark rightFootIndex;
-
     static double[] angleArray = new double[15];
     static ArrayList<String> poseStandard;
 
@@ -78,7 +46,6 @@ public class PoseCalculate{
         if (getPose){
             check();
         }
-
     }
 
     public void angle(){
@@ -100,176 +67,84 @@ public class PoseCalculate{
         PoseLandmark rightEar = pose.getPoseLandmark(PoseLandmark.RIGHT_EAR);
         PoseLandmark leftMouth = pose.getPoseLandmark(PoseLandmark.LEFT_MOUTH);
         PoseLandmark rightMouth = pose.getPoseLandmark(PoseLandmark.RIGHT_MOUTH);
-
-        leftShoulder = pose.getPoseLandmark(PoseLandmark.LEFT_SHOULDER);
-        rightShoulder = pose.getPoseLandmark(PoseLandmark.RIGHT_SHOULDER);
-        leftElbow = pose.getPoseLandmark(PoseLandmark.LEFT_ELBOW);
-        rightElbow = pose.getPoseLandmark(PoseLandmark.RIGHT_ELBOW);
-        leftWrist = pose.getPoseLandmark(PoseLandmark.LEFT_WRIST);
-        rightWrist = pose.getPoseLandmark(PoseLandmark.RIGHT_WRIST);
-        leftHip = pose.getPoseLandmark(PoseLandmark.LEFT_HIP);
-        rightHip = pose.getPoseLandmark(PoseLandmark.RIGHT_HIP);
-        leftKnee = pose.getPoseLandmark(PoseLandmark.LEFT_KNEE);
-        rightKnee = pose.getPoseLandmark(PoseLandmark.RIGHT_KNEE);
-        leftAnkle = pose.getPoseLandmark(PoseLandmark.LEFT_ANKLE);
-        rightAnkle = pose.getPoseLandmark(PoseLandmark.RIGHT_ANKLE);
-
         PoseLandmark leftPinky = pose.getPoseLandmark(PoseLandmark.LEFT_PINKY);
         PoseLandmark rightPinky = pose.getPoseLandmark(PoseLandmark.RIGHT_PINKY);
         PoseLandmark leftIndex = pose.getPoseLandmark(PoseLandmark.LEFT_INDEX);
         PoseLandmark rightIndex = pose.getPoseLandmark(PoseLandmark.RIGHT_INDEX);
         PoseLandmark leftThumb = pose.getPoseLandmark(PoseLandmark.LEFT_THUMB);
         PoseLandmark rightThumb = pose.getPoseLandmark(PoseLandmark.RIGHT_THUMB);
-        leftHeel = pose.getPoseLandmark(PoseLandmark.LEFT_HEEL);
-        rightHeel = pose.getPoseLandmark(PoseLandmark.RIGHT_HEEL);
-        leftFootIndex = pose.getPoseLandmark(PoseLandmark.LEFT_FOOT_INDEX);
-        rightFootIndex = pose.getPoseLandmark(PoseLandmark.RIGHT_FOOT_INDEX);
 
-        // output[0] ~ output[9]
+        double rShoulderX = pose.getPoseLandmark(PoseLandmark.RIGHT_SHOULDER).getPosition().x;
+        double rShoulderY = pose.getPoseLandmark(PoseLandmark.RIGHT_SHOULDER).getPosition().y;
+        double lShoulderX = pose.getPoseLandmark(PoseLandmark.LEFT_SHOULDER).getPosition().x;
+        double lShoulderY = pose.getPoseLandmark(PoseLandmark.LEFT_SHOULDER).getPosition().y;
+        double rElbowX = pose.getPoseLandmark(PoseLandmark.RIGHT_ELBOW).getPosition().x;
+        double rElbowY = pose.getPoseLandmark(PoseLandmark.RIGHT_ELBOW).getPosition().y;
+        double lElbowX = pose.getPoseLandmark(PoseLandmark.LEFT_ELBOW).getPosition().x;
+        double lElbowY = pose.getPoseLandmark(PoseLandmark.LEFT_ELBOW).getPosition().y;
+        double rWristX = pose.getPoseLandmark(PoseLandmark.RIGHT_WRIST).getPosition().x;
+        double rWristY = pose.getPoseLandmark(PoseLandmark.RIGHT_WRIST).getPosition().y;
+        double lWristX = pose.getPoseLandmark(PoseLandmark.LEFT_WRIST).getPosition().x;
+        double lWristY = pose.getPoseLandmark(PoseLandmark.LEFT_WRIST).getPosition().y;
+        double rHipX = pose.getPoseLandmark(PoseLandmark.RIGHT_HIP).getPosition().x;
+        double rHipY = pose.getPoseLandmark(PoseLandmark.RIGHT_HIP).getPosition().y;
+        double lHipX = pose.getPoseLandmark(PoseLandmark.LEFT_HIP).getPosition().x;
+        double lHipY = pose.getPoseLandmark(PoseLandmark.LEFT_HIP).getPosition().y;
+        double rKneeX = pose.getPoseLandmark(PoseLandmark.RIGHT_KNEE).getPosition().x;
+        double rKneeY = pose.getPoseLandmark(PoseLandmark.RIGHT_KNEE).getPosition().y;
+        double lKneeX = pose.getPoseLandmark(PoseLandmark.LEFT_KNEE).getPosition().x;
+        double lKneeY = pose.getPoseLandmark(PoseLandmark.LEFT_KNEE).getPosition().y;
+        double rAnkleX = pose.getPoseLandmark(PoseLandmark.RIGHT_ANKLE).getPosition().x;
+        double rAnkleY = pose.getPoseLandmark(PoseLandmark.RIGHT_ANKLE).getPosition().y;
+        double lAnkleX = pose.getPoseLandmark(PoseLandmark.LEFT_ANKLE).getPosition().x;
+        double lAnkleY = pose.getPoseLandmark(PoseLandmark.LEFT_ANKLE).getPosition().y;
+        double rHeelX = pose.getPoseLandmark(PoseLandmark.RIGHT_HEEL).getPosition().x;
+        double rHeelY = pose.getPoseLandmark(PoseLandmark.RIGHT_HEEL).getPosition().y;
+        double lHeelX = pose.getPoseLandmark(PoseLandmark.LEFT_HEEL).getPosition().x;
+        double lHeelY = pose.getPoseLandmark(PoseLandmark.LEFT_HEEL).getPosition().y;
+        double rFootIndexX = pose.getPoseLandmark(PoseLandmark.RIGHT_FOOT_INDEX).getPosition().x;
+        double rFootIndexY = pose.getPoseLandmark(PoseLandmark.RIGHT_FOOT_INDEX).getPosition().y;
+        double lFootIndexX = pose.getPoseLandmark(PoseLandmark.LEFT_FOOT_INDEX).getPosition().x;
+        double lFootIndexY = pose.getPoseLandmark(PoseLandmark.LEFT_FOOT_INDEX).getPosition().y;
 
-        angleArray[0] = getAngle(rightShoulder,rightHip,rightKnee); //rightHip
-        angleArray[1] = getAngle(leftShoulder,leftHip,leftKnee);    //leftHip
-        angleArray[2] = getAngle(rightHip,rightKnee,rightAnkle);    //rightKnee
-        angleArray[3] = getAngle(leftHip,leftKnee, leftAnkle);      //leftKnee
-        angleArray[4] = getAngle(rightShoulder,rightElbow,rightWrist);  //rightArmpit
-        angleArray[5] = getAngle(leftShoulder,leftElbow,leftWrist);     //leftArmpit
-        angleArray[6] = getAngle(rightElbow,rightShoulder,rightHip);    //rightKnee
-        angleArray[7] = getAngle(leftElbow,leftShoulder,leftHip);       //leftKnee
-        angleArray[8] = getAngle(rightElbow,rightShoulder,leftShoulder);    //rightHip
-        angleArray[9] = getAngle(leftElbow,leftShoulder,rightShoulder);     //leftHip
-        angleArray[10] = 0; //rightKnee
-        angleArray[11] = isKneeOverToe("right");   //rightKneeOverToe
-        angleArray[12] = isKneeOverToe("left");    //leftKneeOverToe
-        angleArray[13] = 0;
-        angleArray[14] = 0;
+        angleArray[0] = getAngle(rShoulderX, rShoulderY, rHipX, rHipY, rKneeX, rKneeY); //rightHip
+        angleArray[1] = getAngle(lShoulderX, lShoulderY, lHipX, lHipY, lKneeX, lKneeY); //leftHip
+        angleArray[2] = getAngle(rHipX, rHipY, rKneeX, rKneeY, rAnkleX, rAnkleY); //rightKnee
+        angleArray[3] = getAngle(lHipX, lHipY, lKneeX, lKneeY, lAnkleX, lAnkleY); //leftKnee
+        angleArray[4] = getAngle(rShoulderX, rShoulderY, rElbowX, rElbowY, rWristX, rWristY); //rightArmpit
+        angleArray[5] = getAngle(lShoulderX, lShoulderY, lElbowX, lElbowY, lWristX, lWristY); //leftArmpit
+        angleArray[6] = getAngle(rElbowX, rElbowY, rShoulderX, rShoulderY, rHipX, rHipY); //rightKnee
+        angleArray[7] = getAngle(lElbowX, lElbowY, lShoulderX, lShoulderY, lHipX, lHipY); //leftKnee
+        angleArray[8] = getAngle(rElbowX, rElbowY, rShoulderX, rElbowY, lShoulderX, lShoulderY); //rightHip
+        angleArray[9] = getAngle(lElbowX, lElbowY, lShoulderX, lShoulderY, rShoulderX, rShoulderY); //leftHip
+        // bodyVertical (clavicleToGroundAngle)
+        angleArray[10] = getAngle((rShoulderX+lShoulderX)/2, (rShoulderY+lShoulderY)/2, (rShoulderX+lShoulderX)/2, rFootIndexY, rFootIndexX, rFootIndexY)
+            + getAngle((rShoulderX+lShoulderX)/2, (rShoulderY+lShoulderY)/2, (rShoulderX+lShoulderX)/2, rFootIndexY, lFootIndexX, lFootIndexY);
+        angleArray[11] = isKneeOverToe(getAngle(rKneeX, rKneeY, rFootIndexX, rFootIndexY, rHeelX, rHeelY));   //rightKneeOverToe
+        angleArray[12] = isKneeOverToe(getAngle(lKneeX, lKneeY, lFootIndexX, lFootIndexY, lHeelX, lHeelY));    //leftKneeOverToe
+        // thighHorizontal
+        angleArray[13] = getAngle(rHipX, rHipY, rKneeX, rKneeY, rKneeX, rFootIndexY) + getAngle(rKneeX, rKneeY, rKneeX, rFootIndexY, lFootIndexX, lFootIndexY);
+        angleArray[14] = getAngle(lHipX, rFootIndexY, lHipX, lHipY, lKneeX, lKneeY); // leftCrotch
 
-
-        rightHipAngle = getAngle(rightShoulder,rightHip,rightKnee);
-        leftHipAngle = getAngle(leftShoulder,leftHip,leftKnee);
-        rightKneeAngle = getAngle(rightHip,rightKnee,rightAnkle);
-        leftKneeAngle = getAngle(leftHip,leftKnee, leftAnkle);
-        rightElbowAngle = getAngle(rightShoulder,rightElbow,rightWrist);
-        leftElbowAngle = getAngle(leftShoulder,leftElbow,leftWrist);
-        rightArmpitAngle = getAngle(rightElbow,rightShoulder,rightHip);
-        leftArmpitAngle = getAngle(leftElbow,leftShoulder,leftHip);
-        rightShoulderAngle = getAngle(rightElbow,rightShoulder,leftShoulder);
-        leftShoulderAngle = getAngle(leftElbow,leftShoulder,rightShoulder);
-        // output[10]
-        bodyVertical = bodyVertical();
-        // output[11] ~ [12]
-        rightKneeToeAngle = getAngle(rightKnee, rightFootIndex, rightHeel);
-        leftKneeToeAngle = getAngle(leftKnee, leftFootIndex, leftHeel);
-        // others
-        rightChestAngle = getAngle(leftShoulder,rightShoulder,rightHip);
-        leftChestAngle = getAngle(rightShoulder,leftShoulder,leftHip);
     }
-    static double getAngle(PoseLandmark firstPoint, PoseLandmark midPoint, PoseLandmark lastPoint) {
+    static double getAngle(double firstPointX, double firstPointY, double midPointX, double midPointY, double lastPointX, double lastPointY) {
         double result =
                 Math.toDegrees(
-                        atan2(lastPoint.getPosition().y - midPoint.getPosition().y,
-                                lastPoint.getPosition().x - midPoint.getPosition().x)
-                                - atan2(firstPoint.getPosition().y - midPoint.getPosition().y,
-                                firstPoint.getPosition().x - midPoint.getPosition().x));
+                        atan2(lastPointY - midPointY, lastPointX - midPointX) -
+                                atan2(firstPointY - midPointY, firstPointX - midPointX)
+                );
         result = Math.abs(result); // Angle should never be negative
         if (result > 180) {
             result = (360.0 - result); // Always get the acute representation of the angle
         }
         return result;
     }
-    // 0 ist genau, 1 ist falsch
-    static double bodyVertical(){
-        // 鎖骨
-        double clavicleMidX = (rightShoulder.getPosition().x + leftShoulder.getPosition().x)/2;
-        double clavicleMidY = (rightShoulder.getPosition().y + leftShoulder.getPosition().y)/2;
-        double clavicleToGroundX = clavicleMidX;
-        double rightClavicleToGroundY = rightFootIndex.getPosition().y;
-        double leftClavicleToGroundY = rightFootIndex.getPosition().y;
-        double rightClavicleToGroundAngle =
-                Math.toDegrees(
-                        atan2(clavicleMidY - rightClavicleToGroundY,
-                                clavicleMidX - clavicleToGroundX)
-                                - atan2(rightFootIndex.getPosition().y - rightClavicleToGroundY,
-                                rightFootIndex.getPosition().x - clavicleToGroundX));
-        rightClavicleToGroundAngle = Math.abs(rightClavicleToGroundAngle);
-        if (rightClavicleToGroundAngle > 180) {
-            rightClavicleToGroundAngle = (360.0 - rightClavicleToGroundAngle);
-        }
-        double leftClavicleToGroundAngle =
-                Math.toDegrees(
-                        atan2(clavicleMidY - leftClavicleToGroundY,
-                                clavicleMidX - clavicleToGroundX)
-                                - atan2(leftFootIndex.getPosition().y - leftClavicleToGroundY ,
-                                leftFootIndex.getPosition().x - clavicleToGroundX));
-        leftClavicleToGroundAngle = Math.abs(leftClavicleToGroundAngle);
-        if (leftClavicleToGroundAngle > 180) {
-            leftClavicleToGroundAngle = (360.0 - leftClavicleToGroundAngle);
-        }
-        double clavicleToGroundAngle = rightClavicleToGroundAngle + leftClavicleToGroundAngle;
 
-        System.out.println("clavicleToGroundAngle : "+clavicleToGroundAngle);
-        return clavicleToGroundAngle;
-    }
-    static double isKneeOverToe(String direction){
-        double angle;
-        if (direction.equals("right")){
-            angle = getAngle(rightKnee, rightFootIndex, rightHeel);
-        }
-        else angle = getAngle(leftKnee, leftFootIndex, leftHeel);
+    static double isKneeOverToe(double angle){
         if (angle <= 90){
             return 90;
         }
         else return 180;
-    }
-    static double getSpecialAngle(String angle){
-        if(angle.equals("rightHipKneeGroundAngle")) {
-            double rightKneeToGroundX = rightKnee.getPosition().x;
-            double rightKneeToGroundY = rightFootIndex.getPosition().y;
-            double rightHipKneeGroundAngle =
-                    Math.toDegrees(
-                            atan2(rightHip.getPosition().y - rightKnee.getPosition().y,
-                                    rightHip.getPosition().x - rightKnee.getPosition().x)
-                                    - atan2(rightKneeToGroundY - rightKnee.getPosition().y,
-                                    rightKneeToGroundX - rightKnee.getPosition().x)
-                    );
-            rightHipKneeGroundAngle = Math.abs(rightHipKneeGroundAngle);
-            if (rightHipKneeGroundAngle > 180) {
-                rightHipKneeGroundAngle = (360.0 - rightHipKneeGroundAngle);
-            }
-            return rightHipKneeGroundAngle;
-        }
-        else if(angle.equals("rightKneeGroundAngle")){
-            double rightKneeToGroundX = rightKnee.getPosition().x;
-            double rightKneeToGroundY = rightFootIndex.getPosition().y;
-            double rightKneeGroundAngle =
-                    Math.toDegrees(
-                            atan2(rightKnee.getPosition().y - rightKneeToGroundY,
-                                    rightKnee.getPosition().x - rightKneeToGroundX)
-                                    - atan2(leftFootIndex.getPosition().y - rightKneeToGroundY,
-                                    leftFootIndex.getPosition().x - rightKneeToGroundX)
-                    );
-            rightKneeGroundAngle = Math.abs(rightKneeGroundAngle);
-            if (rightKneeGroundAngle > 180) {
-                rightKneeGroundAngle = (360.0 - rightKneeGroundAngle);
-            }
-            return rightKneeGroundAngle;
-        }
-        else if(angle.equals("leftCrotchAngle")){
-            double leftHipToGroundX = leftHip.getPosition().x;
-            double leftHipToGroundY = rightFootIndex.getPosition().y;
-            double leftCrotchAngle =
-                    Math.toDegrees(
-                            atan2(leftHipToGroundY - leftHip.getPosition().y,
-                                    leftHipToGroundX - leftHip.getPosition().x)
-                                    - atan2(leftKnee.getPosition().y - leftHip.getPosition().y,
-                                    leftKnee.getPosition().x - leftHip.getPosition().x)
-                    );
-            leftCrotchAngle = Math.abs(leftCrotchAngle);
-            if (leftCrotchAngle > 180) {
-                leftCrotchAngle = (360.0 - leftCrotchAngle);
-            }
-            return leftCrotchAngle;
-        }
-        return 0;
     }
 
     static void check() {
