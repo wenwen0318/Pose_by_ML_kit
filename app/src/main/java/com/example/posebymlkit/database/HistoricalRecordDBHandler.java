@@ -100,7 +100,7 @@ public class HistoricalRecordDBHandler extends SQLiteOpenHelper {
     }
 
     public List<HistoricalRecord> getAllHistoricalRecord() {
-        List<HistoricalRecord> historicalRecords = new ArrayList<HistoricalRecord>();
+        List<HistoricalRecord> historicalRecords = new ArrayList<>();
         // Select All Query
         String selectQuery = "SELECT  * FROM " + TABLE_HISTORICAL_RECORD;
 
@@ -137,6 +137,81 @@ public class HistoricalRecordDBHandler extends SQLiteOpenHelper {
 
         // return contact list
         return historicalRecords;
+    }
+
+    public List<HistoricalRecord> getHistoricalRecordByPoseName(String poseName) {
+        List<HistoricalRecord> historicalRecords = new ArrayList<>();
+        // Select All Query
+        String selectQuery =
+                " SELECT  * FROM " + TABLE_HISTORICAL_RECORD +
+                " WHERE " + KEY_POSE_NAME + " = '" + poseName +
+                "' ORDER BY "+ KEY_DATE +
+                " DESC LIMIT 8";
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                HistoricalRecord historicalRecord = new HistoricalRecord();
+                historicalRecord.setPoseName(cursor.getString(0));
+                historicalRecord.setDate(cursor.getString(1));
+                historicalRecord.setLevel(Integer.parseInt(cursor.getString(2)));
+                historicalRecord.setAllComplete(Integer.parseInt(cursor.getString(3)));
+                historicalRecord.setRHip(cursor.getString(4));
+                historicalRecord.setLHip(cursor.getString(5));
+                historicalRecord.setRKnee(cursor.getString(6));
+                historicalRecord.setLKnee(cursor.getString(7));
+                historicalRecord.setRElbow(cursor.getString(8));
+                historicalRecord.setLElbow(cursor.getString(9));
+                historicalRecord.setRArmpit(cursor.getString(10));
+                historicalRecord.setLArmpit(cursor.getString(11));
+                historicalRecord.setRShoulder(cursor.getString(12));
+                historicalRecord.setLShoulder(cursor.getString(13));
+                historicalRecord.setBodyVertical(cursor.getString(14));
+                historicalRecord.setRKneeToe(cursor.getString(15));
+                historicalRecord.setLKneeToe(cursor.getString(16));
+                historicalRecord.setThighHorizontal(cursor.getString(17));
+                historicalRecord.setCrotch(cursor.getString(18));
+                // Adding contact to list
+                historicalRecords.add(historicalRecord);
+            } while (cursor.moveToNext());
+        }
+
+        // return contact list
+        return historicalRecords;
+    }
+
+    public HistoricalRecord getNewestHistoricalRecord() {
+        HistoricalRecord historicalRecord = new HistoricalRecord();
+        // Select All Query
+        String selectQuery = "SELECT  * FROM " + TABLE_HISTORICAL_RECORD + " ORDER BY " + KEY_DATE + " DESC LIMIT 1";
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        historicalRecord.setPoseName(cursor.getString(0));
+        historicalRecord.setDate(cursor.getString(1));
+        historicalRecord.setLevel(Integer.parseInt(cursor.getString(2)));
+        historicalRecord.setAllComplete(Integer.parseInt(cursor.getString(3)));
+        historicalRecord.setRHip(cursor.getString(4));
+        historicalRecord.setLHip(cursor.getString(5));
+        historicalRecord.setRKnee(cursor.getString(6));
+        historicalRecord.setLKnee(cursor.getString(7));
+        historicalRecord.setRElbow(cursor.getString(8));
+        historicalRecord.setLElbow(cursor.getString(9));
+        historicalRecord.setRArmpit(cursor.getString(10));
+        historicalRecord.setLArmpit(cursor.getString(11));
+        historicalRecord.setRShoulder(cursor.getString(12));
+        historicalRecord.setLShoulder(cursor.getString(13));
+        historicalRecord.setBodyVertical(cursor.getString(14));
+        historicalRecord.setRKneeToe(cursor.getString(15));
+        historicalRecord.setLKneeToe(cursor.getString(16));
+        historicalRecord.setThighHorizontal(cursor.getString(17));
+        historicalRecord.setCrotch(cursor.getString(18));
+
+        return historicalRecord;
     }
 
 //    public void deleteHistoricalRecord(HistoricalRecord historicalRecord) {

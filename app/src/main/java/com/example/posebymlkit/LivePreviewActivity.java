@@ -13,6 +13,8 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 
+import com.example.posebymlkit.database.HistoricalRecord;
+import com.example.posebymlkit.database.HistoricalRecordDBHandler;
 import com.google.android.gms.common.annotation.KeepName;
 import com.example.posebymlkit.preference.PreferenceUtils;
 
@@ -26,6 +28,8 @@ import com.example.posebymlkit.posedetector.PoseDetectorProcessor;
 
 import com.google.mlkit.vision.pose.PoseDetectorOptionsBase;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Locale;
 
 /** Live preview demo for ML Kit APIs. */
@@ -47,6 +51,8 @@ public class LivePreviewActivity extends AppCompatActivity {
     private Handler handler = new Handler();
     PoseDetectorProcessor pdp;
     ObjectDetectorProcessor odp;
+
+    HistoricalRecordDBHandler hr = new HistoricalRecordDBHandler(this);
 
     Intent intent = new Intent();
     Bundle bundle = new Bundle();
@@ -302,6 +308,24 @@ public class LivePreviewActivity extends AppCompatActivity {
             handler.postDelayed(this, time);
             overallCompleteness = pdp.getOverallCompleteness();
             jointCompleteness = pdp.getJointsCompleteness();
+
+            Calendar calendar= Calendar.getInstance();
+            SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+            System.out.println(dateFormat.format(calendar.getTime()));
+            hr.addHistoricalRecord(new HistoricalRecord(
+                    cardView,
+                    dateFormat.format(calendar.getTime()),
+                    userLevel,
+                    overallCompleteness,
+                    Integer.toString(jointCompleteness[0]),Integer.toString(jointCompleteness[1]),
+                    Integer.toString(jointCompleteness[2]),Integer.toString(jointCompleteness[3]),
+                    Integer.toString(jointCompleteness[4]),Integer.toString(jointCompleteness[5]),
+                    Integer.toString(jointCompleteness[6]),Integer.toString(jointCompleteness[7]),
+                    Integer.toString(jointCompleteness[8]),Integer.toString(jointCompleteness[9]),
+                    Integer.toString(jointCompleteness[10]),
+                    Integer.toString(jointCompleteness[11]),Integer.toString(jointCompleteness[12]),
+                    Integer.toString(jointCompleteness[13]),
+                    Integer.toString(jointCompleteness[14])));
             System.out.print("jointCompleteness : ");
             for(int num : jointCompleteness){
                 System.out.print(" "+num+"%");

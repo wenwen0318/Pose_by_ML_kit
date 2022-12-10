@@ -80,43 +80,6 @@ public class MainActivity extends AppCompatActivity {
                 "180",
                 "45"));
 
-        HistoricalRecordDBHandler hr = new HistoricalRecordDBHandler(this);
-
-        // Inserting Contacts
-        Log.d("Insert: ", "Inserting ..");
-
-//        Calendar calendar= Calendar.getInstance();
-//        SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-//        System.out.println(dateFormat.format(calendar.getTime()));
-//
-//        hr.addHistoricalRecord(new HistoricalRecord(
-//                "Warrior2",
-//                dateFormat.format(calendar.getTime()),
-//                2,
-//                98,
-//                "100","100",
-//                "100","100",
-//                "100","100",
-//                "100","100",
-//                "100","100",
-//                "100",
-//                "100","100",
-//                "95",
-//                "100"));
-//
-//        // Reading all contacts
-//        Log.d("Reading: ", "Reading all contacts..");
-//
-//        List<HistoricalRecord> historicalRecord = hr.getAllHistoricalRecord();
-//
-//        for (HistoricalRecord h : historicalRecord) {
-//            String log = "Id: " + h.getDate() + " ,Name: " + h.getPoseName() + " ,Phone: " +
-//                    h.getBodyVertical();
-//            // Writing Contacts to log
-//            Log.d("Name: ", log);
-//        }
-
-
     }
 
     private final BottomNavigationView.OnItemSelectedListener navListener = item -> {
