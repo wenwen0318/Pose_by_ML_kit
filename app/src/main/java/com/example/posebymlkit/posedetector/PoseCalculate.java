@@ -22,8 +22,8 @@ public class PoseCalculate{
     private final int userLevel;
     static int level;
     static Boolean getPose;
-    static int[] status = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}; //各角度狀態 0:正確 1:小於 2:大於
-    static double[] angleArray = new double[15];
+    static int[] status = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}; //各角度狀態 0:正確 1:小於 2:大於
+    static double[] angleArray = new double[16];
     static ArrayList<String> poseStandard;
 
     PoseCalculate(
@@ -125,6 +125,8 @@ public class PoseCalculate{
         // thighHorizontal
         angleArray[13] = getAngle(rHipX, rHipY, rKneeX, rKneeY, rKneeX, rFootIndexY) + getAngle(rKneeX, rKneeY, rKneeX, rFootIndexY, lFootIndexX, lFootIndexY);
         angleArray[14] = getAngle(lHipX, rFootIndexY, lHipX, lHipY, lKneeX, lKneeY); // leftCrotch
+        // leftShoulderGround (shoulderGroundFootIndex)
+        angleArray[15] = getAngle(lShoulderX, lShoulderY, lWristX, lFootIndexY, lFootIndexX, lFootIndexY);
 
     }
     static double getAngle(double firstPointX, double firstPointY, double midPointX, double midPointY, double lastPointX, double lastPointY) {

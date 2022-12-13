@@ -62,8 +62,8 @@ public class LivePreviewActivity extends AppCompatActivity {
 
     String label = "";
     int[] wrongHint;
-    int overallCompleteness;
-    int[] jointCompleteness;
+    float overallCompleteness;
+    float[] jointCompleteness;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -211,6 +211,11 @@ public class LivePreviewActivity extends AppCompatActivity {
 
     private void startTTS() {
         String wrongStr = "";
+        System.out.print("wrongHint : ");
+        for (int i :wrongHint) {
+            System.out.print(i+" ");
+        }
+        System.out.println("");
         if(cardView.equals("Warrior2")){
             switch (wrongHint[0]){
                 case 3 :
@@ -248,6 +253,28 @@ public class LivePreviewActivity extends AppCompatActivity {
                     }
             }
         }
+        else if(cardView.equals("Plank")){
+            switch (wrongHint[0]){
+                case 1 :
+                    wrongStr += "臀部與身體呈直線";
+                    break;
+                case 3 :
+                    wrongStr += "膝蓋與身體呈直線";
+                    break;
+                case 5 :
+                    wrongStr += "手臂伸直";
+                    break;
+                case 15 :
+                    if(wrongHint[1] == 1){
+                        wrongStr += "手臂伸太出去，收一點";
+                        break;
+                    }
+                    else if(wrongHint[1] == 2){
+                        wrongStr += "手臂太進去，出來點";
+                        break;
+                    }
+            }
+        }
         tts.speak(wrongStr,TextToSpeech.QUEUE_ADD,null,null);
     }
 
@@ -266,7 +293,7 @@ public class LivePreviewActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 intent.setClass(LivePreviewActivity.this, PracticeResultActivity.class);
-                bundle.putIntArray("jointResult",jointCompleteness);
+                bundle.putString("poseName",cardView);
                 intent.putExtras(bundle);
                 startActivity(intent);
                 finish();
@@ -317,17 +344,18 @@ public class LivePreviewActivity extends AppCompatActivity {
                     dateFormat.format(calendar.getTime()),
                     userLevel,
                     overallCompleteness,
-                    Integer.toString(jointCompleteness[0]),Integer.toString(jointCompleteness[1]),
-                    Integer.toString(jointCompleteness[2]),Integer.toString(jointCompleteness[3]),
-                    Integer.toString(jointCompleteness[4]),Integer.toString(jointCompleteness[5]),
-                    Integer.toString(jointCompleteness[6]),Integer.toString(jointCompleteness[7]),
-                    Integer.toString(jointCompleteness[8]),Integer.toString(jointCompleteness[9]),
-                    Integer.toString(jointCompleteness[10]),
-                    Integer.toString(jointCompleteness[11]),Integer.toString(jointCompleteness[12]),
-                    Integer.toString(jointCompleteness[13]),
-                    Integer.toString(jointCompleteness[14])));
+                    Float.toString(jointCompleteness[0]),Float.toString(jointCompleteness[1]),
+                    Float.toString(jointCompleteness[2]),Float.toString(jointCompleteness[3]),
+                    Float.toString(jointCompleteness[4]),Float.toString(jointCompleteness[5]),
+                    Float.toString(jointCompleteness[6]),Float.toString(jointCompleteness[7]),
+                    Float.toString(jointCompleteness[8]),Float.toString(jointCompleteness[9]),
+                    Float.toString(jointCompleteness[10]),
+                    Float.toString(jointCompleteness[11]),Float.toString(jointCompleteness[12]),
+                    Float.toString(jointCompleteness[13]),
+                    Float.toString(jointCompleteness[14]),
+                    Float.toString(jointCompleteness[15])));
             System.out.print("jointCompleteness : ");
-            for(int num : jointCompleteness){
+            for(float num : jointCompleteness){
                 System.out.print(" "+num+"%");
             }
             System.out.println();

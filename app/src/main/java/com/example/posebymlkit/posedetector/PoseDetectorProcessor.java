@@ -35,12 +35,12 @@ public class PoseDetectorProcessor
     private PoseClassifierProcessor poseClassifierProcessor;
 
     int[] angleStatus;
-    double frameNum = 0;
+    float frameNum = 0;
     int[][] wrongFre =  {{0, 0, 0},{0, 0, 0},{0, 0, 0},{0, 0, 0},
             {0, 0, 0},{0, 0, 0},{0, 0, 0},{0, 0, 0},
             {0, 0, 0},{0, 0, 0},{0, 0},{0, 0, 0},
-            {0, 0, 0}, {0, 0, 0}, {0, 0, 0}};
-    double[] wrongSum = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+            {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}};
+    float[] wrongSum = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
     String classificationResult ;
     Boolean isCorrectPose;
 
@@ -207,12 +207,17 @@ public class PoseDetectorProcessor
                 }
             }
         }
+        // when completeness == 100%
+        if(wrongFre[wrongInf[0]][wrongInf[1]] == 0){
+            wrongInf[0] = 0;// wrongAngle
+            wrongInf[1] = 0;// wrongStatus
+        }
         return wrongInf;
     }
 
-    public int getOverallCompleteness(){
-        double allWrong = 0;
-        double standardNum = 0;
+    public float getOverallCompleteness(){
+        float allWrong = 0;
+        float standardNum = 0;
         switch (cardView){
             case "Warrior2": standardNum = 9;break;
             case "Plank": standardNum = 4;break;
@@ -225,24 +230,29 @@ public class PoseDetectorProcessor
             case "Star": standardNum = 7;break;
             case "Tree": standardNum = 2;break;
         }
-        for(double num : wrongSum){
+        for(float num : wrongSum){
             allWrong += num;
         }
         System.out.println("allWrong :　"+allWrong);
         System.out.println("myFrame : "+frameNum);
-        double unCompleteness = allWrong/(frameNum*standardNum);
-        unCompleteness = Math.round(unCompleteness*100.0)/100.0;
-        int completeness = 100 - (int)(unCompleteness*100);
+        float unCompleteness = allWrong/(frameNum*standardNum);
+        unCompleteness = (float)(Math.round(unCompleteness*10000.0)/10000.0);
+        float completeness = 100 - unCompleteness*100;
         return completeness;
     }
 
-    public int[] getJointsCompleteness(){
-        double[] unCompleteness = new double[15];
-        int[] completeness = new int[15];
+    public float[] getJointsCompleteness(){
+        float[] unCompleteness = new float[16];
+        float[] completeness = new float[16];
+        System.out.println("wrongSum : ");
+        for (float a:wrongSum) {
+            System.out.print(a+" ");
+        }
         for(int i=0;i<wrongSum.length;i++){
             unCompleteness[i] = (wrongSum[i]/frameNum);
-            unCompleteness[i] = Math.round(unCompleteness[i]*100.0)/100.0;
-            completeness[i] = 100 - (int)(unCompleteness[i]*100);
+            System.out.println("unCom : "+unCompleteness[i]);
+            unCompleteness[i] = (float)(Math.round(unCompleteness[i]*10000.0)/10000.0);
+            completeness[i] = 100 - unCompleteness[i]*100;
         }
         return completeness;
     }

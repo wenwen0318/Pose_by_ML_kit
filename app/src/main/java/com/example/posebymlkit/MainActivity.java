@@ -78,8 +78,19 @@ public class MainActivity extends AppCompatActivity {
                 "180",
                 "90",null,
                 "180",
-                "55"));
-
+                "55",
+                null));
+        db.addPoseStandard(new PoseStandard("Plank",
+                null,"180",
+                null,"180",
+                null,"180",
+                null,null,
+                null,null,
+                null,
+                null,null,
+                null,
+                null,
+                "90"));
     }
 
     private final BottomNavigationView.OnItemSelectedListener navListener = item -> {

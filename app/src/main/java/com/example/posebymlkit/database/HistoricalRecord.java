@@ -4,7 +4,7 @@ public class HistoricalRecord {
     String poseName;
     String date;
     int level;
-    int allComplete;
+    float allComplete;
     String RHip;
     String LHip;
     String RKnee;
@@ -20,13 +20,14 @@ public class HistoricalRecord {
     String LKneeToe;
     String thighHorizontal;
     String crotch;
+    String shoulderGround;
 
     public HistoricalRecord(){}
     public HistoricalRecord(
             String poseName,
             String date,
             int level,
-            int allComplete,
+            float allComplete,
             String RHip, String LHip,
             String RKnee, String LKnee,
             String RElbow, String LElbow,
@@ -35,7 +36,8 @@ public class HistoricalRecord {
             String bodyVertical,
             String RKneeToe, String LKneeToe,
             String thighHorizontal,
-            String crotch
+            String crotch,
+            String shoulderGround
     ){
         this.poseName = poseName;
         this.date = date;
@@ -56,6 +58,7 @@ public class HistoricalRecord {
         this.LKneeToe = LKneeToe;
         this.thighHorizontal = thighHorizontal;
         this.crotch = crotch;
+        this.shoulderGround = shoulderGround;
     }
 
     public String getPoseName(){ return this.poseName;}
@@ -67,8 +70,8 @@ public class HistoricalRecord {
     public int getLevel(){ return this.level;}
     public void setLevel(int level){ this.level = level;}
 
-    public int getAllComplete(){ return this.allComplete;}
-    public void setAllComplete(int allComplete){ this.allComplete = allComplete;}
+    public float getAllComplete(){ return this.allComplete;}
+    public void setAllComplete(float allComplete){ this.allComplete = allComplete;}
 
     public String getRHip(){ return this.RHip;}
     public void setRHip(String rHip){ this.RHip = rHip;}
@@ -114,4 +117,7 @@ public class HistoricalRecord {
 
     public String getCrotch(){ return this.crotch;}
     public void setCrotch(String crotch){ this.crotch = crotch;}
+
+    public String getShoulderGround(){ return this.shoulderGround;}
+    public void setShoulderGround(String crotch){ this.shoulderGround = shoulderGround;}
 }

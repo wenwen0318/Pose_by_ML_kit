@@ -19,6 +19,7 @@ public class PoseStandard {
     String LKneeToe;
     String thighHorizontal;
     String crotch;
+    String shoulderGround;
     public PoseStandard(){}
     public PoseStandard(
             String poseName,
@@ -30,7 +31,8 @@ public class PoseStandard {
             String bodyVertical,
             String RKneeToe, String LKneeToe,
             String thighHorizontal,
-            String crotch){
+            String crotch,
+            String shoulderGround){
         this.poseName = poseName;
         this.RHip = RHip;
         this.LHip = LHip;
@@ -47,6 +49,7 @@ public class PoseStandard {
         this.LKneeToe = LKneeToe;
         this.thighHorizontal = thighHorizontal;
         this.crotch = crotch;
+        this.shoulderGround = shoulderGround;
     }
 
     public ArrayList<String> getPoseStandard(){
@@ -66,6 +69,7 @@ public class PoseStandard {
         standard.add(this.LKneeToe);
         standard.add(this.thighHorizontal);
         standard.add(this.crotch);
+        standard.add(this.shoulderGround);
         return standard;
     }
 
@@ -116,4 +120,7 @@ public class PoseStandard {
 
     public String getCrotch(){ return this.crotch;}
     public void setCrotch(String crotch){ this.crotch = crotch;}
+
+    public String getShoulderGround(){ return this.shoulderGround;}
+    public void setShoulderGround(String crotch){ this.shoulderGround = shoulderGround;}
 }
