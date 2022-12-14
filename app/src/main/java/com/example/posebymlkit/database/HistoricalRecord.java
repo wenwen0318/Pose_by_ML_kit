@@ -61,6 +61,69 @@ public class HistoricalRecord {
         this.shoulderGround = shoulderGround;
     }
 
+    public String get(int i){
+        String item;
+        switch (i){
+            case 1:
+                item = this.poseName;
+                break;
+            case 2:
+                item = this.date;
+                break;
+            case 3:
+                item = Integer.toString(this.level);
+                break;
+            case 4:
+                item = Float.toString(this.allComplete);
+                break;
+            case 5:
+                item = this.RHip;
+                break;
+            case 6:
+                item = this.LHip;
+                break;
+            case 7:
+                item = this.RElbow;
+                break;
+            case 8:
+                item = this.LElbow;
+                break;
+            case 9:
+                item = this.RArmpit;
+                break;
+            case 10:
+                item = this.LArmpit;
+                break;
+            case 11:
+                item = this.RShoulder;
+                break;
+            case 12:
+                item = this.LShoulder;
+                break;
+            case 13:
+                item = this.bodyVertical;
+                break;
+            case 14:
+                item = this.RKneeToe;
+                break;
+            case 15:
+                item = this.LKneeToe;
+                break;
+            case 16:
+                item = this.thighHorizontal;
+                break;
+            case 17:
+                item = this.crotch;
+                break;
+            case 18:
+                item = this.shoulderGround;
+                break;
+            default:
+                item = "null";
+        }
+        return item;
+    }
+
     public String getPoseName(){ return this.poseName;}
     public void setPoseName(String poseName){ this.poseName = poseName;}
 

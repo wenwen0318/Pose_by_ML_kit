@@ -251,8 +251,10 @@ public class PoseDetectorProcessor
         for(int i=0;i<wrongSum.length;i++){
             unCompleteness[i] = (wrongSum[i]/frameNum);
             System.out.println("unCom : "+unCompleteness[i]);
-            unCompleteness[i] = (float)(Math.round(unCompleteness[i]*10000.0)/10000.0);
+            //unCompleteness[i] = (float)(Math.round(unCompleteness[i]*10000.0)/10000.0);
             completeness[i] = 100 - unCompleteness[i]*100;
+            completeness[i] = (float)(Math.round(completeness[i]*100.0)/100.0);
+            Log.d("joints:",i + " " + unCompleteness[i] + " " + completeness[i]);
         }
         return completeness;
     }

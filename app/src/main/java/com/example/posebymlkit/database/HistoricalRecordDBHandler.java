@@ -142,14 +142,14 @@ public class HistoricalRecordDBHandler extends SQLiteOpenHelper {
         return historicalRecords;
     }
 
-    public List<HistoricalRecord> getHistoricalRecordByPoseName(String poseName) {
+    public List<HistoricalRecord> getHistoricalRecordByPoseName(String poseName,int limit) {
         List<HistoricalRecord> historicalRecords = new ArrayList<>();
         // Select All Query
         String selectQuery =
                 " SELECT  * FROM " + TABLE_HISTORICAL_RECORD +
                 " WHERE " + KEY_POSE_NAME + " = '" + poseName +
                 "' ORDER BY "+ KEY_DATE +
-                " DESC LIMIT 8";
+                " DESC LIMIT " + limit;
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
