@@ -106,6 +106,7 @@ public class PoseCalculate{
         double rFootIndexY = pose.getPoseLandmark(PoseLandmark.RIGHT_FOOT_INDEX).getPosition().y;
         double lFootIndexX = pose.getPoseLandmark(PoseLandmark.LEFT_FOOT_INDEX).getPosition().x;
         double lFootIndexY = pose.getPoseLandmark(PoseLandmark.LEFT_FOOT_INDEX).getPosition().y;
+        double lIndexX = pose.getPoseLandmark(PoseLandmark.LEFT_INDEX).getPosition().x;
 
         angleArray[0] = getAngle(rShoulderX, rShoulderY, rHipX, rHipY, rKneeX, rKneeY); //rightHip
         angleArray[1] = getAngle(lShoulderX, lShoulderY, lHipX, lHipY, lKneeX, lKneeY); //leftHip
@@ -127,7 +128,8 @@ public class PoseCalculate{
         angleArray[14] = getAngle(lHipX, rFootIndexY, lHipX, lHipY, lKneeX, lKneeY); // leftCrotch
         // leftShoulderGround (shoulderGroundFootIndex)
         angleArray[15] = getAngle(lShoulderX, lShoulderY, lWristX, lFootIndexY, lFootIndexX, lFootIndexY);
-
+        System.out.println("thighHorizontal : "+angleArray[13]);
+        System.out.println("shoulderGround : "+angleArray[15]);
     }
     static double getAngle(double firstPointX, double firstPointY, double midPointX, double midPointY, double lastPointX, double lastPointY) {
         double result =

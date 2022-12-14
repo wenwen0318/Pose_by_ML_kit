@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 import androidx.annotation.NonNull;
 
+import com.example.posebymlkit.database.PoseStandardDBHandler;
 import com.example.posebymlkit.posedetector.classification.PoseClassifierProcessor;
 import com.google.android.gms.tasks.Task;
 import com.google.android.odml.image.MlImage;
@@ -14,6 +15,8 @@ import com.google.mlkit.vision.pose.Pose;
 import com.google.mlkit.vision.pose.PoseDetection;
 import com.google.mlkit.vision.pose.PoseDetector;
 import com.google.mlkit.vision.pose.PoseDetectorOptionsBase;
+
+import java.util.ArrayList;
 
 /** A processor to run pose detector. */
 public class PoseDetectorProcessor
@@ -43,6 +46,7 @@ public class PoseDetectorProcessor
     float[] wrongSum = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
     String classificationResult ;
     Boolean isCorrectPose;
+    static ArrayList<String> poseStandard;
 
     /** Internal class to hold Pose and classification results. */
 
@@ -187,6 +191,15 @@ public class PoseDetectorProcessor
     }
 
     public void clearWrongTem(){
+        System.out.print("wrongFre : ");
+        for(int i=0;i<wrongFre.length;i++){
+            System.out.print(" "+i+" : ");
+            for(int j=0;j<wrongFre[i].length;j++){
+                System.out.print(wrongFre[i][j]+",");
+            }
+            System.out.print("");
+        }
+        System.out.println("");
         for(int i=0;i<wrongFre.length;i++){
             for(int j=0;j<wrongFre[i].length;j++){
                 wrongFre[i][j] = 0;
@@ -236,24 +249,29 @@ public class PoseDetectorProcessor
         System.out.println("allWrong :　"+allWrong);
         System.out.println("myFrame : "+frameNum);
         float unCompleteness = allWrong/(frameNum*standardNum);
-        unCompleteness = (float)(Math.round(unCompleteness*10000.0)/10000.0);
         float completeness = 100 - unCompleteness*100;
+        completeness = (float)(Math.round(completeness*100.0)/100.0);
         return completeness;
     }
 
-    public float[] getJointsCompleteness(){
+    public String[] getJointsCompleteness(){
         float[] unCompleteness = new float[16];
         float[] completeness = new float[16];
-        System.out.println("wrongSum : ");
-        for (float a:wrongSum) {
-            System.out.print(a+" ");
-        }
+        String[] jointCompleteness = new String[16];
+        PoseStandardDBHandler db = new PoseStandardDBHandler(context);
+        poseStandard = db.getPoseStandard(cardView).getPoseStandard();
         for(int i=0;i<wrongSum.length;i++){
             unCompleteness[i] = (wrongSum[i]/frameNum);
-            System.out.println("unCom : "+unCompleteness[i]);
-            unCompleteness[i] = (float)(Math.round(unCompleteness[i]*10000.0)/10000.0);
             completeness[i] = 100 - unCompleteness[i]*100;
+            completeness[i] = (float)(Math.round(completeness[i]*100.0)/100.0);
+            if(poseStandard.get(i) == null || poseStandard.get(i).length() == 0){
+                jointCompleteness[i] = null;
+            }
+            else{
+                jointCompleteness[i] = Float.toString(completeness[i]);
+                jointCompleteness[i] = jointCompleteness[i]+"%";
+            }
         }
-        return completeness;
+        return jointCompleteness;
     }
 }

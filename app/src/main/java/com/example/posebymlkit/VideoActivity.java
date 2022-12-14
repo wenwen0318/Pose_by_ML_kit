@@ -87,7 +87,7 @@ public class VideoActivity extends AppCompatActivity {
             public void onClick(View v) {
                 int time = Integer.parseInt(timeSet.getText().toString());
                 time-=10;
-                if (time<30) time = 30;
+                if (time<10) time = 10;
                 timeSet.setText(String.valueOf(time));
             }
         });

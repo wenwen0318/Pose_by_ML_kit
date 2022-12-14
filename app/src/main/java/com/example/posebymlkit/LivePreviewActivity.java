@@ -63,7 +63,7 @@ public class LivePreviewActivity extends AppCompatActivity {
     String label = "";
     int[] wrongHint;
     float overallCompleteness;
-    float[] jointCompleteness;
+    String[] jointCompleteness;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -344,19 +344,19 @@ public class LivePreviewActivity extends AppCompatActivity {
                     dateFormat.format(calendar.getTime()),
                     userLevel,
                     overallCompleteness,
-                    Float.toString(jointCompleteness[0]),Float.toString(jointCompleteness[1]),
-                    Float.toString(jointCompleteness[2]),Float.toString(jointCompleteness[3]),
-                    Float.toString(jointCompleteness[4]),Float.toString(jointCompleteness[5]),
-                    Float.toString(jointCompleteness[6]),Float.toString(jointCompleteness[7]),
-                    Float.toString(jointCompleteness[8]),Float.toString(jointCompleteness[9]),
-                    Float.toString(jointCompleteness[10]),
-                    Float.toString(jointCompleteness[11]),Float.toString(jointCompleteness[12]),
-                    Float.toString(jointCompleteness[13]),
-                    Float.toString(jointCompleteness[14]),
-                    Float.toString(jointCompleteness[15])));
+                    jointCompleteness[0],jointCompleteness[1],
+                    jointCompleteness[2],jointCompleteness[3],
+                    jointCompleteness[4],jointCompleteness[5],
+                    jointCompleteness[6],jointCompleteness[7],
+                    jointCompleteness[8],jointCompleteness[9],
+                    jointCompleteness[10],
+                    jointCompleteness[11],jointCompleteness[12],
+                    jointCompleteness[13],
+                    jointCompleteness[14],
+                    jointCompleteness[15]));
             System.out.print("jointCompleteness : ");
-            for(float num : jointCompleteness){
-                System.out.print(" "+num+"%");
+            for(String num : jointCompleteness){
+                System.out.print(" "+num);
             }
             System.out.println();
             if (cameraSource != null) {

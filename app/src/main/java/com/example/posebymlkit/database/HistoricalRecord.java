@@ -119,5 +119,5 @@ public class HistoricalRecord {
     public void setCrotch(String crotch){ this.crotch = crotch;}
 
     public String getShoulderGround(){ return this.shoulderGround;}
-    public void setShoulderGround(String crotch){ this.shoulderGround = shoulderGround;}
+    public void setShoulderGround(String shoulderGround){ this.shoulderGround = shoulderGround;}
 }
