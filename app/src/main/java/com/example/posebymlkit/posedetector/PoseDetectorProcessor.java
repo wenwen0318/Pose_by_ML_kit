@@ -191,15 +191,6 @@ public class PoseDetectorProcessor
     }
 
     public void clearWrongTem(){
-        System.out.print("wrongFre : ");
-        for(int i=0;i<wrongFre.length;i++){
-            System.out.print(" "+i+" : ");
-            for(int j=0;j<wrongFre[i].length;j++){
-                System.out.print(wrongFre[i][j]+",");
-            }
-            System.out.print("");
-        }
-        System.out.println("");
         for(int i=0;i<wrongFre.length;i++){
             for(int j=0;j<wrongFre[i].length;j++){
                 wrongFre[i][j] = 0;

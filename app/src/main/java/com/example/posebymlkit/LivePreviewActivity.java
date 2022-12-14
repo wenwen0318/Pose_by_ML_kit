@@ -336,9 +336,13 @@ public class LivePreviewActivity extends AppCompatActivity {
             overallCompleteness = pdp.getOverallCompleteness();
             jointCompleteness = pdp.getJointsCompleteness();
 
+            for (float joint: jointCompleteness){
+
+            }
             Calendar calendar= Calendar.getInstance();
             SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
             System.out.println(dateFormat.format(calendar.getTime()));
+
             hr.addHistoricalRecord(new HistoricalRecord(
                     cardView,
                     dateFormat.format(calendar.getTime()),
