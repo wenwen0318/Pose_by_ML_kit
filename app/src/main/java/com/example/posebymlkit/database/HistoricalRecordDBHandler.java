@@ -220,9 +220,10 @@ public class HistoricalRecordDBHandler extends SQLiteOpenHelper {
                 historicalRecord.setBodyVertical(cursor.getString(14));
                 historicalRecord.setRKneeToe(cursor.getString(15));
                 historicalRecord.setLKneeToe(cursor.getString(16));
-                historicalRecord.setThighHorizontal(cursor.getString(17));
+                historicalRecord.setRThighHorizontal(cursor.getString(17));
                 historicalRecord.setCrotch(cursor.getString(18));
                 historicalRecord.setShoulderGround(cursor.getString(19));
+                historicalRecord.setLThighHorizontal(cursor.getString(20));
                 // Adding contact to list
             } while (cursor.moveToNext());
         }

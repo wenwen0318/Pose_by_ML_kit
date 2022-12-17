@@ -394,7 +394,7 @@ public class LivePreviewActivity extends AppCompatActivity {
             jointCompleteness = pdp.getJointsCompleteness();
 
             Calendar calendar= Calendar.getInstance();
-            SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+            SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd   hh:mm:ss");
             System.out.println(dateFormat.format(calendar.getTime()));
 
             hr.addHistoricalRecord(new HistoricalRecord(

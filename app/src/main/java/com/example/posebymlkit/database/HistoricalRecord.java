@@ -119,13 +119,16 @@ public class HistoricalRecord {
                 item = this.LKneeToe;
                 break;
             case 18:
-                item = this.thighHorizontal;
+                item = this.RThighHorizontal;
                 break;
             case 19:
                 item = this.crotch;
                 break;
             case 20:
                 item = this.shoulderGround;
+                break;
+            case 21:
+                item = this.LThighHorizontal;
                 break;
             default:
                 item = "null";
