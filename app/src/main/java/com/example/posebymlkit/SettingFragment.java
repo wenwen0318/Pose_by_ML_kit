@@ -72,7 +72,7 @@ public class SettingFragment extends Fragment {
         historyBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                intent.setClass(SettingFragment.this.getContext(), PracticeResultActivity.class);
+                intent.setClass(SettingFragment.this.getContext(), HistoryListActivity.class);
                 startActivity(intent);
             }
         });

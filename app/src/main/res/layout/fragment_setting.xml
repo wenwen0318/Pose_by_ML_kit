@@ -12,28 +12,6 @@
         android:orientation="vertical"
         android:layout_margin="10dp">
 
-        <TextView
-            android:id="@+id/history"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:onClick="history"
-            android:text="history"
-            android:textSize="20sp" />
-
-        <TextView
-            android:id="@+id/userIllustrate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:onClick="userIllustrate"
-            android:text="userIllustrate"
-            android:textSize="20sp" />
-
         <Button
             android:id="@+id/historyBtn"
             android:layout_width="match_parent"

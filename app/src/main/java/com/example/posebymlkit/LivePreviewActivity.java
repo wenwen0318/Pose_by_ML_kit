@@ -108,7 +108,7 @@ public class LivePreviewActivity extends AppCompatActivity {
         if (cameraSource == null) {
             cameraSource = new CameraSource(this, graphicOverlay);
         }
-        cameraSource.setFacing(CameraSource.CAMERA_FACING_BACK);
+        cameraSource.setFacing(CameraSource.CAMERA_FACING_FRONT);
 
         try {
             switch (model) {
@@ -294,6 +294,7 @@ public class LivePreviewActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialogInterface, int i) {
                 intent.setClass(LivePreviewActivity.this, PracticeResultActivity.class);
                 bundle.putString("poseName",cardView);
+                bundle.putString("date",null);
                 intent.putExtras(bundle);
                 startActivity(intent);
                 finish();
@@ -336,9 +337,6 @@ public class LivePreviewActivity extends AppCompatActivity {
             overallCompleteness = pdp.getOverallCompleteness();
             jointCompleteness = pdp.getJointsCompleteness();
 
-            for (float joint: jointCompleteness){
-
-            }
             Calendar calendar= Calendar.getInstance();
             SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
             System.out.println(dateFormat.format(calendar.getTime()));
