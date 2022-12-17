@@ -350,6 +350,7 @@ public class LivePreviewActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialogInterface, int i) {
                 intent.setClass(LivePreviewActivity.this, PracticeResultActivity.class);
                 bundle.putString("poseName",cardView);
+                bundle.putString("date",null);
                 intent.putExtras(bundle);
                 startActivity(intent);
                 finish();

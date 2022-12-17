@@ -37,6 +37,7 @@ public class PracticeResultActivity extends AppCompatActivity {
     Intent intent;
     Bundle bundle;
     String cardView;
+    String date;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,8 +49,8 @@ public class PracticeResultActivity extends AppCompatActivity {
         intent = new Intent();
         bundle = getIntent().getExtras();
         cardView = bundle.getString("cardView");
+        date = bundle.getString("date");
 
-//        HistoricalRecordDBHandler hr = new HistoricalRecordDBHandler(this);
         List<HistoricalRecord> historicalRecord = hr.getHistoricalRecordByPoseName(cardView,8);
         Collections.reverse(historicalRecord);
 
@@ -70,19 +71,25 @@ public class PracticeResultActivity extends AppCompatActivity {
     }
     private void displayListView() {
 
+        String[] joint = {"右臀","左臀","右膝","左膝","右手肘","左手肘","右腋下","左腋下","右肩","左肩","身體垂直","右膝不超過腳趾","左膝不超過腳趾","大腿平行地面","胯下","手臂垂直地面"};
         listView = findViewById(R.id.listView);
-
-        HistoricalRecord historicalRecord = hr.getHistoricalRecordByPoseName(cardView,1).get(0);
-
+        HistoricalRecord historicalRecord;
+        Log.d("date",date + " ");
+        if (date == null){
+            historicalRecord = hr.getHistoricalRecordByPoseName(cardView,1).get(0);
+        }
+        else {
+            historicalRecord = hr.getHistoricalRecordByDate(date);
+        }
 
         final ArrayList<HashMap<String, String>> arrayList = new ArrayList<>();
 
-        for (int i = 5; i <= 18; i++) {
+        for (int i = 5; i <= 20; i++) {
             HashMap<String, String> hashMap = new HashMap<>();
             String complete = historicalRecord.get(i);
             Log.d("joint_complete",i + " " + complete);
             if (historicalRecord.get(i) != null){
-                hashMap.put("joint", Integer.toString(i));
+                hashMap.put("joint", joint[i-5]);
                 hashMap.put("complete", complete);
                 arrayList.add(hashMap);
             }
@@ -94,6 +101,5 @@ public class PracticeResultActivity extends AppCompatActivity {
                 new SimpleAdapter(this, arrayList, R.layout.result_list_layout, from, value);
         listView.setAdapter(simpleAdapter);
 
-        //listView.setOnItemClickListener(onItemClickListener);
     }
 }

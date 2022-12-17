@@ -86,43 +86,46 @@ public class HistoricalRecord {
                 item = this.LHip;
                 break;
             case 7:
-                item = this.RElbow;
+                item = this.RKnee;
                 break;
             case 8:
-                item = this.LElbow;
+                item = this.LKnee;
                 break;
             case 9:
-                item = this.RArmpit;
+                item = this.RElbow;
                 break;
             case 10:
-                item = this.LArmpit;
+                item = this.LElbow;
                 break;
             case 11:
-                item = this.RShoulder;
+                item = this.RArmpit;
                 break;
             case 12:
-                item = this.LShoulder;
+                item = this.LArmpit;
                 break;
             case 13:
-                item = this.bodyVertical;
+                item = this.RShoulder;
                 break;
             case 14:
-                item = this.RKneeToe;
+                item = this.LShoulder;
                 break;
             case 15:
-                item = this.LKneeToe;
+                item = this.bodyVertical;
                 break;
             case 16:
-                item = this.RThighHorizontal;
+                item = this.RKneeToe;
                 break;
             case 17:
-                item = this.crotch;
+                item = this.LKneeToe;
                 break;
             case 18:
-                item = this.shoulderGround;
+                item = this.thighHorizontal;
                 break;
             case 19:
-                item = this.LThighHorizontal;
+                item = this.crotch;
+                break;
+            case 20:
+                item = this.shoulderGround;
                 break;
             default:
                 item = "null";
