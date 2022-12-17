@@ -22,8 +22,8 @@ public class PoseCalculate{
     private final int userLevel;
     static int level;
     static Boolean getPose;
-    static int[] status = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}; //各角度狀態 0:正確 1:小於 2:大於
-    static double[] angleArray = new double[16];
+    static int[] status = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}; //各角度狀態 0:正確 1:小於 2:大於
+    static double[] angleArray = new double[17];
     static ArrayList<String> poseStandard;
 
     PoseCalculate(
@@ -106,30 +106,32 @@ public class PoseCalculate{
         double rFootIndexY = pose.getPoseLandmark(PoseLandmark.RIGHT_FOOT_INDEX).getPosition().y;
         double lFootIndexX = pose.getPoseLandmark(PoseLandmark.LEFT_FOOT_INDEX).getPosition().x;
         double lFootIndexY = pose.getPoseLandmark(PoseLandmark.LEFT_FOOT_INDEX).getPosition().y;
-        double lIndexX = pose.getPoseLandmark(PoseLandmark.LEFT_INDEX).getPosition().x;
+        double lIndexY = pose.getPoseLandmark(PoseLandmark.LEFT_INDEX).getPosition().y;
 
         angleArray[0] = getAngle(rShoulderX, rShoulderY, rHipX, rHipY, rKneeX, rKneeY); //rightHip
         angleArray[1] = getAngle(lShoulderX, lShoulderY, lHipX, lHipY, lKneeX, lKneeY); //leftHip
         angleArray[2] = getAngle(rHipX, rHipY, rKneeX, rKneeY, rAnkleX, rAnkleY); //rightKnee
         angleArray[3] = getAngle(lHipX, lHipY, lKneeX, lKneeY, lAnkleX, lAnkleY); //leftKnee
-        angleArray[4] = getAngle(rShoulderX, rShoulderY, rElbowX, rElbowY, rWristX, rWristY); //rightArmpit
-        angleArray[5] = getAngle(lShoulderX, lShoulderY, lElbowX, lElbowY, lWristX, lWristY); //leftArmpit
-        angleArray[6] = getAngle(rElbowX, rElbowY, rShoulderX, rShoulderY, rHipX, rHipY); //rightKnee
-        angleArray[7] = getAngle(lElbowX, lElbowY, lShoulderX, lShoulderY, lHipX, lHipY); //leftKnee
-        angleArray[8] = getAngle(rElbowX, rElbowY, rShoulderX, rElbowY, lShoulderX, lShoulderY); //rightHip
-        angleArray[9] = getAngle(lElbowX, lElbowY, lShoulderX, lShoulderY, rShoulderX, rShoulderY); //leftHip
+        angleArray[4] = getAngle(rShoulderX, rShoulderY, rElbowX, rElbowY, rWristX, rWristY); //rightElbow
+        angleArray[5] = getAngle(lShoulderX, lShoulderY, lElbowX, lElbowY, lWristX, lWristY); //leftElbow
+        angleArray[6] = getAngle(rElbowX, rElbowY, rShoulderX, rShoulderY, rHipX, rHipY); //rightArmpit
+        angleArray[7] = getAngle(lElbowX, lElbowY, lShoulderX, lShoulderY, lHipX, lHipY); //leftArmpit
+        angleArray[8] = getAngle(rElbowX, rElbowY, rShoulderX, rElbowY, lShoulderX, lShoulderY); //rightShoulder
+        angleArray[9] = getAngle(lElbowX, lElbowY, lShoulderX, lShoulderY, rShoulderX, rShoulderY); //leftShoulder
         // bodyVertical (clavicleToGroundAngle)
         angleArray[10] = getAngle((rShoulderX+lShoulderX)/2, (rShoulderY+lShoulderY)/2, (rShoulderX+lShoulderX)/2, rFootIndexY, rFootIndexX, rFootIndexY)
             + getAngle((rShoulderX+lShoulderX)/2, (rShoulderY+lShoulderY)/2, (rShoulderX+lShoulderX)/2, rFootIndexY, lFootIndexX, lFootIndexY);
         angleArray[11] = isKneeOverToe(getAngle(rKneeX, rKneeY, rFootIndexX, rFootIndexY, rHeelX, rHeelY));   //rightKneeOverToe
         angleArray[12] = isKneeOverToe(getAngle(lKneeX, lKneeY, lFootIndexX, lFootIndexY, lHeelX, lHeelY));    //leftKneeOverToe
-        // thighHorizontal
-        angleArray[13] = getAngle(rHipX, rHipY, rKneeX, rKneeY, rKneeX, rFootIndexY) + getAngle(rKneeX, rKneeY, rKneeX, rFootIndexY, lFootIndexX, lFootIndexY);
+        // rThighHorizontal
+        angleArray[13] = getAngle(rHipX, rHipY, rKneeX, rKneeY, rKneeX, rFootIndexY) + getAngle(rKneeX, rKneeY, rKneeX, rFootIndexY, rFootIndexX, rFootIndexY);
         angleArray[14] = getAngle(lHipX, rFootIndexY, lHipX, lHipY, lKneeX, lKneeY); // leftCrotch
         // leftShoulderGround (shoulderGroundFootIndex)
         angleArray[15] = getAngle(lShoulderX, lShoulderY, lWristX, lFootIndexY, lFootIndexX, lFootIndexY);
-        System.out.println("thighHorizontal : "+angleArray[13]);
-        System.out.println("shoulderGround : "+angleArray[15]);
+        // lThighHorizontal
+        angleArray[16] = getAngle(lHipX, lHipY, lKneeX, lKneeY, lKneeX, lFootIndexY) + getAngle(lKneeX, lKneeY, lKneeX, lFootIndexY, lFootIndexX, lFootIndexY);
+        System.out.println("testAngle : "+getAngle(rKneeX, rKneeY, rHipX, rHipY, rHipX, rFootIndexY));
+        System.out.println("testAngle : "+getAngle(lKneeX, lKneeY, lHipX, lHipY, lHipX, lFootIndexY));
     }
     static double getAngle(double firstPointX, double firstPointY, double midPointX, double midPointY, double lastPointX, double lastPointY) {
         double result =

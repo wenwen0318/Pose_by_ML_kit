@@ -18,9 +18,10 @@ public class HistoricalRecord {
     String bodyVertical;
     String RKneeToe;
     String LKneeToe;
-    String thighHorizontal;
+    String RThighHorizontal;
     String crotch;
     String shoulderGround;
+    String LThighHorizontal;
 
     public HistoricalRecord(){}
     public HistoricalRecord(
@@ -35,9 +36,10 @@ public class HistoricalRecord {
             String RShoulder, String LShoulder,
             String bodyVertical,
             String RKneeToe, String LKneeToe,
-            String thighHorizontal,
+            String RThighHorizontal,
             String crotch,
-            String shoulderGround
+            String shoulderGround,
+            String LThighHorizontal
     ){
         this.poseName = poseName;
         this.date = date;
@@ -56,9 +58,10 @@ public class HistoricalRecord {
         this.bodyVertical = bodyVertical;
         this.RKneeToe = RKneeToe;
         this.LKneeToe = LKneeToe;
-        this.thighHorizontal = thighHorizontal;
+        this.RThighHorizontal = RThighHorizontal;
         this.crotch = crotch;
         this.shoulderGround = shoulderGround;
+        this.LThighHorizontal = LThighHorizontal;
     }
 
     public String get(int i){
@@ -110,13 +113,16 @@ public class HistoricalRecord {
                 item = this.LKneeToe;
                 break;
             case 16:
-                item = this.thighHorizontal;
+                item = this.RThighHorizontal;
                 break;
             case 17:
                 item = this.crotch;
                 break;
             case 18:
                 item = this.shoulderGround;
+                break;
+            case 19:
+                item = this.LThighHorizontal;
                 break;
             default:
                 item = "null";
@@ -175,12 +181,15 @@ public class HistoricalRecord {
     public String getLKneeToe(){ return this.LKneeToe;}
     public void setLKneeToe(String lKneeToe){ this.LKneeToe = lKneeToe;}
 
-    public String getThighHorizontal(){ return this.thighHorizontal;}
-    public void setThighHorizontal(String thighHorizontal){ this.thighHorizontal = thighHorizontal;}
+    public String getRThighHorizontal(){ return this.RThighHorizontal;}
+    public void setRThighHorizontal(String RThighHorizontal){ this.RThighHorizontal = RThighHorizontal;}
 
     public String getCrotch(){ return this.crotch;}
     public void setCrotch(String crotch){ this.crotch = crotch;}
 
     public String getShoulderGround(){ return this.shoulderGround;}
     public void setShoulderGround(String shoulderGround){ this.shoulderGround = shoulderGround;}
+
+    public String getLThighHorizontal(){ return this.LThighHorizontal;}
+    public void setLThighHorizontal(String LThighHorizontal){ this.LThighHorizontal = LThighHorizontal;}
 }

@@ -42,8 +42,9 @@ public class PoseDetectorProcessor
     int[][] wrongFre =  {{0, 0, 0},{0, 0, 0},{0, 0, 0},{0, 0, 0},
             {0, 0, 0},{0, 0, 0},{0, 0, 0},{0, 0, 0},
             {0, 0, 0},{0, 0, 0},{0, 0},{0, 0, 0},
-            {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}};
-    float[] wrongSum = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+            {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0},
+            {0, 0, 0}};
+    float[] wrongSum = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
     String classificationResult ;
     Boolean isCorrectPose;
     static ArrayList<String> poseStandard;
@@ -225,7 +226,7 @@ public class PoseDetectorProcessor
         switch (cardView){
             case "Warrior2": standardNum = 9;break;
             case "Plank": standardNum = 4;break;
-            case "Goddess": standardNum = 7;break;
+            case "Goddess": standardNum = 11;break;
             case "Chair": standardNum = 6;break;
             case "DownDog": standardNum = 4;break;
             case "Four-limbed_Staff": standardNum = 4;break;
@@ -246,9 +247,9 @@ public class PoseDetectorProcessor
     }
 
     public String[] getJointsCompleteness(){
-        float[] unCompleteness = new float[16];
-        float[] completeness = new float[16];
-        String[] jointCompleteness = new String[16];
+        float[] unCompleteness = new float[17];
+        float[] completeness = new float[17];
+        String[] jointCompleteness = new String[17];
         PoseStandardDBHandler db = new PoseStandardDBHandler(context);
         poseStandard = db.getPoseStandard(cardView).getPoseStandard();
         for(int i=0;i<wrongSum.length;i++){

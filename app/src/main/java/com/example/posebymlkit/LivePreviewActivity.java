@@ -108,7 +108,7 @@ public class LivePreviewActivity extends AppCompatActivity {
         if (cameraSource == null) {
             cameraSource = new CameraSource(this, graphicOverlay);
         }
-        cameraSource.setFacing(CameraSource.CAMERA_FACING_BACK);
+        cameraSource.setFacing(CameraSource.CAMERA_FACING_FRONT);
 
         try {
             switch (model) {
@@ -211,11 +211,6 @@ public class LivePreviewActivity extends AppCompatActivity {
 
     private void startTTS() {
         String wrongStr = "";
-        System.out.print("wrongHint : ");
-        for (int i :wrongHint) {
-            System.out.print(i+" ");
-        }
-        System.out.println("");
         if(cardView.equals("Warrior2")){
             switch (wrongHint[0]){
                 case 3 :
@@ -273,6 +268,67 @@ public class LivePreviewActivity extends AppCompatActivity {
                         wrongStr += "手臂太進去，出來點";
                         break;
                     }
+            }
+        }
+        else if(cardView.equals("Goddess")){
+            switch (wrongHint[0]){
+                case 2 :
+                    if(wrongHint[1] == 1){
+                        wrongStr += "右膝蹲太下去";
+                        break;
+                    }
+                    else if(wrongHint[1] == 2){
+                        wrongStr += "右膝蹲不夠下去";
+                        break;
+                    }
+                case 3 :
+                    if(wrongHint[1] == 1){
+                        wrongStr += "左膝蹲太下去";
+                        break;
+                    }
+                    else if(wrongHint[1] == 2){
+                        wrongStr += "左膝蹲不夠下去";
+                        break;
+                    }
+                case 4 :
+                    if(wrongHint[1] == 1){
+                        wrongStr += "右手肘張不夠開";
+                        break;
+                    }
+                    else if(wrongHint[1] == 2){
+                        wrongStr += "右手肘張太開";
+                        break;
+                    }
+                case 5 :
+                    if(wrongHint[1] == 1){
+                        wrongStr += "左手肘張不夠開";
+                        break;
+                    }
+                    else if(wrongHint[1] == 2){
+                        wrongStr += "右手肘張太開";
+                        break;
+                    }
+                case 8 :
+                    wrongStr += "右手與地板平行";
+                    break;
+                case 9 :
+                    wrongStr += "左手與地板平行";
+                    break;
+                case 10 :
+                    wrongStr += "身體與地板保持垂直";
+                    break;
+                case 11 :
+                    wrongStr += "右膝不超過右腳尖";
+                    break;
+                case 12 :
+                    wrongStr += "左膝不超過左腳尖";
+                    break;
+                case 13 :
+                    wrongStr += "右大腿與地板平行";
+                    break;
+                case 16 :
+                    wrongStr += "左大腿與地板平行";
+                    break;
             }
         }
         tts.speak(wrongStr,TextToSpeech.QUEUE_ADD,null,null);
@@ -336,9 +392,6 @@ public class LivePreviewActivity extends AppCompatActivity {
             overallCompleteness = pdp.getOverallCompleteness();
             jointCompleteness = pdp.getJointsCompleteness();
 
-            for (float joint: jointCompleteness){
-
-            }
             Calendar calendar= Calendar.getInstance();
             SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
             System.out.println(dateFormat.format(calendar.getTime()));
@@ -357,7 +410,8 @@ public class LivePreviewActivity extends AppCompatActivity {
                     jointCompleteness[11],jointCompleteness[12],
                     jointCompleteness[13],
                     jointCompleteness[14],
-                    jointCompleteness[15]));
+                    jointCompleteness[15],
+                    jointCompleteness[16]));
             System.out.print("jointCompleteness : ");
             for(String num : jointCompleteness){
                 System.out.print(" "+num);
@@ -370,24 +424,6 @@ public class LivePreviewActivity extends AppCompatActivity {
             handler.removeCallbacks(TTSWrongHint);
             handler.removeCallbacks(timeCountdown);
             getResultDialog();
-        }
-    };
-
-    Runnable poseClassify = new Runnable() {
-        @Override
-        public void run() {
-            handler.postDelayed(this, 1000);
-//            cameraSource.setMachineLearningFrameProcessor(
-//                    pdp = new PoseDetectorProcessor(
-//                            this,
-//                            poseDetectorOptions,
-//                            shouldShowInFrameLikelihood,
-//                            visualizeZ,
-//                            rescaleZ,
-//                            runClassification,
-//                            /* isStreamMode = */ true,
-//                            cardView,
-//                            userLevel));
         }
     };
 
