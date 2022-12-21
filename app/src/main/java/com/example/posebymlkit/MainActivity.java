@@ -69,39 +69,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         PoseStandardDBHandler db = new PoseStandardDBHandler(this);
-        db.addPoseStandard(new PoseStandard("Warrior2",
-                null,null,
-                null,"170",
-                "170","170",
-                null,null,
-                "170","170",
-                "180",
-                "90",null,
-                "185",
-                "55",
-                null,null));
-        db.addPoseStandard(new PoseStandard("Plank",
-                null,"170",
-                null,"170",
-                null,"170",
-                null,null,
-                null,null,
-                null,
-                null,null,
-                null,
-                null,
-                "90",null));
-        db.addPoseStandard(new PoseStandard("Goddess",
-                null,null,
-                "90","90",
-                "90","90",
-                null,null,
-                "170","170",
-                "180",
-                "90","90",
-                "185",
-                null,
-                null,"185"));
+        db.poseStandardInit();
     }
 
     private final BottomNavigationView.OnItemSelectedListener navListener = item -> {

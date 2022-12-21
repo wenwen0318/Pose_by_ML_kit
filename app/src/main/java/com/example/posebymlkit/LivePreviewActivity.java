@@ -108,7 +108,7 @@ public class LivePreviewActivity extends AppCompatActivity {
         if (cameraSource == null) {
             cameraSource = new CameraSource(this, graphicOverlay);
         }
-        cameraSource.setFacing(CameraSource.CAMERA_FACING_FRONT);
+        cameraSource.setFacing(CameraSource.CAMERA_FACING_BACK);
 
         try {
             switch (model) {
@@ -343,6 +343,7 @@ public class LivePreviewActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 dialogInterface.dismiss();
+                finish();
             }
         });
         builder.setPositiveButton("詳細數據", new DialogInterface.OnClickListener() {

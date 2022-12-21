@@ -73,6 +73,42 @@ public class PoseStandardDBHandler extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    public void poseStandardInit(){
+        this.addPoseStandard(new PoseStandard("Warrior2",
+                null,null,
+                null,"170",
+                "170","170",
+                null,null,
+                "170","170",
+                "180",
+                "90",null,
+                "185",
+                "55",
+                null,null));
+        this.addPoseStandard(new PoseStandard("Plank",
+                null,"170",
+                null,"170",
+                null,"170",
+                null,null,
+                null,null,
+                null,
+                null,null,
+                null,
+                null,
+                "90",null));
+        this.addPoseStandard(new PoseStandard("Goddess",
+                null,null,
+                "90","90",
+                "90","90",
+                null,null,
+                "170","170",
+                "180",
+                "90","90",
+                "185",
+                null,
+                null,"185"));
+    }
+
     // code to add the new contact
     public void addPoseStandard(PoseStandard poseStandard) {
         SQLiteDatabase db = this.getWritableDatabase();

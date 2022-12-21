@@ -13,14 +13,41 @@
         android:layout_margin="10dp">
 
         <Button
+            android:id="@+id/setBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:text="\n 設定 \n"
+            android:background="@drawable/roundbtn" />
+        <Button
             android:id="@+id/historyBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:text="\n history \n"
+            android:background="@drawable/roundbtn" />
+        <Button
+            android:id="@+id/illBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:text="\n 使用說明 \n"
+            android:background="@drawable/roundbtn" />
+        <Button
+            android:id="@+id/removeBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:padding="10dp"
             android:textColor="@color/black"
             android:textSize="20sp"
-            android:text="\n history \n"
+            android:text="\n 移除歷史紀錄 \n"
             android:background="@drawable/roundbtn" />
     </LinearLayout>
 
