@@ -79,7 +79,9 @@ public class MainActivity extends AppCompatActivity {
                 "90",null,
                 "185",
                 "55",
-                null,null));
+                null,
+                null,
+                null));
         db.addPoseStandard(new PoseStandard("Plank",
                 null,"170",
                 null,"170",
@@ -90,7 +92,9 @@ public class MainActivity extends AppCompatActivity {
                 null,null,
                 null,
                 null,
-                "90",null));
+                "90",
+                null,
+                null));
         db.addPoseStandard(new PoseStandard("Goddess",
                 null,null,
                 "90","90",
@@ -101,7 +105,35 @@ public class MainActivity extends AppCompatActivity {
                 "90","90",
                 "185",
                 null,
-                null,"185"));
+                null,
+                "185",
+                null));
+        db.addPoseStandard(new PoseStandard("Chair",
+                "90",null,
+                "90",null,
+                "170",null,
+                null,null,
+                null,null,
+                null,
+                "90",null,
+                null,
+                null,
+                null,
+                null,
+                "120"));
+        db.addPoseStandard(new PoseStandard("DownDog",
+                null,null,
+                "170",null,
+                "170",null,
+                "160",null,
+                null,null,
+                null,
+                null,null,
+                null,
+                null,
+                null,
+                null,
+                null));
     }
 
     private final BottomNavigationView.OnItemSelectedListener navListener = item -> {

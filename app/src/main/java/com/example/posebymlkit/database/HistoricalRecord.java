@@ -22,6 +22,7 @@ public class HistoricalRecord {
     String crotch;
     String shoulderGround;
     String LThighHorizontal;
+    String RElbowRaise;
 
     public HistoricalRecord(){}
     public HistoricalRecord(
@@ -39,7 +40,8 @@ public class HistoricalRecord {
             String RThighHorizontal,
             String crotch,
             String shoulderGround,
-            String LThighHorizontal
+            String LThighHorizontal,
+            String RElbowRaise
     ){
         this.poseName = poseName;
         this.date = date;
@@ -62,6 +64,7 @@ public class HistoricalRecord {
         this.crotch = crotch;
         this.shoulderGround = shoulderGround;
         this.LThighHorizontal = LThighHorizontal;
+        this.RElbowRaise = RElbowRaise;
     }
 
     public String get(int i){
@@ -129,6 +132,9 @@ public class HistoricalRecord {
                 break;
             case 21:
                 item = this.LThighHorizontal;
+                break;
+            case 22:
+                item = this.RElbowRaise;
                 break;
             default:
                 item = "null";
@@ -198,4 +204,7 @@ public class HistoricalRecord {
 
     public String getLThighHorizontal(){ return this.LThighHorizontal;}
     public void setLThighHorizontal(String LThighHorizontal){ this.LThighHorizontal = LThighHorizontal;}
+
+    public String getRElbowRaise(){ return this.RElbowRaise;}
+    public void setRElbowRaise(String RElbowRaise){ this.RElbowRaise = RElbowRaise;}
 }

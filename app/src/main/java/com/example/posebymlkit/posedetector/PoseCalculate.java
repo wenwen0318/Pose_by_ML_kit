@@ -22,8 +22,8 @@ public class PoseCalculate{
     private final int userLevel;
     static int level;
     static Boolean getPose;
-    static int[] status = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}; //各角度狀態 0:正確 1:小於 2:大於
-    static double[] angleArray = new double[17];
+    static int[] status = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}; //各角度狀態 0:正確 1:小於 2:大於
+    static double[] angleArray = new double[18];
     static ArrayList<String> poseStandard;
 
     PoseCalculate(
@@ -106,7 +106,8 @@ public class PoseCalculate{
         double rFootIndexY = pose.getPoseLandmark(PoseLandmark.RIGHT_FOOT_INDEX).getPosition().y;
         double lFootIndexX = pose.getPoseLandmark(PoseLandmark.LEFT_FOOT_INDEX).getPosition().x;
         double lFootIndexY = pose.getPoseLandmark(PoseLandmark.LEFT_FOOT_INDEX).getPosition().y;
-        double lIndexY = pose.getPoseLandmark(PoseLandmark.LEFT_INDEX).getPosition().y;
+        double noseX = pose.getPoseLandmark(PoseLandmark.NOSE).getPosition().x;
+        double noseY = pose.getPoseLandmark(PoseLandmark.NOSE).getPosition().y;
 
         angleArray[0] = getAngle(rShoulderX, rShoulderY, rHipX, rHipY, rKneeX, rKneeY); //rightHip
         angleArray[1] = getAngle(lShoulderX, lShoulderY, lHipX, lHipY, lKneeX, lKneeY); //leftHip
@@ -130,9 +131,23 @@ public class PoseCalculate{
         angleArray[15] = getAngle(lShoulderX, lShoulderY, lWristX, lFootIndexY, lFootIndexX, lFootIndexY);
         // lThighHorizontal
         angleArray[16] = getAngle(lHipX, lHipY, lKneeX, lKneeY, lKneeX, lFootIndexY) + getAngle(lKneeX, lKneeY, lKneeX, lFootIndexY, lFootIndexX, lFootIndexY);
-        System.out.println("testAngle : "+getAngle(rKneeX, rKneeY, rHipX, rHipY, rHipX, rFootIndexY));
-        System.out.println("testAngle : "+getAngle(lKneeX, lKneeY, lHipX, lHipY, lHipX, lFootIndexY));
+        angleArray[17] = getAngle(rElbowX, rElbowY, rShoulderX, rShoulderY, rShoulderX, rFootIndexY);
+        System.out.println("testAngle : "+getAngle(rElbowX, rElbowY, rShoulderX, rShoulderY, rShoulderX, rFootIndexY));
+        double left = getLength(noseX, noseY, lShoulderX, lShoulderY);
+        double right = getLength(noseX, noseY, rShoulderX, rShoulderY);
+        if(left > right){
+            System.out.println("leftDir");
+        }
+        else{
+            System.out.println("rightDir");
+        }
     }
+    static double getLength(double firstPointX, double firstPointY, double lastPointX, double lastPointY){
+        double result = Math.sqrt(Math.pow(firstPointX - lastPointX, 2) + Math.pow(firstPointY - lastPointY, 2));
+        result = Math.abs(result);
+        return result;
+    }
+
     static double getAngle(double firstPointX, double firstPointY, double midPointX, double midPointY, double lastPointX, double lastPointY) {
         double result =
                 Math.toDegrees(
