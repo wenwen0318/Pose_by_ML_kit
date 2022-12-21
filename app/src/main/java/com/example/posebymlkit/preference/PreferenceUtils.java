@@ -175,7 +175,7 @@ public class PreferenceUtils {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         String prefKey =
                 context.getString(R.string.pref_key_live_preview_pose_detector_show_in_frame_likelihood);
-        return sharedPreferences.getBoolean(prefKey, true);
+        return sharedPreferences.getBoolean(prefKey, false);
     }
 
     public static boolean shouldShowPoseDetectionInFrameLikelihoodStillImage(Context context) {

@@ -22,4 +22,36 @@
         app:layout_constraintTop_toTopOf="@id/preview_view"
         app:layout_constraintBottom_toBottomOf="@id/preview_view"/>
 
+    <LinearLayout
+        android:id="@+id/control"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="#000"
+        android:orientation="horizontal">
+
+        <ToggleButton
+            android:id="@+id/facing_switch"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center_vertical"
+            android:background="@layout/toggle_style"
+            android:checked="false"
+            android:textOff=""
+            android:textOn=""/>
+
+        <TextView
+            android:id="@+id/poseNameView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textSize="20dp"
+            android:textColor="@color/white"
+            android:text="TextView" />
+
+
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

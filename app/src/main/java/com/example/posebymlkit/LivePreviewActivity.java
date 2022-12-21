@@ -10,6 +10,9 @@ import android.os.Handler;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.CompoundButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -19,6 +22,7 @@ import com.google.android.gms.common.annotation.KeepName;
 import com.example.posebymlkit.preference.PreferenceUtils;
 
 import android.content.Intent;
+import android.widget.ToggleButton;
 
 import com.google.mlkit.common.model.LocalModel;
 import com.google.mlkit.vision.objects.custom.CustomObjectDetectorOptions;
@@ -34,7 +38,7 @@ import java.util.Locale;
 
 /** Live preview demo for ML Kit APIs. */
 @KeepName
-public class LivePreviewActivity extends AppCompatActivity {
+public class LivePreviewActivity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener{
 
     private static final String POSE_DETECTION = "Pose Detection";
     private static final String OBJECT_DETECTION = "Object Detection";
@@ -83,15 +87,22 @@ public class LivePreviewActivity extends AppCompatActivity {
         if (preview == null) {
             Log.d(TAG, "Preview is null");
         }
+
         graphicOverlay = findViewById(R.id.graphic_overlay);
         if (graphicOverlay == null) {
             Log.d(TAG, "graphicOverlay is null");
         }
 
+        ToggleButton facingSwitch = findViewById(R.id.facing_switch);
+        facingSwitch.setOnCheckedChangeListener(this);
+
         bundle = getIntent().getExtras();
         cardView = bundle.getString("cardView");
         userLevel = bundle.getInt("userLevel");
         time = bundle.getInt("time")*1000;
+
+        TextView poseName = findViewById(R.id.poseNameView);
+        poseName.setText(cardView);
 
         System.out.println("pose:"+ cardView+ " userLevel:"+ userLevel+ " time:"+ time);
 
@@ -103,12 +114,26 @@ public class LivePreviewActivity extends AppCompatActivity {
 
         //handler.postDelayed(runnable, 5000);
     }
+
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        Log.d(TAG, "Set facing");
+        if (cameraSource != null) {
+            if (isChecked) {
+                cameraSource.setFacing(CameraSource.CAMERA_FACING_FRONT);
+            } else {
+                cameraSource.setFacing(CameraSource.CAMERA_FACING_BACK);
+            }
+        }
+        preview.stop();
+        startCameraSource();
+    }
+
     private void createCameraSource(String model) {
         // If there's no existing cameraSource, create one.
         if (cameraSource == null) {
             cameraSource = new CameraSource(this, graphicOverlay);
         }
-        cameraSource.setFacing(CameraSource.CAMERA_FACING_BACK);
 
         try {
             switch (model) {
