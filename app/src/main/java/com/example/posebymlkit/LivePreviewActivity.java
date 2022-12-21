@@ -331,6 +331,35 @@ public class LivePreviewActivity extends AppCompatActivity {
                     break;
             }
         }
+        else if(cardView.equals("Chair")){
+            switch (wrongHint[0]) {
+                case 2:
+                    if (wrongHint[1] == 1) {
+                        wrongStr += "膝蓋蹲太低";
+                        break;
+                    } else if (wrongHint[1] == 2) {
+                        wrongStr += "膝蓋蹲不夠低";
+                        break;
+                    }
+                case 4:
+                    wrongStr += "右手肘伸直";
+                    break;
+                case 6:
+                    wrongStr += "身體與大腿垂直";
+                    break;
+                case 11:
+                    wrongStr += "膝蓋稍微超過右腳尖";
+                    break;
+                case 17:
+                    if (wrongHint[1] == 1) {
+                        wrongStr += "手臂舉高點";
+                        break;
+                    } else if (wrongHint[1] == 2) {
+                        wrongStr += "手臂舉太高";
+                        break;
+                    }
+            }
+        }
         tts.speak(wrongStr,TextToSpeech.QUEUE_ADD,null,null);
     }
 
@@ -413,7 +442,8 @@ public class LivePreviewActivity extends AppCompatActivity {
                     jointCompleteness[13],
                     jointCompleteness[14],
                     jointCompleteness[15],
-                    jointCompleteness[16]));
+                    jointCompleteness[16],
+                    jointCompleteness[17]));
             System.out.print("jointCompleteness : ");
             for(String num : jointCompleteness){
                 System.out.print(" "+num);

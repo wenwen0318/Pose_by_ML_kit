@@ -32,6 +32,7 @@ public class PoseStandardDBHandler extends SQLiteOpenHelper {
     private static final String KEY_CROTCH = "crotch";
     private static final String KEY_SHOULDER_GROUND = "shoulderGround";
     private static final String KEY_LEFT_THIGH_HORIZONTAL = "LThighHorizontal";
+    private static final String KEY_RIGHT_ELBOW_RAISE = "RElbowRaise";
 
     public PoseStandardDBHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -58,7 +59,8 @@ public class PoseStandardDBHandler extends SQLiteOpenHelper {
                 + KEY_RIGHT_THIGH_HORIZONTAL + " TEXT,"
                 + KEY_CROTCH + " TEXT,"
                 + KEY_SHOULDER_GROUND + " TEXT,"
-                + KEY_LEFT_THIGH_HORIZONTAL + " TEXT"
+                + KEY_LEFT_THIGH_HORIZONTAL + " TEXT,"
+                + KEY_RIGHT_ELBOW_RAISE + " TEXT"
                 + ")";
         db.execSQL(CREATE_CONTACTS_TABLE);
     }
@@ -132,6 +134,7 @@ public class PoseStandardDBHandler extends SQLiteOpenHelper {
         values.put(KEY_CROTCH, poseStandard.getCrotch());
         values.put(KEY_SHOULDER_GROUND, poseStandard.getShoulderGround());
         values.put(KEY_LEFT_THIGH_HORIZONTAL, poseStandard.getLThighHorizontal());
+        values.put(KEY_RIGHT_ELBOW_RAISE, poseStandard.getRElbowRaise());
 
         // Inserting Row
         db.insert(TABLE_POSE_STANDARD, null, values);
@@ -154,7 +157,8 @@ public class PoseStandardDBHandler extends SQLiteOpenHelper {
                         KEY_RIGHT_THIGH_HORIZONTAL,
                         KEY_CROTCH,
                         KEY_SHOULDER_GROUND,
-                        KEY_LEFT_THIGH_HORIZONTAL
+                        KEY_LEFT_THIGH_HORIZONTAL,
+                        KEY_RIGHT_ELBOW_RAISE
                 }, KEY_POSE_NAME + "=?",
                 new String[] { String.valueOf(poseName) }, null, null, null, null);
         if (cursor != null)
@@ -177,7 +181,8 @@ public class PoseStandardDBHandler extends SQLiteOpenHelper {
                     cursor.getString(14),
                     cursor.getString(15),
                     cursor.getString(16),
-                    cursor.getString(17)
+                    cursor.getString(17),
+                    cursor.getString(18)
         );
         // return contact
         return poseStandard;
@@ -214,6 +219,7 @@ public class PoseStandardDBHandler extends SQLiteOpenHelper {
                 poseStandard.setCrotch(cursor.getString(15));
                 poseStandard.setShoulderGround(cursor.getString(16));
                 poseStandard.setLThighHorizontal(cursor.getString(17));
+                poseStandard.setRElbowRaise(cursor.getString(18));
                 // Adding contact to list
                 poseStandardList.add(poseStandard);
             } while (cursor.moveToNext());
@@ -246,6 +252,7 @@ public class PoseStandardDBHandler extends SQLiteOpenHelper {
         values.put(KEY_CROTCH, poseStandard.getCrotch());
         values.put(KEY_SHOULDER_GROUND, poseStandard.getShoulderGround());
         values.put(KEY_LEFT_THIGH_HORIZONTAL, poseStandard.getLThighHorizontal());
+        values.put(KEY_RIGHT_ELBOW_RAISE, poseStandard.getRElbowRaise());
 
         // updating row
         return db.update(TABLE_POSE_STANDARD, values, KEY_POSE_NAME + " = ?",
