@@ -71,7 +71,9 @@ public class PracticeResultActivity extends AppCompatActivity {
     }
     private void displayListView() {
 
-        String[] joint = {"右臀","左臀","右膝","左膝","右手肘","左手肘","右腋下","左腋下","右肩","左肩","身體垂直","右膝是否超過腳趾","左膝是否超過腳趾","右大腿平行地面","胯下","手臂垂直地面", "左大腿平行地面", "右手斜上舉"};
+        String[] joint = {"右臀", "左臀", "右膝", "左膝", "右手肘", "左手肘", "右腋下", "左腋下", "右肩", "左肩",
+                "右膝不超過腳趾", "左膝不超過腳趾", "右大腿平行地面", "左大腿平行地面", "右胯下", "左胯下",
+                "右手臂垂直地面", "左手臂垂直地面", "右手斜上舉", "左手斜上舉", "右腳腳跟著地", "左腳腳跟著地", "身體垂直"};
         listView = findViewById(R.id.listView);
         HistoricalRecord historicalRecord;
         Log.d("date",date + " ");
@@ -84,7 +86,7 @@ public class PracticeResultActivity extends AppCompatActivity {
 
         final ArrayList<HashMap<String, String>> arrayList = new ArrayList<>();
 
-        for (int i = 5; i <= 22; i++) {
+        for (int i = 5; i <= 27; i++) {
             HashMap<String, String> hashMap = new HashMap<>();
             String complete = historicalRecord.get(i);
             Log.d("joint_complete",i + " " + complete);

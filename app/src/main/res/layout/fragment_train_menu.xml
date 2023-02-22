@@ -57,6 +57,7 @@
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
+
             <androidx.cardview.widget.CardView
                 android:id="@+id/suggestMenuCardView1"
                 android:transitionName="suggestMenu1"
@@ -97,6 +98,7 @@
             </androidx.cardview.widget.CardView>
 
         </LinearLayout>
+
     </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -22,8 +22,11 @@ public class PoseCalculate{
     private final int userLevel;
     static int level;
     static Boolean getPose;
-    static int[] status = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}; //各角度狀態 0:正確 1:小於 2:大於
-    static double[] angleArray = new double[18];
+    //各角度狀態 0:正確 1:小於 2:大於
+    static int[] status = {0, 0, 0, 0, 0,   0, 0, 0, 0, 0,
+                            0, 0, 0, 0, 0,  0, 0, 0, 0, 0,
+                            0, 0, 0};
+    static double[] angleArray = new double[23];
     static ArrayList<String> poseStandard;
 
     PoseCalculate(
@@ -36,13 +39,10 @@ public class PoseCalculate{
         this.cardView = cardView;
         this.userLevel = userLevel;
         level = userLevel;
-
         //取關節點，如果有關節點就取得位置計算角度 存至angleList;
         angle();
-
         PoseStandardDBHandler db = new PoseStandardDBHandler(context);
         poseStandard = db.getPoseStandard(cardView).getPoseStandard();
-
         if (getPose){
             check();
         }
@@ -106,8 +106,10 @@ public class PoseCalculate{
         double rFootIndexY = pose.getPoseLandmark(PoseLandmark.RIGHT_FOOT_INDEX).getPosition().y;
         double lFootIndexX = pose.getPoseLandmark(PoseLandmark.LEFT_FOOT_INDEX).getPosition().x;
         double lFootIndexY = pose.getPoseLandmark(PoseLandmark.LEFT_FOOT_INDEX).getPosition().y;
-        double noseX = pose.getPoseLandmark(PoseLandmark.NOSE).getPosition().x;
-        double noseY = pose.getPoseLandmark(PoseLandmark.NOSE).getPosition().y;
+        double rPinkyX = pose.getPoseLandmark(PoseLandmark.RIGHT_PINKY).getPosition().x;
+        double rPinkyY = pose.getPoseLandmark(PoseLandmark.RIGHT_PINKY).getPosition().y;
+        double lPinkyX = pose.getPoseLandmark(PoseLandmark.LEFT_PINKY).getPosition().x;
+        double lPinkyY = pose.getPoseLandmark(PoseLandmark.LEFT_PINKY).getPosition().y;
 
         angleArray[0] = getAngle(rShoulderX, rShoulderY, rHipX, rHipY, rKneeX, rKneeY); //rightHip
         angleArray[1] = getAngle(lShoulderX, lShoulderY, lHipX, lHipY, lKneeX, lKneeY); //leftHip
@@ -119,33 +121,40 @@ public class PoseCalculate{
         angleArray[7] = getAngle(lElbowX, lElbowY, lShoulderX, lShoulderY, lHipX, lHipY); //leftArmpit
         angleArray[8] = getAngle(rElbowX, rElbowY, rShoulderX, rElbowY, lShoulderX, lShoulderY); //rightShoulder
         angleArray[9] = getAngle(lElbowX, lElbowY, lShoulderX, lShoulderY, rShoulderX, rShoulderY); //leftShoulder
-        // bodyVertical (clavicleToGroundAngle)
-        angleArray[10] = getAngle((rShoulderX+lShoulderX)/2, (rShoulderY+lShoulderY)/2, (rShoulderX+lShoulderX)/2, rFootIndexY, rFootIndexX, rFootIndexY)
-            + getAngle((rShoulderX+lShoulderX)/2, (rShoulderY+lShoulderY)/2, (rShoulderX+lShoulderX)/2, rFootIndexY, lFootIndexX, lFootIndexY);
-        angleArray[11] = isKneeOverToe(getAngle(rKneeX, rKneeY, rFootIndexX, rFootIndexY, rHeelX, rHeelY));   //rightKneeOverToe
-        angleArray[12] = isKneeOverToe(getAngle(lKneeX, lKneeY, lFootIndexX, lFootIndexY, lHeelX, lHeelY));    //leftKneeOverToe
+        angleArray[10] = isKneeOverToe(getAngle(rKneeX, rKneeY, rFootIndexX, rFootIndexY, rHeelX, rHeelY)); //rightKneeOverToe
+        angleArray[11] = isKneeOverToe(getAngle(lKneeX, lKneeY, lFootIndexX, lFootIndexY, lHeelX, lHeelY));  //leftKneeOverToe
         // rThighHorizontal
-        angleArray[13] = getAngle(rHipX, rHipY, rKneeX, rKneeY, rKneeX, rFootIndexY) + getAngle(rKneeX, rKneeY, rKneeX, rFootIndexY, rFootIndexX, rFootIndexY);
-        angleArray[14] = getAngle(lHipX, rFootIndexY, lHipX, lHipY, lKneeX, lKneeY); // leftCrotch
-        // leftShoulderGround (shoulderGroundFootIndex)
-        angleArray[15] = getAngle(lShoulderX, lShoulderY, lWristX, lFootIndexY, lFootIndexX, lFootIndexY);
+        angleArray[12] = getAngle(rHipX, rHipY, rKneeX, rKneeY, rKneeX, rFootIndexY) + getAngle(rKneeX, rKneeY, rKneeX, rFootIndexY, rFootIndexX, rFootIndexY);
         // lThighHorizontal
-        angleArray[16] = getAngle(lHipX, lHipY, lKneeX, lKneeY, lKneeX, lFootIndexY) + getAngle(lKneeX, lKneeY, lKneeX, lFootIndexY, lFootIndexX, lFootIndexY);
-        angleArray[17] = getAngle(rElbowX, rElbowY, rShoulderX, rShoulderY, rShoulderX, rFootIndexY);
-        System.out.println("testAngle : "+getAngle(rElbowX, rElbowY, rShoulderX, rShoulderY, rShoulderX, rFootIndexY));
-        double left = getLength(noseX, noseY, lShoulderX, lShoulderY);
-        double right = getLength(noseX, noseY, rShoulderX, rShoulderY);
-        if(left > right){
-            System.out.println("leftDir");
+        angleArray[13] = getAngle(lHipX, lHipY, lKneeX, lKneeY, lKneeX, lFootIndexY) + getAngle(lKneeX, lKneeY, lKneeX, lFootIndexY, lFootIndexX, lFootIndexY);
+        angleArray[14] = getAngle(rHipX, lFootIndexY, rHipX, rHipY, rKneeX, rKneeY); // rightCrotch
+        angleArray[15] = getAngle(lHipX, rFootIndexY, lHipX, lHipY, lKneeX, lKneeY); // leftCrotch
+        // rightShoulderGround (shoulderGroundFootIndex)
+        angleArray[16] = getAngle(rShoulderX, rShoulderY, rWristX, rFootIndexY, rFootIndexX, rFootIndexY);
+        // leftShoulderGround (shoulderGroundFootIndex)
+        angleArray[17] = getAngle(lShoulderX, lShoulderY, lWristX, lFootIndexY, lFootIndexX, lFootIndexY);
+        // rElbowRaise
+        angleArray[18] = getAngle(rElbowX, rElbowY, rShoulderX, rShoulderY, rShoulderX, rFootIndexY);
+        // lElbowRaise
+        angleArray[19] = getAngle(lElbowX, lElbowY, lShoulderX, lShoulderY, lShoulderX, lFootIndexY);
+        angleArray[20] = heelOnGroundTransform(Math.abs(rFootIndexY - rHeelY)); // rHeelOnGround
+        angleArray[21] = heelOnGroundTransform(Math.abs(lFootIndexY - lHeelY)); // lHeelOnGround
+//        angleArray[22] = getAngle(rElbowX, rElbowY, rWristX, rPinkyY, rPinkyX, rPinkyY) + angleArray[4]; // rArmHorizontal
+//        angleArray[23] = getAngle(lElbowX, lElbowY, lWristX, lPinkyY, lPinkyX, lPinkyY) + angleArray[5]; // lArmHorizontal
+        // bodyVertical (shoulderGroundHorizontal, hipGroundHorizontal)
+        angleArray[22] = bodyVertical(
+                (getAngle(lShoulderX, lShoulderY, (lShoulderX+rShoulderX)/2, (lShoulderY+rShoulderY)/2, (lShoulderX+rShoulderX)/2, lFootIndexY)
+                    + getAngle(rShoulderX, lFootIndexY, (lShoulderX+rShoulderX)/2, lFootIndexY, (lShoulderX+rShoulderX)/2, (lShoulderY+rShoulderY)/2)
+                ),
+                (getAngle(lHipX, lHipY, (lHipX+rHipX)/2, (lHipY+rHipY)/2, (lHipX+rHipX)/2, lFootIndexY)
+                        + getAngle(rHipX, lFootIndexY, (lHipX+rHipX)/2, lFootIndexY, (lHipX+rHipX)/2, (lHipY+rHipY)/2)
+                )
+        );
+        if (cardView.equals("DownDog")){
+            if (angleArray[0] > 80) angleArray[0] = 80;
         }
-        else{
-            System.out.println("rightDir");
-        }
-    }
-    static double getLength(double firstPointX, double firstPointY, double lastPointX, double lastPointY){
-        double result = Math.sqrt(Math.pow(firstPointX - lastPointX, 2) + Math.pow(firstPointY - lastPointY, 2));
-        result = Math.abs(result);
-        return result;
+        System.out.println("upperBodyGround : "+getAngle(rShoulderX, rShoulderY, rHipX, rHipY, rShoulderX, rHipY));
+        System.out.println("lowerBodyGround : "+getAngle(rKneeX, rKneeY, rHipX, rHipY, rHeelX, rHipY));
     }
 
     static double getAngle(double firstPointX, double firstPointY, double midPointX, double midPointY, double lastPointX, double lastPointY) {
@@ -166,6 +175,27 @@ public class PoseCalculate{
             return 90;
         }
         else return 180;
+    }
+
+    static double heelOnGroundTransform(double coordinate){
+        // if on ground transform angle to 90
+        System.out.println("coordinate : "+coordinate);
+        if (coordinate <= 7){
+            return 90;
+        }
+        else return 180;
+    }
+
+    static double bodyVertical(double shoulderGroundHorizontal, double hipGroundHorizontal){
+        System.out.println("shoulderGroundHorizontal : "+shoulderGroundHorizontal);
+        System.out.println("hipGroundHorizontal : "+hipGroundHorizontal);
+        if(shoulderGroundHorizontal > (185+5*level) || shoulderGroundHorizontal < (185-5*level)){
+            return 0;
+        }
+        if(hipGroundHorizontal > (185+5*level) || hipGroundHorizontal < (185-5*level)){
+            return 0;
+        }
+        return 90;
     }
 
     static void check() {

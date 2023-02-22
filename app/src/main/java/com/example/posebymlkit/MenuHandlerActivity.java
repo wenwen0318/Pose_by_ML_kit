@@ -41,7 +41,7 @@ import java.util.Locale;
 
 /** Live preview demo for ML Kit APIs. */
 @KeepName
-public class LivePreviewActivity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener{
+public class MenuHandlerActivity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener{
 
     private static final String POSE_DETECTION = "Pose Detection";
     private static final String OBJECT_DETECTION = "Object Detection";
@@ -433,7 +433,7 @@ public class LivePreviewActivity extends AppCompatActivity implements CompoundBu
     }
 
     private void getResultDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(LivePreviewActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(MenuHandlerActivity.this);
         builder.setCancelable(false);
         builder.setTitle("練習結束");
         builder.setMessage("總體正確率： "+overallCompleteness+"%");
@@ -447,7 +447,7 @@ public class LivePreviewActivity extends AppCompatActivity implements CompoundBu
         builder.setPositiveButton("詳細數據", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                intent.setClass(LivePreviewActivity.this, PracticeResultActivity.class);
+//                intent.setClass(LivePreviewActivity.this, PracticeResultActivity.class);
                 bundle.putString("poseName",cardView);
                 bundle.putString("date",null);
                 intent.putExtras(bundle);

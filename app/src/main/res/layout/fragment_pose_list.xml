@@ -193,7 +193,7 @@
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardView6"
-                android:transitionName="Four-limbed_Staff"
+                android:transitionName="Four-limb_Staff"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"

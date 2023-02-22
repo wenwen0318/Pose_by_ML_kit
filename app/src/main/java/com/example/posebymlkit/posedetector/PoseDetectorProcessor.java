@@ -39,12 +39,14 @@ public class PoseDetectorProcessor
 
     int[] angleStatus;
     float frameNum = 0;
-    int[][] wrongFre =  {{0, 0, 0},{0, 0, 0},{0, 0, 0},{0, 0, 0},
-            {0, 0, 0},{0, 0, 0},{0, 0, 0},{0, 0, 0},
-            {0, 0, 0},{0, 0, 0},{0, 0},{0, 0, 0},
-            {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0},
-            {0, 0, 0}, {0, 0, 0}};
-    float[] wrongSum = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+    int[][] wrongFre =  {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0},
+                            {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0},
+                            {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0},
+                            {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0},
+                            {0, 0, 0}, {0, 0, 0}, {0, 0}};
+    float[] wrongSum = {0, 0, 0, 0, 0,  0, 0, 0, 0, 0,
+                        0, 0, 0, 0, 0,  0, 0, 0, 0, 0,
+                        0, 0, 0};
     String classificationResult ;
     Boolean isCorrectPose;
     static ArrayList<String> poseStandard;
@@ -146,13 +148,6 @@ public class PoseDetectorProcessor
                         showInFrameLikelihood,
                         visualizeZ,
                         rescaleZForVisualization));
-//        classificationResult = getPose.classificationResult;
-//        if(classificationResult.equals(cardView)){
-//            isCorrectPose = true;
-//        }
-//        else{
-//            isCorrectPose = false;
-//        }
         PoseCalculate Calculate = new PoseCalculate(
                 context,
                 getPose.getPose(),
@@ -228,12 +223,12 @@ public class PoseDetectorProcessor
             case "Plank": standardNum = 4;break;
             case "Goddess": standardNum = 11;break;
             case "Chair": standardNum = 5;break;
-            case "DownDog": standardNum = 4;break;
-            case "Four-limbed_Staff": standardNum = 4;break;
+            case "DownDog": standardNum = 5;break;
+            case "Four-limb_Staff": standardNum = 4;break;
             case "Boat": standardNum = 4;break;
-            case "Rejuvenation": standardNum = 4;break;
+            case "Rejuvenation": standardNum = 2;break;
             case "Star": standardNum = 7;break;
-            case "Tree": standardNum = 2;break;
+            case "Tree": standardNum = 7;break;
         }
         for(float num : wrongSum){
             allWrong += num;
@@ -247,9 +242,9 @@ public class PoseDetectorProcessor
     }
 
     public String[] getJointsCompleteness(){
-        float[] unCompleteness = new float[18];
-        float[] completeness = new float[18];
-        String[] jointCompleteness = new String[18];
+        float[] unCompleteness = new float[23];
+        float[] completeness = new float[23];
+        String[] jointCompleteness = new String[23];
         PoseStandardDBHandler db = new PoseStandardDBHandler(context);
         poseStandard = db.getPoseStandard(cardView).getPoseStandard();
         for(int i=0;i<wrongSum.length;i++){

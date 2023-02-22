@@ -5,24 +5,18 @@ public class HistoricalRecord {
     String date;
     int level;
     float allComplete;
-    String RHip;
-    String LHip;
-    String RKnee;
-    String LKnee;
-    String RElbow;
-    String LElbow;
-    String RArmpit;
-    String LArmpit;
-    String RShoulder;
-    String LShoulder;
+    String RHip, LHip;
+    String RKnee, LKnee;
+    String RElbow, LElbow;
+    String RArmpit, LArmpit;
+    String RShoulder, LShoulder;
+    String RKneeToe, LKneeToe;
+    String RThighHorizontal, LThighHorizontal;
+    String RCrotch, LCrotch;
+    String RShoulderGround, LShoulderGround;
+    String RElbowRaise, LElbowRaise;
+    String RHeelOnGround, LHeelOnGround;
     String bodyVertical;
-    String RKneeToe;
-    String LKneeToe;
-    String RThighHorizontal;
-    String crotch;
-    String shoulderGround;
-    String LThighHorizontal;
-    String RElbowRaise;
 
     public HistoricalRecord(){}
     public HistoricalRecord(
@@ -35,36 +29,30 @@ public class HistoricalRecord {
             String RElbow, String LElbow,
             String RArmpit, String LArmpit,
             String RShoulder, String LShoulder,
-            String bodyVertical,
             String RKneeToe, String LKneeToe,
-            String RThighHorizontal,
-            String crotch,
-            String shoulderGround,
-            String LThighHorizontal,
-            String RElbowRaise
+            String RThighHorizontal, String LThighHorizontal,
+            String RCrotch, String LCrotch,
+            String RShoulderGround, String LShoulderGround,
+            String RElbowRaise, String LElbowRaise,
+            String RHeelOnGround, String LHeelOnGround,
+            String bodyVertical
     ){
         this.poseName = poseName;
         this.date = date;
         this.level = level;
         this.allComplete = allComplete;
-        this.RHip = RHip;
-        this.LHip = LHip;
-        this.RKnee = RKnee;
-        this.LKnee = LKnee;
-        this.RElbow = RElbow;
-        this.LElbow = LElbow;
-        this.RArmpit = RArmpit;
-        this.LArmpit = LArmpit;
-        this.RShoulder = RShoulder;
-        this.LShoulder = LShoulder;
+        this.RHip = RHip;   this.LHip = LHip;
+        this.RKnee = RKnee; this.LKnee = LKnee;
+        this.RElbow = RElbow;   this.LElbow = LElbow;
+        this.RArmpit = RArmpit; this.LArmpit = LArmpit;
+        this.RShoulder = RShoulder; this.LShoulder = LShoulder;
+        this.RKneeToe = RKneeToe;   this.LKneeToe = LKneeToe;
+        this.RThighHorizontal = RThighHorizontal;   this.LThighHorizontal = LThighHorizontal;
+        this.RCrotch = RCrotch; this.LCrotch = LCrotch;
+        this.RShoulderGround = RShoulderGround; this.LShoulderGround = LShoulderGround;
+        this.RElbowRaise = RElbowRaise; this.LElbowRaise = LElbowRaise;
+        this.RHeelOnGround = RHeelOnGround; this.LHeelOnGround = LHeelOnGround;
         this.bodyVertical = bodyVertical;
-        this.RKneeToe = RKneeToe;
-        this.LKneeToe = LKneeToe;
-        this.RThighHorizontal = RThighHorizontal;
-        this.crotch = crotch;
-        this.shoulderGround = shoulderGround;
-        this.LThighHorizontal = LThighHorizontal;
-        this.RElbowRaise = RElbowRaise;
     }
 
     public String get(int i){
@@ -113,28 +101,43 @@ public class HistoricalRecord {
                 item = this.LShoulder;
                 break;
             case 15:
-                item = this.bodyVertical;
-                break;
-            case 16:
                 item = this.RKneeToe;
                 break;
-            case 17:
+            case 16:
                 item = this.LKneeToe;
                 break;
-            case 18:
+            case 17:
                 item = this.RThighHorizontal;
                 break;
-            case 19:
-                item = this.crotch;
-                break;
-            case 20:
-                item = this.shoulderGround;
-                break;
-            case 21:
+            case 18:
                 item = this.LThighHorizontal;
                 break;
+            case 19:
+                item = this.RCrotch;
+                break;
+            case 20:
+                item = this.LCrotch;
+                break;
+            case 21:
+                item = this.RShoulderGround;
+                break;
             case 22:
+                item = this.LShoulderGround;
+                break;
+            case 23:
                 item = this.RElbowRaise;
+                break;
+            case 24:
+                item = this.LElbowRaise;
+                break;
+            case 25:
+                item = this.RHeelOnGround;
+                break;
+            case 26:
+                item = this.LHeelOnGround;
+                break;
+            case 27:
+                item = this.bodyVertical;
                 break;
             default:
                 item = "null";
@@ -184,9 +187,6 @@ public class HistoricalRecord {
     public String getLShoulder(){ return this.LShoulder;}
     public void setLShoulder(String lShoulder){ this.LShoulder = lShoulder;}
 
-    public String getBodyVertical(){ return this.bodyVertical;}
-    public void setBodyVertical(String bodyVertical){ this.bodyVertical = bodyVertical;}
-
     public String getRKneeToe(){ return this.RKneeToe;}
     public void setRKneeToe(String rKneeToe){ this.RKneeToe = rKneeToe;}
 
@@ -196,15 +196,33 @@ public class HistoricalRecord {
     public String getRThighHorizontal(){ return this.RThighHorizontal;}
     public void setRThighHorizontal(String RThighHorizontal){ this.RThighHorizontal = RThighHorizontal;}
 
-    public String getCrotch(){ return this.crotch;}
-    public void setCrotch(String crotch){ this.crotch = crotch;}
-
-    public String getShoulderGround(){ return this.shoulderGround;}
-    public void setShoulderGround(String shoulderGround){ this.shoulderGround = shoulderGround;}
-
     public String getLThighHorizontal(){ return this.LThighHorizontal;}
     public void setLThighHorizontal(String LThighHorizontal){ this.LThighHorizontal = LThighHorizontal;}
 
+    public String getRCrotch(){ return this.RCrotch;}
+    public void setRCrotch(String RCrotch){ this.RCrotch = RCrotch;}
+
+    public String getLCrotch(){ return this.LCrotch;}
+    public void setLCrotch(String LCrotch){ this.LCrotch = LCrotch;}
+
+    public String getRShoulderGround(){ return this.RShoulderGround;}
+    public void setRShoulderGround(String RShoulderGround){ this.RShoulderGround = RShoulderGround;}
+
+    public String getLShoulderGround(){ return this.LShoulderGround;}
+    public void setLShoulderGround(String LShoulderGround){ this.LShoulderGround = LShoulderGround;}
+
     public String getRElbowRaise(){ return this.RElbowRaise;}
     public void setRElbowRaise(String RElbowRaise){ this.RElbowRaise = RElbowRaise;}
+
+    public String getLElbowRaise(){ return this.LElbowRaise;}
+    public void setLElbowRaise(String LElbowRaise){ this.LElbowRaise = LElbowRaise;}
+
+    public String getRHeelOnGround(){ return this.RHeelOnGround;}
+    public void setRHeelOnGround(String RHeelOnGround){ this.RHeelOnGround = RHeelOnGround;}
+
+    public String getLHeelOnGround(){ return this.LHeelOnGround;}
+    public void setLHeelOnGround(String LHeelOnGround){ this.LHeelOnGround = LHeelOnGround;}
+
+    public String getBodyVertical(){ return this.bodyVertical;}
+    public void setBodyVertical(String bodyVertical){ this.bodyVertical = bodyVertical;}
 }
