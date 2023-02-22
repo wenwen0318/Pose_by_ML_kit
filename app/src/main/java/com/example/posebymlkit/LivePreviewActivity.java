@@ -2,15 +2,19 @@ package com.example.posebymlkit;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.content.DialogInterface;
+import android.media.MediaRecorder;
+import android.os.Build;
 import android.os.Bundle;
 
+import android.os.Environment;
 import android.os.Handler;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
+import android.view.SurfaceHolder;
 import android.view.WindowManager;
-import android.widget.AdapterView;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,6 +37,8 @@ import com.example.posebymlkit.objectdetector.ObjectDetectorProcessor;
 import com.example.posebymlkit.posedetector.PoseDetectorProcessor;
 
 import com.google.mlkit.vision.pose.PoseDetectorOptionsBase;
+
+import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -41,7 +47,8 @@ import java.util.Locale;
 
 /** Live preview demo for ML Kit APIs. */
 @KeepName
-public class LivePreviewActivity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener{
+public class LivePreviewActivity extends AppCompatActivity
+        implements CompoundButton.OnCheckedChangeListener{
 
     private static final String POSE_DETECTION = "Pose Detection";
     private static final String OBJECT_DETECTION = "Object Detection";
@@ -53,6 +60,11 @@ public class LivePreviewActivity extends AppCompatActivity implements CompoundBu
     private CameraSource cameraSource = null;
     private CameraSourcePreview preview;
     private GraphicOverlay graphicOverlay;
+    private MediaRecorder mediaRecorder;
+    private SurfaceHolder surfaceHolder;
+
+    private boolean isRecording = false;
+    private boolean isSurfaceCreated = false;
 
     private TextToSpeech tts = null;
     private Handler handler = new Handler();
@@ -67,6 +79,7 @@ public class LivePreviewActivity extends AppCompatActivity implements CompoundBu
     String cardView;
     int userLevel;
     int time;
+    String date;
 
     String label = "";
     int[] wrongHint;
@@ -82,6 +95,10 @@ public class LivePreviewActivity extends AppCompatActivity implements CompoundBu
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        Calendar calendar= Calendar.getInstance();
+        SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd   hh:mm:ss");
+        date = dateFormat.format(calendar.getTime());
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
@@ -111,6 +128,9 @@ public class LivePreviewActivity extends AppCompatActivity implements CompoundBu
         System.out.println("pose:"+ cardView+ " userLevel:"+ userLevel+ " time:"+ time);
 
         createCameraSource(OBJECT_DETECTION);
+
+        surfaceHolder = preview.getSurfaceView().getHolder();
+        surfaceHolder.addCallback(surfaceCallback);
 
         createTTSSource();
 
@@ -172,10 +192,11 @@ public class LivePreviewActivity extends AppCompatActivity implements CompoundBu
                                     /* isStreamMode = */ true,
                                     cardView,
                                     userLevel));
+
                     handler.postDelayed(TTSWrongHint,5000);
                     handler.postDelayed(timeCountdown,time);
-                    break;
-            }
+                            break;
+                        }
         } catch (RuntimeException e) {
             Toast.makeText(
                             getApplicationContext(),
@@ -496,13 +517,9 @@ public class LivePreviewActivity extends AppCompatActivity implements CompoundBu
             overallCompleteness = pdp.getOverallCompleteness();
             jointCompleteness = pdp.getJointsCompleteness();
 
-            Calendar calendar= Calendar.getInstance();
-            SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd   hh:mm:ss");
-            System.out.println(dateFormat.format(calendar.getTime()));
-
             hr.addHistoricalRecord(new HistoricalRecord(
                     cardView,
-                    dateFormat.format(calendar.getTime()),
+                    date,
                     userLevel,
                     overallCompleteness,
                     jointCompleteness[0], jointCompleteness[1],
@@ -527,6 +544,63 @@ public class LivePreviewActivity extends AppCompatActivity implements CompoundBu
         }
     };
 
+    private final SurfaceHolder.Callback surfaceCallback = new SurfaceHolder.Callback() {
+
+        @Override
+        public void surfaceDestroyed(SurfaceHolder holder) {
+            isSurfaceCreated = false;
+        }
+
+        @Override
+        public void surfaceCreated(SurfaceHolder holder) {
+            isSurfaceCreated = true;
+        }
+
+        @Override
+        public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+            startCameraSource();
+        }
+    };
+
+    private void initMediaRecorder() {
+        mediaRecorder = new MediaRecorder();//例項化
+
+        //mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC); // 設定從麥克風採集聲音
+        mediaRecorder.setVideoSource(MediaRecorder.VideoSource.CAMERA); // 設定從攝像頭採集影象
+        mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4); // 設定視訊的輸出格式 為MP4
+        //mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.DEFAULT); // 設定音訊的編碼格式
+        mediaRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.H264); // 設定視訊的編碼格式
+        mediaRecorder.setVideoSize(352, 288); // 設定視訊大小
+        mediaRecorder.setVideoFrameRate(20); // 設定幀率
+        mediaRecorder.setPreviewDisplay(surfaceHolder.getSurface());
+
+        //設定視訊儲存路徑0
+        File file = new File(ContextCompat.getExternalFilesDirs(this,Environment.DIRECTORY_DCIM)[0].getAbsolutePath()+File.separator + "VideoRecorder");;
+        if (!file.exists()) {
+            //多級目錄的建立
+            boolean mkdir = file.mkdir();
+            if (!mkdir) {
+                Log.e(TAG, file.getPath() + "Directory creation failed.");
+            }
+        }
+        Log.d("filePath",file.toString());
+        String fileName = file.getPath() + File.separator + "VID_" + cardView + "_" + date + ".mp4";
+        Log.d("fileName",fileName);
+        mediaRecorder.setOutputFile(fileName);
+    }
+
+    private void startRecording() {
+        if (mediaRecorder != null) {
+            try {
+                mediaRecorder.prepare();
+                mediaRecorder.start();
+            } catch (Exception e) {
+                isRecording = false;
+                Log.e(TAG, e.getMessage());
+            }
+        }
+    }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -550,9 +624,11 @@ public class LivePreviewActivity extends AppCompatActivity implements CompoundBu
         if (cameraSource != null) {
             cameraSource.release();
         }
+
         tts.shutdown();
         handler.removeCallbacks(personDetection);
         handler.removeCallbacks(TTSWrongHint);
         handler.removeCallbacks(timeCountdown);
     }
+
 }

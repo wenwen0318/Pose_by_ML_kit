@@ -62,6 +62,10 @@ public class CameraSourcePreview extends ViewGroup {
         surfaceView.getHolder().getSurface().release();
     }
 
+    public SurfaceView getSurfaceView() {
+        return surfaceView;
+    }
+
     private void startIfReady() throws IOException, SecurityException {
         if (startRequested && surfaceAvailable) {
             if (PreferenceUtils.isCameraLiveViewportEnabled(context)) {

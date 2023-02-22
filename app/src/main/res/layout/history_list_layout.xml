@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -36,6 +37,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="50dp"
+                android:orientation="vertical"
                 >
                 <TextView
                     android:id="@+id/date"
@@ -45,23 +47,17 @@
                     android:text="Date"
                     android:textColor="#666666"
                     android:textSize="15sp" />
-                <TextView
-                    android:id="@+id/poseLevel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Level"
-                    android:textColor="#666666"
-                    android:textSize="15sp" />
+
                 <TextView
                     android:id="@+id/allComplete"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:layout_gravity="end"
                     android:text="all Complete"
                     android:textColor="#666666"
                     android:textSize="15sp" />
-            </LinearLayout>>
+            </LinearLayout>
 
 
         </LinearLayout>

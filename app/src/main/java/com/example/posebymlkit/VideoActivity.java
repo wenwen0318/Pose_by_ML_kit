@@ -51,10 +51,6 @@ public class VideoActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 getDialog();
-//                intent.setClass(VideoActivity.this, LivePreviewActivity.class);
-//                bundle.putString("cardView", cardView);
-//                intent.putExtras(bundle);
-//                startActivity(intent);
             }
         });
         btn_backToHome.setOnClickListener(new View.OnClickListener() {
@@ -130,6 +126,7 @@ public class VideoActivity extends AppCompatActivity {
                 intent.putExtras(bundle);
                 startActivity(intent);
                 dialog.dismiss();
+                finish();
             }
         });
     }

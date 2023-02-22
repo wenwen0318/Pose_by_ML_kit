@@ -1,6 +1,9 @@
 package com.example.posebymlkit;
 
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.cardview.widget.CardView;
@@ -52,6 +55,7 @@ public class SettingFragment extends Fragment {
 
     Intent intent = new Intent();
     Button historyBtn;
+    Button mailBtn;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -77,7 +81,24 @@ public class SettingFragment extends Fragment {
             }
         });
 
+        mailBtn = view.findViewById(R.id.mailBtn);
+        mailBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                mailToDeveloper();
+            }
+        });
+
         return view;
+    }
+    private void mailToDeveloper() {
+        Intent intent = new Intent(Intent.ACTION_SENDTO);
+        intent.setData(Uri.parse("mailto:")); // only email apps should handle this
+        intent.putExtra(Intent.EXTRA_EMAIL, new String[] {"wen0318asd@gmail.com"});
+        intent.putExtra(Intent.EXTRA_SUBJECT, "App Question Request");
+        if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
+            startActivity(intent);
+        }
     }
 
 }
