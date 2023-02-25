@@ -57,17 +57,19 @@ public class TrainMenuFragment extends Fragment {
         }
     }
 
+    int easy = 3;
+    int hard = 2;
     int[] menuList = {
             R.id.customMenuCardView,
             R.id.suggestMenuCardView1
     };
     int[] sugMenu1 = {
-            R.id.sugMeu1CardView1, R.id.sugMeu1CardView1Time,
-            R.id.sugMeu1CardView2, R.id.sugMeu1CardView2Time,
-            R.id.sugMeu1CardView3, R.id.sugMeu1CardView3Time,
-            R.id.sugMeu1CardView4, R.id.sugMeu1CardView4Time,
-            R.id.sugMeu1CardView5, R.id.sugMeu1CardView5Time,
-            R.id.sugMeu1CardView6, R.id.sugMeu1CardView6Time
+            R.id.sugMeu1CardView1, R.id.sugMeu1CardView1Time, easy,
+            R.id.sugMeu1CardView2, R.id.sugMeu1CardView2Time, easy,
+            R.id.sugMeu1CardView3, R.id.sugMeu1CardView3Time, easy,
+            R.id.sugMeu1CardView4, R.id.sugMeu1CardView4Time, easy,
+            R.id.sugMeu1CardView5, R.id.sugMeu1CardView5Time, easy,
+            R.id.sugMeu1CardView6, R.id.sugMeu1CardView6Time, easy
     };
     Intent intent = new Intent();
     Bundle bundle = new Bundle();
@@ -80,14 +82,15 @@ public class TrainMenuFragment extends Fragment {
 
         for(int menu : menuList){
             CardView cardView = view.findViewById(menu);
-            String myMenu = cardView.getTransitionName();
             cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    String myMenu = cardView.getTransitionName();
                     intent.setClass(TrainMenuFragment.this.getContext(), MenuActivity.class);
                     switch (myMenu){
-                        case "suggestMenu1" :
+                        case "sugMenu1" :
                             bundle.putIntArray("myMenu", sugMenu1);
+                            bundle.putInt("menuLength", sugMenu1.length);
                             break;
                     }
 //                    bundle.putString("cardView", cardView.getTransitionName());

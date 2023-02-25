@@ -60,7 +60,7 @@
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/suggestMenuCardView1"
-                android:transitionName="suggestMenu1"
+                android:transitionName="sugMenu1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"

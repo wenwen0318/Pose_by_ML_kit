@@ -93,7 +93,7 @@
 
                         <TextView
                             android:id="@+id/sugMeu1CardView1Time"
-                            android:transitionName="30"
+                            android:transitionName="10"
                             android:layout_width="match_parent"
                             android:layout_height="30dp"
                             android:layout_gravity="bottom"
@@ -145,7 +145,7 @@
 
                         <TextView
                             android:id="@+id/sugMeu1CardView2Time"
-                            android:transitionName="30"
+                            android:transitionName="10"
                             android:layout_width="match_parent"
                             android:layout_height="30dp"
                             android:layout_gravity="bottom"
@@ -161,7 +161,7 @@
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/sugMeu1CardView3"
-                android:transitionName="Rest"
+                android:transitionName="Boat"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
@@ -197,7 +197,7 @@
 
                         <TextView
                             android:id="@+id/sugMeu1CardView3Time"
-                            android:transitionName="30"
+                            android:transitionName="10"
                             android:layout_width="match_parent"
                             android:layout_height="30dp"
                             android:layout_gravity="bottom"
@@ -249,7 +249,7 @@
 
                         <TextView
                             android:id="@+id/sugMeu1CardView4Time"
-                            android:transitionName="30"
+                            android:transitionName="10"
                             android:layout_width="match_parent"
                             android:layout_height="30dp"
                             android:layout_gravity="bottom"
@@ -301,7 +301,7 @@
 
                         <TextView
                             android:id="@+id/sugMeu1CardView5Time"
-                            android:transitionName="30"
+                            android:transitionName="10"
                             android:layout_width="match_parent"
                             android:layout_height="30dp"
                             android:layout_gravity="bottom"
@@ -317,7 +317,7 @@
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/sugMeu1CardView6"
-                android:transitionName="Rest"
+                android:transitionName="Warrior2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
@@ -353,7 +353,7 @@
 
                         <TextView
                             android:id="@+id/sugMeu1CardView6Time"
-                            android:transitionName="30"
+                            android:transitionName="10"
                             android:layout_width="match_parent"
                             android:layout_height="30dp"
                             android:layout_gravity="bottom"

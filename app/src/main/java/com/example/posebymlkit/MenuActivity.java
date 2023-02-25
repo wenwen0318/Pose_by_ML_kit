@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,6 +26,7 @@ public class MenuActivity extends AppCompatActivity {
     Button btn_cancel,btn_check;
     int userLevel = 3;
     int[] menu;
+    int menuLength;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +37,7 @@ public class MenuActivity extends AppCompatActivity {
         intent = new Intent();
         bundle = new Bundle();
 
+
         //開始練習
         btn_startPractice.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -43,6 +46,7 @@ public class MenuActivity extends AppCompatActivity {
             }
         });
     }
+
 
     private void getDialog() {
         dialog = new Dialog(MenuActivity.this);
@@ -54,7 +58,13 @@ public class MenuActivity extends AppCompatActivity {
         btn_hard = viewDialog.findViewById(R.id.btn_hard);
         btn_cancel = viewDialog.findViewById(R.id.cancel);
         btn_check  = viewDialog.findViewById(R.id.check);
+        bundle = getIntent().getExtras();
+        menuLength = bundle.getInt("menuLength");
         menu = bundle.getIntArray("myMenu");
+        for(int i=0;i<menuLength;i++){
+            Log.i("MenuActivity", ""+menu[i]);
+        }
+        System.out.println("menuIn : "+menuLength);
 
         dialog.show();
         btn_easy.setOnClickListener(new View.OnClickListener() {
@@ -79,9 +89,13 @@ public class MenuActivity extends AppCompatActivity {
         btn_check.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                for(int i=2;i<menuLength;i+=3){
+                    menu[i] = userLevel;
+                }
                 intent.setClass(MenuActivity.this, LivePreviewActivity.class);
                 bundle.putIntArray("myMenu", menu);
                 bundle.putInt("userLevel", userLevel);
+                bundle.putInt("menuLength", menuLength);
                 intent.putExtras(bundle);
                 startActivity(intent);
                 dialog.dismiss();
