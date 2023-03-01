@@ -6,99 +6,10 @@
     android:layout_height="match_parent"
     tools:context=".TrainMenuFragment">
 
-    <ScrollView
+    <ListView
+        android:id="@+id/menuListView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:ignore="MissingConstraints">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:orientation="vertical"
-            >
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/customMenuCardView"
-                android:transitionName="customMenu"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                app:cardBackgroundColor="#EEEEEE"
-                app:cardCornerRadius="10dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:id="@+id/customImageView"
-                        android:layout_width="match_parent"
-                        android:layout_height="200dp"
-                        android:layout_margin="5dp"
-                        android:adjustViewBounds="true"
-                        app:srcCompat="@drawable/boat" />
-
-                    <TextView
-                        android:id="@+id/customTextView"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_gravity="top"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginEnd="5dp"
-                        android:layout_marginBottom="5dp"
-                        android:gravity="center"
-                        android:text="自訂菜單"
-                        android:textSize="30sp" />
-
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/suggestMenuCardView1"
-                android:transitionName="sugMenu1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                app:cardBackgroundColor="#EEEEEE"
-                app:cardCornerRadius="10dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:id="@+id/suggestMenuImageView1"
-                        android:layout_width="match_parent"
-                        android:layout_height="200dp"
-                        android:layout_margin="5dp"
-                        android:adjustViewBounds="true"
-                        app:srcCompat="@drawable/boat" />
-
-                    <TextView
-                        android:id="@+id/suggestMenuTextMenu1"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_gravity="top"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginEnd="5dp"
-                        android:layout_marginBottom="5dp"
-                        android:gravity="center"
-                        android:text="推薦菜單"
-                        android:textSize="30sp" />
-
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
-
-        </LinearLayout>
-
-    </ScrollView>
-
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="1dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
