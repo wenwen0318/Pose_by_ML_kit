@@ -161,12 +161,9 @@ public class HistoricalRecordDBHandler extends SQLiteOpenHelper {
                 historicalRecord.setRHeelOnGround(cursor.getString(24));
                 historicalRecord.setLHeelOnGround(cursor.getString(25));
                 historicalRecord.setBodyVertical(cursor.getString(26));
-                // Adding contact to list
                 historicalRecords.add(historicalRecord);
             } while (cursor.moveToNext());
         }
-
-        // return contact list
         return historicalRecords;
     }
 

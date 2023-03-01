@@ -14,16 +14,27 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.VideoView;
 
+import com.example.posebymlkit.database.TrainMenu;
+import com.example.posebymlkit.database.TrainMenuDBHandler;
+
 import java.util.ArrayList;
+import java.util.List;
 
 public class MenuActivity extends AppCompatActivity {
 
     Intent intent;
     Bundle bundle;
+
+    String menuName;
+
     Dialog dialog;
     View viewDialog;
+
     RadioButton btn_easy,btn_hard;
     Button btn_cancel,btn_check;
+
+    TrainMenuDBHandler tm = new TrainMenuDBHandler(this);
+
     int userLevel = 3;
     int[] menu;
     int menuLength;
@@ -35,7 +46,13 @@ public class MenuActivity extends AppCompatActivity {
 
         Button btn_startPractice = findViewById(R.id.btn_startPractice_menu);
         intent = new Intent();
-        bundle = new Bundle();
+        bundle = getIntent().getExtras();
+        menuName = bundle.getString("menuName");
+
+        TrainMenu trainMenu = tm.getMenu(menuName);
+        System.out.println("menu Name:" + trainMenu.getMenuName());
+        System.out.println("Pose 1:" + trainMenu.getPose1() + trainMenu.getTime1());
+
 
 
         //開始練習
@@ -73,7 +90,7 @@ public class MenuActivity extends AppCompatActivity {
                 userLevel = 3;
             }
         });
-        btn_easy.setOnClickListener(new View.OnClickListener() {
+        btn_hard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 userLevel = 2;

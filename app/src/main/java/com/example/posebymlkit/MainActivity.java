@@ -18,6 +18,7 @@ import com.example.posebymlkit.database.HistoricalRecordDBHandler;
 import com.example.posebymlkit.database.PoseStandardDBHandler;
 import com.example.posebymlkit.database.PoseStandard;
 import com.example.posebymlkit.database.PoseWrongTTSDBHandler;
+import com.example.posebymlkit.database.TrainMenuDBHandler;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.text.SimpleDateFormat;
@@ -47,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
         db.poseStandardInit();
         PoseWrongTTSDBHandler pwt = new PoseWrongTTSDBHandler(this);
         pwt.poseWrongTTSInit();
+        TrainMenuDBHandler tm = new TrainMenuDBHandler(this);
+        tm.trainMenuInit();
     }
 
     private final BottomNavigationView.OnItemSelectedListener navListener = item -> {
