@@ -224,7 +224,7 @@ public class PoseDetectorProcessor
             case "Goddess": standardNum = 11;break;
             case "Chair": standardNum = 5;break;
             case "DownDog": standardNum = 5;break;
-            case "Four-limb_Staff": standardNum = 4;break;
+            case "Four_Limbed_Staff": standardNum = 3;break;
             case "Boat": standardNum = 4;break;
             case "Rejuvenation": standardNum = 2;break;
             case "Star": standardNum = 7;break;

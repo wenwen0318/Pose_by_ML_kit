@@ -193,7 +193,7 @@
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardView6"
-                android:transitionName="Four-limb_Staff"
+                android:transitionName="Four_Limbed_Staff"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
@@ -211,7 +211,7 @@
                         android:layout_height="100dp"
                         android:layout_margin="5dp"
                         android:adjustViewBounds="true"
-                        app:srcCompat="@drawable/staff" />
+                        app:srcCompat="@drawable/four_limbed_staff" />
 
                     <TextView
                         android:id="@+id/textView6"
@@ -220,7 +220,7 @@
                         android:layout_gravity="center"
                         android:layout_margin="5dp"
                         android:gravity="center"
-                        android:text="Staff"
+                        android:text="Four_Limbed_Staff"
                         android:textSize="30sp" />
                 </LinearLayout>
 

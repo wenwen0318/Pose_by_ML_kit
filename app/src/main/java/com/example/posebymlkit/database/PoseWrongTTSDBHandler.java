@@ -253,7 +253,7 @@ public class PoseWrongTTSDBHandler extends SQLiteOpenHelper{
                 null, null,
                 null
         ));
-        this.addPoseWrongTTS(new PoseWrongTTS("Four-limb_Staff",
+        this.addPoseWrongTTS(new PoseWrongTTS("Four_Limbed_Staff",
                 "臀部與地板平行","臀部與地板平行",
                 null,null,
                 "膝蓋挺直","膝蓋挺直",

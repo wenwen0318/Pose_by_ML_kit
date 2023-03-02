@@ -4,10 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.MediaController;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -41,15 +42,24 @@ public class VideoActivity extends AppCompatActivity {
         intent = new Intent();
         bundle = getIntent().getExtras();
         cardView = bundle.getString("cardView");
-        mediaController = new MediaController(this);
 
         poseIllustrate = findViewById(R.id.poseIllustrate);
         videoView = findViewById(R.id.videoView);
+        mediaController = new MediaController(this);
+
+        getIllustrate(cardView);
+        poseIllustrate.setMovementMethod(new ScrollingMovementMethod());
+        videoView.setMediaController(mediaController);
+        mediaController.setAnchorView(videoView);
+        getVideo(cardView);
+
+        videoView.start();
 
         //切換至練習頁面
         btn_startPractice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                videoView.pause();
                 getDialog();
             }
         });
@@ -61,6 +71,80 @@ public class VideoActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void getVideo(String poseName){
+        String videoPath = "android.resource://" + getPackageName() + "/";
+        switch (poseName.toLowerCase()){
+            case ("warrior2"):
+                videoPath += R.raw.warrior2;
+                break;
+            case ("plank"):
+                videoPath += R.raw.plank;
+                break;
+            case ("goddess"):
+                videoPath += R.raw.goddess;
+                break;
+            case ("chair"):
+                videoPath += R.raw.chair;
+                break;
+            case ("downdog"):
+                videoPath += R.raw.downdog;
+                break;
+            case ("four_limbed_staff"):
+                videoPath += R.raw.four_limbed_staff;
+                break;
+            case ("boat"):
+                videoPath += R.raw.boat;
+                break;
+            case ("rejuvenation"):
+                videoPath += R.raw.rejuvenation;
+                break;
+            case ("star"):
+                videoPath += R.raw.star;
+                break;
+            case ("tree"):
+                videoPath += R.raw.tree;
+                break;
+        }
+        System.out.println("videoPath:" + videoPath);
+        videoView.setVideoURI(Uri.parse(videoPath));
+    }
+
+    private void getIllustrate(String poseName){
+        String illustrate;
+        switch (poseName.toLowerCase()){
+            case ("warrior2"):
+                poseIllustrate.setText(R.string.warrior2_ill);
+                break;
+            case ("plank"):
+                illustrate = "";
+                break;
+            case ("goddess"):
+                illustrate = "";
+                break;
+            case ("chair"):
+                illustrate = "";
+                break;
+            case ("downdog"):
+                illustrate = "";
+                break;
+            case ("four_limbed_staff"):
+                illustrate = "";
+                break;
+            case ("boat"):
+                illustrate = "";
+                break;
+            case ("rejuvenation"):
+                illustrate = "";
+                break;
+            case ("star"):
+                illustrate = "";
+                break;
+            case ("tree"):
+                illustrate = "";
+                break;
+        }
     }
 
     private void getDialog() {

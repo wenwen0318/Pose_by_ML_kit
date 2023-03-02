@@ -151,7 +151,7 @@ public class PoseStandardDBHandler extends SQLiteOpenHelper {
                 null, null,
                 "90", null,
                 null));
-        this.addPoseStandard(new PoseStandard("Four-limb_Staff",
+        this.addPoseStandard(new PoseStandard("Four_Limbed_Staff",
                 "170",null,
                 "170",null,
                 "95",null,
