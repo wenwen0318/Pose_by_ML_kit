@@ -27,7 +27,7 @@
                 android:layout_height="200dp"
                 android:layout_margin="5dp"
                 android:adjustViewBounds="true"
-                app:srcCompat="@drawable/boat" />
+                app:srcCompat="@drawable/boat_b" />
 
             <TextView
                 android:id="@+id/menuName"

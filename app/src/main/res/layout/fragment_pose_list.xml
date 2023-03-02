@@ -36,7 +36,7 @@
                         android:layout_height="100dp"
                         android:layout_margin="5dp"
                         android:adjustViewBounds="true"
-                        app:srcCompat="@drawable/ic_baseline_settings_24"/>
+                        app:srcCompat="@drawable/warrior2"/>
 
                     <TextView
                         android:id="@+id/textView1"
@@ -71,7 +71,7 @@
                         android:layout_height="100dp"
                         android:layout_margin="5dp"
                         android:adjustViewBounds="true"
-                        app:srcCompat="@drawable/ic_baseline_account_circle_24" />
+                        app:srcCompat="@drawable/plank" />
 
                     <TextView
                         android:id="@+id/textView2"
@@ -106,7 +106,7 @@
                         android:layout_height="100dp"
                         android:layout_margin="5dp"
                         android:adjustViewBounds="true"
-                        app:srcCompat="@drawable/ic_baseline_home_24" />
+                        app:srcCompat="@drawable/goddess" />
 
                     <TextView
                         android:id="@+id/textView3"
@@ -141,7 +141,7 @@
                         android:layout_height="100dp"
                         android:layout_margin="5dp"
                         android:adjustViewBounds="true"
-                        app:srcCompat="@drawable/ic_baseline_settings_24" />
+                        app:srcCompat="@drawable/chair" />
 
                     <TextView
                         android:id="@+id/textView4"
@@ -176,7 +176,7 @@
                         android:layout_height="100dp"
                         android:layout_margin="5dp"
                         android:adjustViewBounds="true"
-                        app:srcCompat="@drawable/ic_baseline_account_circle_24" />
+                        app:srcCompat="@drawable/downdog" />
 
                     <TextView
                         android:id="@+id/textView5"
@@ -211,7 +211,7 @@
                         android:layout_height="100dp"
                         android:layout_margin="5dp"
                         android:adjustViewBounds="true"
-                        app:srcCompat="@drawable/ic_baseline_settings_24" />
+                        app:srcCompat="@drawable/staff" />
 
                     <TextView
                         android:id="@+id/textView6"
@@ -246,7 +246,7 @@
                         android:layout_height="100dp"
                         android:layout_margin="5dp"
                         android:adjustViewBounds="true"
-                        app:srcCompat="@drawable/ic_baseline_settings_24" />
+                        app:srcCompat="@drawable/boat_b" />
 
                     <TextView
                         android:id="@+id/textView7"
@@ -281,7 +281,7 @@
                         android:layout_height="100dp"
                         android:layout_margin="5dp"
                         android:adjustViewBounds="true"
-                        app:srcCompat="@drawable/ic_baseline_settings_24" />
+                        app:srcCompat="@drawable/rejuvenation" />
 
                     <TextView
                         android:id="@+id/textView8"
@@ -316,7 +316,7 @@
                         android:layout_height="100dp"
                         android:layout_margin="5dp"
                         android:adjustViewBounds="true"
-                        app:srcCompat="@drawable/ic_baseline_settings_24" />
+                        app:srcCompat="@drawable/star" />
 
                     <TextView
                         android:id="@+id/textView9"
@@ -351,7 +351,7 @@
                         android:layout_height="100dp"
                         android:layout_margin="5dp"
                         android:adjustViewBounds="true"
-                        app:srcCompat="@drawable/ic_baseline_settings_24" />
+                        app:srcCompat="@drawable/tree" />
 
                     <TextView
                         android:id="@+id/textView10"
