@@ -176,4 +176,11 @@
     <string name="goddess">女神式</string>
     <string name="language">繁體中文</string>
     <string name="warrior2_ill">"1.下巴內收，目光朝向右方與右手同方向。\n2.身體前側與地板保持垂直。\n3.雙手側平舉，掌心朝下。\n4.(右)大腿與地板保持平行。\n5.面對鏡頭，右膝朝右呈弓箭步，膝蓋約90度。\n6.右膝不超過右腳腳尖。\n7.左膝伸直，以身體為中垂線，左跨下約45度。\n8.面對鏡頭，左腳腳尖朝向鏡頭(前方)。\n9.右腳腳尖向右與右膝同方向。\n10.以左腳腳跟及右腳腳跟之延伸線，夾角呈約90度。\n\n優點:\n強化全身\n強化軀幹\n提高髖關節柔韌性\n收緊上臂\n提高專注力\n"</string>
+    <string name="chair">椅子式</string>
+    <string name="downdog">下犬式</string>
+    <string name="four_limbed_staff">四肢支撐</string>
+    <string name="boat">船式</string>
+    <string name="rejuvanation">回春式</string>
+    <string name="star">星式</string>
+    <string name="tree">樹式</string>
 </resources>

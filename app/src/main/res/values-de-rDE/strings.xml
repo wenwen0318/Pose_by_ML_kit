@@ -176,4 +176,11 @@
     <string name="goddess">Göttin</string>
     <string name="language">Deutsch</string>
     <string name="warrior2_ill">Det</string>
+    <string name="chair">Chair</string>
+    <string name="downdog">Downdog</string>
+    <string name="four_limbed_staff">Four-Limbed\\nstaff</string>
+    <string name="boat">Boat</string>
+    <string name="rejuvanation">Rejuvanation</string>
+    <string name="star">Star</string>
+    <string name="tree">Tree</string>
 </resources>

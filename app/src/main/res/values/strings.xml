@@ -176,6 +176,17 @@
     <string name="warrior2">Warrior 2</string>
     <string name="plank">Plank</string>
     <string name="goddess">Goddess</string>
+    <string name="chair">Chair</string>
+    <string name="downdog">Downdog</string>
+
     <string name="language">English</string>
+
     <string name="warrior2_ill">warrior2_ill</string>
+    <string name="four_limbed_staff">Four-Limbed\\nstaff</string>
+    <string name="boat">Boat</string>
+    <string name="rejuvanation">Rejuvanation</string>
+    <string name="star">Star</string>
+    <string name="tree">Tree</string>
+
+
 </resources>
