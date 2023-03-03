@@ -27,6 +27,10 @@ public class MenuActivity extends AppCompatActivity {
 
     String menuName;
 
+    TextView menuNameTextView;
+
+
+
     Dialog dialog;
     View viewDialog;
 

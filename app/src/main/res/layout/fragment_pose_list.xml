@@ -115,7 +115,7 @@
                         android:layout_gravity="center"
                         android:layout_margin="5dp"
                         android:gravity="center"
-                        android:text="Goddess"
+                        android:text="@string/goddess"
                         android:textSize="30sp" />
                 </LinearLayout>
 
@@ -150,7 +150,7 @@
                         android:layout_gravity="center"
                         android:layout_margin="5dp"
                         android:gravity="center"
-                        android:text="Chair"
+                        android:text="@string/chair"
                         android:textSize="30sp" />
                 </LinearLayout>
 
@@ -185,7 +185,7 @@
                         android:layout_gravity="center"
                         android:layout_margin="5dp"
                         android:gravity="center"
-                        android:text="DownDog"
+                        android:text="@string/downdog"
                         android:textSize="30sp" />
                 </LinearLayout>
 
@@ -220,7 +220,7 @@
                         android:layout_gravity="center"
                         android:layout_margin="5dp"
                         android:gravity="center"
-                        android:text="Four_Limbed_Staff"
+                        android:text="@string/four_limbed_staff"
                         android:textSize="30sp" />
                 </LinearLayout>
 
@@ -255,7 +255,7 @@
                         android:layout_gravity="center"
                         android:layout_margin="5dp"
                         android:gravity="center"
-                        android:text="Boat"
+                        android:text="@string/boat"
                         android:textSize="30sp" />
                 </LinearLayout>
 
@@ -290,7 +290,7 @@
                         android:layout_gravity="center"
                         android:layout_margin="5dp"
                         android:gravity="center"
-                        android:text="Rejuvenation"
+                        android:text="@string/rejuvanation"
                         android:textSize="30sp" />
                 </LinearLayout>
 
@@ -325,7 +325,7 @@
                         android:layout_gravity="center"
                         android:layout_margin="5dp"
                         android:gravity="center"
-                        android:text="Star"
+                        android:text="@string/star"
                         android:textSize="30sp" />
                 </LinearLayout>
 
@@ -360,7 +360,7 @@
                         android:layout_gravity="center"
                         android:layout_margin="5dp"
                         android:gravity="center"
-                        android:text="Tree"
+                        android:text="@string/tree"
                         android:textSize="30sp" />
                 </LinearLayout>
 

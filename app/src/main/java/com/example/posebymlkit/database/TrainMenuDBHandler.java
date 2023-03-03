@@ -102,7 +102,7 @@ public class TrainMenuDBHandler extends SQLiteOpenHelper {
     public void trainMenuInit(){
         this.addTrainMenu(new TrainMenu
                 (
-                        "推薦清單",
+                        "核心清單",
                         "Boat",30,
                         "Star",30,
                         "Tree",30,
