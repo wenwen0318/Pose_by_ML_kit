@@ -15,9 +15,8 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
-            android:layout_weight="3"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <ImageView
@@ -27,21 +26,14 @@
                 android:maxHeight="100dp"
                 android:adjustViewBounds="true" />
             <TextView
+                android:id="@+id/menuNameTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="推薦菜單1"
+                android:text=""
                 android:layout_marginTop="15dp"
                 android:layout_marginStart="20dp"
                 android:textSize="30dp"
                 android:textColor="@color/black"
-                android:textStyle="bold"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="說明"
-                android:layout_marginStart="25dp"
-                android:layout_marginTop="5dp"
                 android:textStyle="bold"/>
 
             <TextView
@@ -53,30 +45,26 @@
 
         </LinearLayout>
 
-        <LinearLayout
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_weight="6"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:orientation="vertical">
 
-            <ListView
-                android:id="@+id/listView"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/menuRecycleView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                tools:listitem="@layout/menu_pose_layout"/>
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_marginEnd="16dp"
+                app:srcCompat="@android:drawable/ic_input_add" />
 
-            </ListView>
-
-        </LinearLayout>
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_marginEnd="16dp"
-            app:layout_anchor="@id/listView"
-            app:layout_anchorGravity="bottom|end"
-            app:srcCompat="@android:drawable/ic_input_add" />
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -93,7 +81,5 @@
         </LinearLayout>
 
     </LinearLayout>
-
-
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

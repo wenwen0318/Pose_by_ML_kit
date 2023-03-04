@@ -73,6 +73,139 @@ public class TrainMenu {
     public String getMenuName(){ return this.menuName;}
     public void setMenuName(String menuName){ this.menuName = menuName;}
 
+    public String getPose(int ind){
+        String pose = "";
+        switch (ind){
+            case 1:
+                pose = getPose1();
+                break;
+            case 2:
+                pose = getPose2();
+                break;
+            case 3:
+                pose = getPose3();
+                break;
+            case 4:
+                pose = getPose4();
+                break;
+            case 5:
+                pose = getPose5();
+                break;
+            case 6:
+                pose = getPose6();
+                break;
+            case 7:
+                pose = getPose7();
+                break;
+            case 8:
+                pose = getPose8();
+                break;
+            case 9:
+                pose = getPose9();
+                break;
+            case 10:
+                pose = getPose10();
+                break;
+            case 11:
+                pose = getPose11();
+                break;
+            case 12:
+                pose = getPose12();
+                break;
+            case 13:
+                pose = getPose13();
+                break;
+            case 14:
+                pose = getPose14();
+                break;
+            case 15:
+                pose = getPose15();
+                break;
+            case 16:
+                pose = getPose16();
+                break;
+            case 17:
+                pose = getPose17();
+                break;
+            case 18:
+                pose = getPose18();
+                break;
+            case 19:
+                pose = getPose19();
+                break;
+            case 20:
+                pose = getPose20();
+                break;
+        }
+        return pose;
+    }
+    public int getTime(int ind){
+        int time = 0;
+        switch (ind){
+            case 1:
+                time = getTime1();
+                break;
+            case 2:
+                time = getTime2();
+                break;
+            case 3:
+                time = getTime3();
+                break;
+            case 4:
+                time = getTime4();
+                break;
+            case 5:
+                time = getTime5();
+                break;
+            case 6:
+                time = getTime6();
+                break;
+            case 7:
+                time = getTime7();
+                break;
+            case 8:
+                time = getTime8();
+                break;
+            case 9:
+                time = getTime9();
+                break;
+            case 10:
+                time = getTime10();
+                break;
+            case 11:
+                time = getTime11();
+                break;
+            case 12:
+                time = getTime12();
+                break;
+            case 13:
+                time = getTime13();
+                break;
+            case 14:
+                time = getTime14();
+                break;
+            case 15:
+                time = getTime15();
+                break;
+            case 16:
+                time = getTime16();
+                break;
+            case 17:
+                time = getTime17();
+                break;
+            case 18:
+                time = getTime18();
+                break;
+            case 19:
+                time = getTime19();
+                break;
+            case 20:
+                time = getTime20();
+                break;
+        }
+        return time;
+    }
+
     public String getPose1(){ return this.pose1;}
     public void setPose1(String pose1){ this.pose1 = pose1;}
     public int getTime1(){ return this.time1;}
@@ -99,7 +232,7 @@ public class TrainMenu {
     public void setTime5(int time5){ this.time5 = time5;}
 
     public String getPose6(){ return this.pose6;}
-    public void setPose6(String pose1){ this.pose6 = pose6;}
+    public void setPose6(String pose6){ this.pose6 = pose6;}
     public int getTime6(){ return this.time6;}
     public void setTime6(int time6){ this.time6 = time6;}
 

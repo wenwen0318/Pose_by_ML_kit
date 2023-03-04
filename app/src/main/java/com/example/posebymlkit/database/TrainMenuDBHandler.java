@@ -150,6 +150,31 @@ public class TrainMenuDBHandler extends SQLiteOpenHelper {
                         "Boat",30
                 )
         );
+        this.addTrainMenu(new TrainMenu
+                (
+                        "測試清單2",
+                        "Boat",30,
+                        "Star",30,
+                        "Tree",30,
+                        "Boat",30,
+                        "Boat",30,
+                        "Boat",30,
+                        "Boat",30,
+                        "Boat",30,
+                        "Boat",30,
+                        null,0,
+                        null,0,
+                        null,0,
+                        null,0,
+                        null,0,
+                        null,0,
+                        null,0,
+                        null,0,
+                        null,0,
+                        null,0,
+                        null,0
+                )
+        );
     }
 
     // code to add the new contact
