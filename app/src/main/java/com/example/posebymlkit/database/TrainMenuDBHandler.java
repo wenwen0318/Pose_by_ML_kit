@@ -102,27 +102,27 @@ public class TrainMenuDBHandler extends SQLiteOpenHelper {
     public void trainMenuInit(){
         this.addTrainMenu(new TrainMenu
                 (
-                        "核心清單",
+                        "核心訓練清單",
+                        "Plank",30,
+                        "Rest",30,
+                        "Plank",30,
+                        "Rest",30,
+                        "DownDog",30,
+                        "Rest",30,
+                        "DownDog",30,
+                        "Rest",30,
+                        "Four_Limbed_Staff",30,
+                        "Rest",30,
+                        "Four_Limbed_Staff",30,
+                        "Rest",30,
+                        "Rejuvenation",30,
+                        "Rest",30,
+                        "Rejuvenation",30,
+                        "Rest",30,
                         "Boat",30,
-                        "Star",30,
-                        "Tree",30,
+                        "Rest",30,
                         "Boat",30,
-                        "Boat",30,
-                        "Boat",30,
-                        "Boat",30,
-                        "Boat",30,
-                        "Boat",30,
-                        "Boat",30,
-                        "Boat",30,
-                        "Boat",30,
-                        "Boat",30,
-                        "Boat",30,
-                        "Boat",30,
-                        "Boat",30,
-                        "Boat",30,
-                        "Boat",30,
-                        "Boat",30,
-                        "Boat",30
+                        "Rest",30
                 )
         );
         this.addTrainMenu(new TrainMenu
