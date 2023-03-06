@@ -180,7 +180,20 @@
     <string name="downdog">下犬式</string>
     <string name="four_limbed_staff">四肢支撐</string>
     <string name="boat">船式</string>
-    <string name="rejuvanation">回春式</string>
+    <string name="rejuvenation">回春式</string>
     <string name="star">星式</string>
     <string name="tree">樹式</string>
+
+    <string-array name="poseSpinner">
+        <item>勇士二式</item>
+        <item>平板式</item>
+        <item>女神式</item>
+        <item>椅子式</item>
+        <item>下犬式</item>
+        <item>四肢支撐</item>
+        <item>船式</item>
+        <item>回春式</item>
+        <item>星式</item>
+        <item>樹式</item>
+    </string-array>
 </resources>

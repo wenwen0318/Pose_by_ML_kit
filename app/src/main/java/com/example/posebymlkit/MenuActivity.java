@@ -13,12 +13,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.RadioButton;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.posebymlkit.database.TrainMenu;
 import com.example.posebymlkit.database.TrainMenuDBHandler;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,12 +41,18 @@ public class MenuActivity extends AppCompatActivity {
     MyListAdapter menuListAdapter;
     ArrayList<HashMap<String,String>> arrayList = new ArrayList<>();
 
-    Dialog dialog;
-    View viewDialog;
-
+    Dialog startDialog;
+    View viewStartDialog;
     RadioButton btn_easy,btn_hard;
     Button btn_cancel,btn_check;
 
+    Dialog addPoseDialog;
+    View viewAddPoseDialog;
+    Spinner poseSpinner;
+    TextView timeSet;
+    Button btn_timeSub,btn_timeAdd,btn_addPose_cancel,btn_addPose_check;
+
+    TrainMenu trainMenu;
     TrainMenuDBHandler tm = new TrainMenuDBHandler(this);
 
     int userLevel = 3;
@@ -54,7 +64,6 @@ public class MenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_pose);
 
-
         intent = new Intent();
         bundle = getIntent().getExtras();
         menuName = bundle.getString("menuName");
@@ -62,16 +71,19 @@ public class MenuActivity extends AppCompatActivity {
         menuNameTextView = findViewById(R.id.menuNameTextView);
         menuNameTextView.setText(menuName);
 
-        TrainMenu trainMenu = tm.getMenu(menuName);
+        trainMenu = tm.getMenu(menuName);
+
         for (int i = 1;i<=20;i++){
             HashMap<String,String> hashMap = new HashMap<>();
-            if (trainMenu.getPose(i) != null){
-                hashMap.put("num",String.format("%02d",i));
-                hashMap.put("poseName",trainMenu.getPose(i));
-                hashMap.put("poseTime",trainMenu.getTime(i) + "s");
-                System.out.println(hashMap);
-                arrayList.add(hashMap);
+            if (trainMenu.getPose(i) == null){
+                break;
             }
+            hashMap.put("num",String.format("%02d",i));
+            hashMap.put("poseName",trainMenu.getPose(i));
+            hashMap.put("poseTime",trainMenu.getTime(i) + "s");
+            System.out.println(hashMap);
+            arrayList.add(hashMap);
+            menuLength = i;
         }
 
         menuRecyclerView = findViewById(R.id.menuRecycleView);
@@ -80,13 +92,32 @@ public class MenuActivity extends AppCompatActivity {
         menuListAdapter = new MyListAdapter();
         menuRecyclerView.setAdapter(menuListAdapter);
 
+        FloatingActionButton fab = findViewById(R.id.fab);
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (menuLength < 20){
+                    intent.setClass(MenuActivity.this, AddPoseActivity.class);
+                    bundle.putString("menuName", menuName);
+                    bundle.putInt("menuLength", menuLength+1);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                    finish();
+                }
+                else {
+                    Toast.makeText(MenuActivity.this,"清單已滿",Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+
         Button btn_startPractice = findViewById(R.id.btn_startPractice_menu);
 
-        //開始練習
         btn_startPractice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getDialog();
+                getStartDialog();
             }
         });
     }
@@ -128,16 +159,16 @@ public class MenuActivity extends AppCompatActivity {
         }
     }
 
-    private void getDialog() {
-        dialog = new Dialog(MenuActivity.this);
+    private void getStartDialog() {
+        startDialog = new Dialog(MenuActivity.this);
 
-        viewDialog = getLayoutInflater().inflate(R.layout.menu_dialog_layout , null);
-        dialog.setContentView(viewDialog);
+        viewStartDialog = getLayoutInflater().inflate(R.layout.menu_dialog_layout , null);
+        startDialog.setContentView(viewStartDialog);
 
-        btn_easy = viewDialog.findViewById(R.id.btn_easy);
-        btn_hard = viewDialog.findViewById(R.id.btn_hard);
-        btn_cancel = viewDialog.findViewById(R.id.cancel);
-        btn_check  = viewDialog.findViewById(R.id.check);
+        btn_easy = viewStartDialog.findViewById(R.id.btn_easy);
+        btn_hard = viewStartDialog.findViewById(R.id.btn_hard);
+        btn_cancel = viewStartDialog.findViewById(R.id.cancel);
+        btn_check  = viewStartDialog.findViewById(R.id.check);
         bundle = getIntent().getExtras();
         menuLength = bundle.getInt("menuLength");
         menu = bundle.getIntArray("myMenu");
@@ -146,7 +177,7 @@ public class MenuActivity extends AppCompatActivity {
         }
         System.out.println("menuIn : "+menuLength);
 
-        dialog.show();
+        startDialog.show();
         btn_easy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -163,7 +194,7 @@ public class MenuActivity extends AppCompatActivity {
         btn_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialog.dismiss();
+                startDialog.dismiss();
             }
         });
         btn_check.setOnClickListener(new View.OnClickListener() {
@@ -178,8 +209,9 @@ public class MenuActivity extends AppCompatActivity {
                 bundle.putInt("menuLength", menuLength);
                 intent.putExtras(bundle);
                 startActivity(intent);
-                dialog.dismiss();
+                startDialog.dismiss();
             }
         });
     }
+
 }

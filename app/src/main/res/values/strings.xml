@@ -178,15 +178,26 @@
     <string name="goddess">Goddess</string>
     <string name="chair">Chair</string>
     <string name="downdog">Downdog</string>
+    <string name="four_limbed_staff">Four-Limbed\\nstaff</string>
+    <string name="boat">Boat</string>
+    <string name="rejuvenation">Rejuvenation</string>
+    <string name="star">Star</string>
+    <string name="tree">Tree</string>
 
     <string name="language">English</string>
 
     <string name="warrior2_ill">warrior2_ill</string>
-    <string name="four_limbed_staff">Four-Limbed\\nstaff</string>
-    <string name="boat">Boat</string>
-    <string name="rejuvanation">Rejuvanation</string>
-    <string name="star">Star</string>
-    <string name="tree">Tree</string>
 
-
+    <string-array name="poseSpinner">
+        <item>Warrior 2</item>
+        <item>Plank</item>
+        <item>Goddess</item>
+        <item>Chair</item>
+        <item>Downdog</item>
+        <item>Four-Limbed staff</item>
+        <item>Boat</item>
+        <item>Rejuvenation</item>
+        <item>Star</item>
+        <item>Tree</item>
+    </string-array>
 </resources>
