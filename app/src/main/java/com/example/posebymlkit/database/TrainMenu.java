@@ -205,6 +205,134 @@ public class TrainMenu {
         }
         return time;
     }
+    public void setPose(int ind,String pose){
+        switch (ind){
+            case 1:
+                setPose1(pose);
+                break;
+            case 2:
+                setPose2(pose);
+                break;
+            case 3:
+                setPose3(pose);
+                break;
+            case 4:
+                setPose4(pose);
+                break;
+            case 5:
+                setPose5(pose);
+                break;
+            case 6:
+                setPose6(pose);
+                break;
+            case 7:
+                setPose7(pose);
+                break;
+            case 8:
+                setPose8(pose);
+                break;
+            case 9:
+                setPose9(pose);
+                break;
+            case 10:
+                setPose10(pose);
+                break;
+            case 11:
+                setPose11(pose);
+                break;
+            case 12:
+                setPose12(pose);
+                break;
+            case 13:
+                setPose13(pose);
+                break;
+            case 14:
+                setPose14(pose);
+                break;
+            case 15:
+                setPose15(pose);
+                break;
+            case 16:
+                setPose16(pose);
+                break;
+            case 17:
+                setPose17(pose);
+                break;
+            case 18:
+                setPose18(pose);
+                break;
+            case 19:
+                setPose19(pose);
+                break;
+            case 20:
+                setPose20(pose);
+                break;
+        }
+    }
+    public void setTime(int ind,int time){
+        switch (ind){
+            case 1:
+                setTime1(time);
+                break;
+            case 2:
+                setTime2(time);
+                break;
+            case 3:
+                setTime3(time);
+                break;
+            case 4:
+                setTime4(time);
+                break;
+            case 5:
+                setTime5(time);
+                break;
+            case 6:
+                setTime6(time);
+                break;
+            case 7:
+                setTime7(time);
+                break;
+            case 8:
+                setTime8(time);
+                break;
+            case 9:
+                setTime9(time);
+                break;
+            case 10:
+                setTime10(time);
+                break;
+            case 11:
+                setTime11(time);
+                break;
+            case 12:
+                setTime12(time);
+                break;
+            case 13:
+                setTime13(time);
+                break;
+            case 14:
+                setTime14(time);
+                break;
+            case 15:
+                setTime15(time);
+                break;
+            case 16:
+                setTime16(time);
+                break;
+            case 17:
+                setTime17(time);
+                break;
+            case 18:
+                setTime18(time);
+                break;
+            case 19:
+                setTime19(time);
+                break;
+            case 20:
+                setTime20(time);
+                break;
+        }
+    }
 
     public String getPose1(){ return this.pose1;}
     public void setPose1(String pose1){ this.pose1 = pose1;}
