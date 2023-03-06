@@ -189,12 +189,12 @@
     <string name="warrior2_ill">warrior2_ill</string>
 
     <string-array name="poseSpinner">
-        <item>Warrior 2</item>
+        <item>Warrior2</item>
         <item>Plank</item>
         <item>Goddess</item>
         <item>Chair</item>
         <item>Downdog</item>
-        <item>Four-Limbed staff</item>
+        <item>Four_Limbed_staff</item>
         <item>Boat</item>
         <item>Rejuvenation</item>
         <item>Star</item>

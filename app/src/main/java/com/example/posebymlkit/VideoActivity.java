@@ -75,75 +75,23 @@ public class VideoActivity extends AppCompatActivity {
 
     private void getVideo(String poseName){
         String videoPath = "android.resource://" + getPackageName() + "/";
-        switch (poseName.toLowerCase()){
-            case ("warrior2"):
-                videoPath += R.raw.warrior2;
-                break;
-            case ("plank"):
-                videoPath += R.raw.plank;
-                break;
-            case ("goddess"):
-                videoPath += R.raw.goddess;
-                break;
-            case ("chair"):
-                videoPath += R.raw.chair;
-                break;
-            case ("downdog"):
-                videoPath += R.raw.downdog;
-                break;
-            case ("four_limbed_staff"):
-                videoPath += R.raw.four_limbed_staff;
-                break;
-            case ("boat"):
-                videoPath += R.raw.boat;
-                break;
-            case ("rejuvenation"):
-                videoPath += R.raw.rejuvenation;
-                break;
-            case ("star"):
-                videoPath += R.raw.star;
-                break;
-            case ("tree"):
-                videoPath += R.raw.tree;
-                break;
-        }
+        int videoID = getApplicationContext().getResources().getIdentifier(
+                poseName.toLowerCase(),
+                "raw",
+                getPackageName());
+        videoPath += videoID;
         System.out.println("videoPath:" + videoPath);
         videoView.setVideoURI(Uri.parse(videoPath));
     }
 
     private void getIllustrate(String poseName){
-        String illustrate;
-        switch (poseName.toLowerCase()){
-            case ("warrior2"):
-                poseIllustrate.setText(R.string.warrior2_ill);
-                break;
-            case ("plank"):
-                illustrate = "";
-                break;
-            case ("goddess"):
-                illustrate = "";
-                break;
-            case ("chair"):
-                illustrate = "";
-                break;
-            case ("downdog"):
-                illustrate = "";
-                break;
-            case ("four_limbed_staff"):
-                illustrate = "";
-                break;
-            case ("boat"):
-                illustrate = "";
-                break;
-            case ("rejuvenation"):
-                illustrate = "";
-                break;
-            case ("star"):
-                illustrate = "";
-                break;
-            case ("tree"):
-                illustrate = "";
-                break;
+        int stringID = getApplicationContext().getResources().getIdentifier(
+                poseName.toLowerCase() + "_ill",
+                "string",
+                getPackageName());
+        System.out.println("String ID:" + stringID);
+        if (stringID != 0){
+            poseIllustrate.setText(stringID);
         }
     }
 
