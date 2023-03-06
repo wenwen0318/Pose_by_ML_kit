@@ -9,12 +9,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -127,12 +129,14 @@ public class MenuActivity extends AppCompatActivity {
         class ViewHolder extends RecyclerView.ViewHolder{
 
             private final TextView poseNum,poseName,poseTime;
+            ImageView poseImage;
 
             public ViewHolder(@NonNull View itemView) {
                 super(itemView);
                 poseNum = itemView.findViewById(R.id.poseNum);
                 poseName = itemView.findViewById(R.id.poseName);
                 poseTime = itemView.findViewById(R.id.poseTime);
+                poseImage = itemView.findViewById(R.id.poseImg);
             }
         }
 
@@ -147,9 +151,14 @@ public class MenuActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(@NonNull MyListAdapter.ViewHolder holder, int position) {
 
+            int resId = getApplicationContext().getResources().getIdentifier(
+                            arrayList.get(position).get("poseName").toLowerCase(),
+                            "drawable",
+                            getPackageName());
             holder.poseNum.setText(arrayList.get(position).get("num"));
             holder.poseName.setText(arrayList.get(position).get("poseName"));
             holder.poseTime.setText(arrayList.get(position).get("poseTime"));
+            holder.poseImage.setImageResource(resId);
 
         }
 

@@ -246,7 +246,7 @@
                         android:layout_height="100dp"
                         android:layout_margin="5dp"
                         android:adjustViewBounds="true"
-                        app:srcCompat="@drawable/boat_b" />
+                        app:srcCompat="@drawable/boat" />
 
                     <TextView
                         android:id="@+id/textView7"
