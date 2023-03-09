@@ -16,8 +16,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -44,6 +46,8 @@ public class MenuActivity extends AppCompatActivity {
     RecyclerView menuRecyclerView;
     MyListAdapter menuListAdapter;
     ArrayList<HashMap<String,String>> arrayList = new ArrayList<>();
+
+    FloatingActionButton fab;
 
     Dialog startDialog;
     View viewStartDialog;
@@ -91,7 +95,7 @@ public class MenuActivity extends AppCompatActivity {
         menuRecyclerView.setAdapter(menuListAdapter);
         recyclerViewAction(menuRecyclerView, trainMenu, menuListAdapter);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
+        fab = findViewById(R.id.fab);
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -166,7 +170,11 @@ public class MenuActivity extends AppCompatActivity {
             holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    getEditDialog();
+                    intent.setClass(MenuActivity.this, AddPoseActivity.class);
+                    bundle.putString("menuName", menuName);
+                    bundle.putInt("menuLength", position+1);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
                     return false;
                 }
             });
@@ -208,10 +216,6 @@ public class MenuActivity extends AppCompatActivity {
             }
         });
         helper.attachToRecyclerView(recyclerView);
-    }
-
-    private void getEditDialog(){
-        Toast.makeText(MenuActivity.this,"長按",Toast.LENGTH_LONG).show();
     }
 
     private void getStartDialog() {

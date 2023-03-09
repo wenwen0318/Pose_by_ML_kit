@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.MediaController;
 import android.widget.RadioButton;
@@ -52,8 +53,6 @@ public class VideoActivity extends AppCompatActivity {
         videoView.setMediaController(mediaController);
         mediaController.setAnchorView(videoView);
         getVideo(cardView);
-
-        videoView.start();
 
         //切換至練習頁面
         btn_startPractice.setOnClickListener(new View.OnClickListener() {
