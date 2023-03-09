@@ -200,4 +200,5 @@
         <item>Star</item>
         <item>Tree</item>
     </string-array>
+    <string name="plank_ill">plank_ill</string>
 </resources>

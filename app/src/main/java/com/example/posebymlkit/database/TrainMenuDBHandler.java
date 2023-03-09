@@ -127,7 +127,7 @@ public class TrainMenuDBHandler extends SQLiteOpenHelper {
         );
         this.addTrainMenu(new TrainMenu
                 (
-                        "推薦清單2",
+                        "手臂訓練清單",
                         "Boat",30,
                         "Star",30,
                         "Tree",30,
@@ -152,7 +152,7 @@ public class TrainMenuDBHandler extends SQLiteOpenHelper {
         );
         this.addTrainMenu(new TrainMenu
                 (
-                        "測試清單2",
+                        "大腿訓練清單",
                         "Warrior2",30,
                         "Plank",30,
                         "Goddess",30,

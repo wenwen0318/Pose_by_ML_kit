@@ -29,7 +29,7 @@
                 android:layout_height="200dp"
                 android:layout_margin="5dp"
                 android:adjustViewBounds="true"
-                app:srcCompat="@drawable/boat" />
+                app:srcCompat="@drawable/anya" />
 
             <View
                 android:layout_width="match_parent"
