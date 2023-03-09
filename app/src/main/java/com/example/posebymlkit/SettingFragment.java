@@ -55,6 +55,7 @@ public class SettingFragment extends Fragment {
 
     Intent intent = new Intent();
     Button historyBtn;
+    Button removeSqlBtn;
     Button mailBtn;
 
     @Override
@@ -78,6 +79,14 @@ public class SettingFragment extends Fragment {
             public void onClick(View v) {
                 intent.setClass(SettingFragment.this.getContext(), HistoryListActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        removeSqlBtn = view.findViewById(R.id.removeSQL);
+        removeSqlBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
 

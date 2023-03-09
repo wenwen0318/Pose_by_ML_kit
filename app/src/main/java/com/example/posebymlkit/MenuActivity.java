@@ -3,6 +3,7 @@ package com.example.posebymlkit;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -27,6 +28,7 @@ import com.example.posebymlkit.database.TrainMenuDBHandler;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 public class MenuActivity extends AppCompatActivity {
@@ -47,12 +49,6 @@ public class MenuActivity extends AppCompatActivity {
     View viewStartDialog;
     RadioButton btn_easy,btn_hard;
     Button btn_cancel,btn_check;
-
-    Dialog addPoseDialog;
-    View viewAddPoseDialog;
-    Spinner poseSpinner;
-    TextView timeSet;
-    Button btn_timeSub,btn_timeAdd,btn_addPose_cancel,btn_addPose_check;
 
     TrainMenu trainMenu;
     TrainMenuDBHandler tm = new TrainMenuDBHandler(this);
@@ -93,6 +89,7 @@ public class MenuActivity extends AppCompatActivity {
         menuRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         menuListAdapter = new MyListAdapter();
         menuRecyclerView.setAdapter(menuListAdapter);
+        recyclerViewAction(menuRecyclerView, trainMenu, menuListAdapter);
 
         FloatingActionButton fab = findViewById(R.id.fab);
 
@@ -160,12 +157,61 @@ public class MenuActivity extends AppCompatActivity {
             holder.poseTime.setText(arrayList.get(position).get("poseTime"));
             holder.poseImage.setImageResource(resId);
 
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
+            holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    getEditDialog();
+                    return false;
+                }
+            });
+
         }
 
         @Override
         public int getItemCount() {
             return arrayList.size();
         }
+
+    }
+
+    private void recyclerViewAction(RecyclerView recyclerView, final TrainMenu trainMenu, final MyListAdapter myAdapter){
+        ItemTouchHelper helper = new ItemTouchHelper(new ItemTouchHelper.Callback() {
+            @Override
+            public int getMovementFlags(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
+                return makeMovementFlags(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT); //RecyclerView操作類型
+            }
+
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                //管理滑動情形
+                int position = viewHolder.getAdapterPosition();
+                switch (direction) {
+                    case ItemTouchHelper.LEFT:
+                    case ItemTouchHelper.RIGHT:
+                        arrayList.remove(position);
+                        trainMenu.remove(position);
+                        tm.updateTrainMenu(trainMenu);
+                        myAdapter.notifyItemRemoved(position);
+                        break;
+                }
+            }
+        });
+        helper.attachToRecyclerView(recyclerView);
+    }
+
+    private void getEditDialog(){
+        Toast.makeText(MenuActivity.this,"長按",Toast.LENGTH_LONG).show();
     }
 
     private void getStartDialog() {

@@ -22,6 +22,15 @@
             android:text="\n 歷史紀錄 \n"
             android:background="@drawable/roundbtn" />
         <Button
+            android:id="@+id/removeSQL"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:text="\n 清除資料 \n"
+            android:background="@drawable/roundbtn" />
+        <Button
             android:id="@+id/illBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -70,9 +70,6 @@ public class TrainMenu {
         this.pose20 = pose20; this.time20 = time20;
     }
 
-    public String getMenuName(){ return this.menuName;}
-    public void setMenuName(String menuName){ this.menuName = menuName;}
-
     public String getPose(int ind){
         String pose = "";
         switch (ind){
@@ -136,6 +133,8 @@ public class TrainMenu {
             case 20:
                 pose = getPose20();
                 break;
+            default:
+                pose = null;
         }
         return pose;
     }
@@ -202,6 +201,7 @@ public class TrainMenu {
             case 20:
                 time = getTime20();
                 break;
+            default:
         }
         return time;
     }
@@ -333,6 +333,38 @@ public class TrainMenu {
                 break;
         }
     }
+
+    public void swap(int position_dragged, int position_target){
+        position_dragged += 1;
+        position_target += 1;
+        String poseDragged = getPose(position_dragged);
+        int timeDragged = getTime(position_dragged);
+        String poseTarget = getPose(position_target);
+        int timeTarget = getTime(position_target);
+        System.out.println(position_dragged + poseDragged + timeDragged);
+        System.out.println(position_target + poseTarget + timeTarget);
+        setPose(position_dragged,poseTarget);
+        setTime(position_dragged,timeTarget);
+        setPose(position_target,poseDragged);
+        setTime(position_target,timeDragged);
+    }
+    public void remove(int ind){
+        for (int i = ind + 1; i <= 20; i++){
+            setPose(i,getPose(i+1));
+            setTime(i,getTime(i+1));
+
+        }
+    }
+    public void show(){
+        System.out.println(getMenuName());
+        for (int i = 1; i <= 20; i++){
+            System.out.print(getPose(i) + " ");
+            System.out.println(getTime(i));
+        }
+    }
+
+    public String getMenuName(){ return this.menuName;}
+    public void setMenuName(String menuName){ this.menuName = menuName;}
 
     public String getPose1(){ return this.pose1;}
     public void setPose1(String pose1){ this.pose1 = pose1;}
