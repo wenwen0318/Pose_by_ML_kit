@@ -184,4 +184,12 @@
     <string name="star">Star</string>
     <string name="tree">Tree</string>
     <string name="plank_ill">plank</string>
+    <string name="goddess_ill">goddess</string>
+    <string name="chair_ill">chair</string>
+    <string name="downdog_ill">downdog</string>
+    <string name="four_limbed_staff_ill">four_limbed_staff</string>
+    <string name="boat_ill">boat</string>
+    <string name="rejuvenation_ill">rejuvenation</string>
+    <string name="star_ill">star</string>
+    <string name="tree_ill">tree</string>
 </resources>
