@@ -81,10 +81,6 @@ public class AddPoseActivity extends AppCompatActivity {
         btn_addPose_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                intent.setClass(AddPoseActivity.this, MenuActivity.class);
-                bundle.putString("menuName", menuName);
-                intent.putExtras(bundle);
-                startActivity(intent);
                 finish();
             }
         });
@@ -95,12 +91,7 @@ public class AddPoseActivity extends AppCompatActivity {
                 trainMenu.setPose(menuLength,pose[0]);
                 trainMenu.setTime(menuLength,Integer.parseInt(timeSet.getText().toString()));
                 tm.updateTrainMenu(trainMenu);
-                intent.setClass(AddPoseActivity.this, MenuActivity.class);
-                bundle.putString("menuName", menuName);
-                intent.putExtras(bundle);
-                startActivity(intent);
                 finish();
-
             }
         });
     }

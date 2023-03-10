@@ -19,6 +19,7 @@ import com.example.posebymlkit.database.HistoricalRecord;
 import com.example.posebymlkit.database.HistoricalRecordDBHandler;
 import com.example.posebymlkit.database.TrainMenu;
 import com.example.posebymlkit.database.TrainMenuDBHandler;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -36,10 +37,10 @@ public class TrainMenuFragment extends Fragment {
     ListView menuListView;
     SimpleAdapter simpleAdapter;
 
-    List<TrainMenu> trainMenu;
-    TrainMenuDBHandler tm;
+    FloatingActionButton fab;
 
-    int [] poseMenu;
+    ArrayList<String> menuNames;
+    TrainMenuDBHandler tm;
 
     public TrainMenuFragment() {
 
@@ -63,9 +64,6 @@ public class TrainMenuFragment extends Fragment {
         }
     }
 
-    int easy = 3;
-    int hard = 2;
-
     Intent intent = new Intent();
     Bundle bundle = new Bundle();
 
@@ -78,16 +76,14 @@ public class TrainMenuFragment extends Fragment {
         menuListView = view.findViewById(R.id.menuListView);
 
         tm = new TrainMenuDBHandler(getActivity());
-
-        trainMenu = tm.getAllTrainMenu();
-        Collections.reverse(trainMenu);
+        menuNames = tm.getAllTrainMenuName();
 
         final ArrayList<HashMap<String, String>> arrayList = new ArrayList<>();
 
-        for (TrainMenu menu:trainMenu) {
+        for (String menuName:menuNames) {
             HashMap<String, String> hashMap = new HashMap<>();
-            Log.d("menu:", menu.getMenuName());
-            hashMap.put("menuName", menu.getMenuName());
+            Log.d("menu:", menuName);
+            hashMap.put("menuName", menuName);
             arrayList.add(hashMap);
         }
         String[] from = {"menuName"};
@@ -97,6 +93,15 @@ public class TrainMenuFragment extends Fragment {
         menuListView.setAdapter(simpleAdapter);
 
         menuListView.setOnItemClickListener(onItemClickListener);
+
+        fab = view.findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intent.setClass(getActivity(),AddMenuActivity.class);
+                startActivity(intent);
+            }
+        });
 
         return view;
     }

@@ -7,21 +7,17 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.RadioButton;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,7 +26,6 @@ import com.example.posebymlkit.database.TrainMenuDBHandler;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 
 public class MenuActivity extends AppCompatActivity {
@@ -73,27 +68,14 @@ public class MenuActivity extends AppCompatActivity {
         menuNameTextView = findViewById(R.id.menuNameTextView);
         menuNameTextView.setText(menuName);
 
-        trainMenu = tm.getMenu(menuName);
-
-        for (int i = 1;i<=20;i++){
-            HashMap<String,String> hashMap = new HashMap<>();
-            if (trainMenu.getPose(i) == null){
-                break;
-            }
-            hashMap.put("num",String.format("%02d",i));
-            hashMap.put("poseName",trainMenu.getPose(i));
-            hashMap.put("poseTime",trainMenu.getTime(i) + "s");
-            System.out.println(hashMap);
-            arrayList.add(hashMap);
-            menuLength = i;
-        }
+        getMenuToList();
 
         menuRecyclerView = findViewById(R.id.menuRecycleView);
         menuRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         menuRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         menuListAdapter = new MyListAdapter();
         menuRecyclerView.setAdapter(menuListAdapter);
-        recyclerViewAction(menuRecyclerView, trainMenu, menuListAdapter);
+        recyclerViewAction(menuRecyclerView, menuListAdapter);
 
         fab = findViewById(R.id.fab);
 
@@ -106,7 +88,6 @@ public class MenuActivity extends AppCompatActivity {
                     bundle.putInt("menuLength", menuLength+1);
                     intent.putExtras(bundle);
                     startActivity(intent);
-                    finish();
                 }
                 else {
                     Toast.makeText(MenuActivity.this,"清單已滿",Toast.LENGTH_LONG).show();
@@ -123,6 +104,31 @@ public class MenuActivity extends AppCompatActivity {
                 getStartDialog();
             }
         });
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getMenuToList();
+        menuListAdapter.notifyDataSetChanged();
+    }
+
+    private void getMenuToList(){
+        menuLength = 0;
+        trainMenu = tm.getMenu(menuName);
+        arrayList.clear();
+        for (int i = 1;i<=20;i++){
+            HashMap<String,String> hashMap = new HashMap<>();
+            if (trainMenu.getPose(i) == null){
+                break;
+            }
+            hashMap.put("num",String.format("%02d",i));
+            hashMap.put("poseName",trainMenu.getPose(i));
+            hashMap.put("poseTime",trainMenu.getTime(i) + "s");
+            arrayList.add(hashMap);
+            menuLength = i;
+        }
     }
 
     private class MyListAdapter extends RecyclerView.Adapter<MyListAdapter.ViewHolder>{
@@ -188,7 +194,7 @@ public class MenuActivity extends AppCompatActivity {
 
     }
 
-    private void recyclerViewAction(RecyclerView recyclerView, final TrainMenu trainMenu, final MyListAdapter myAdapter){
+    private void recyclerViewAction(RecyclerView recyclerView, final MyListAdapter myAdapter){
         ItemTouchHelper helper = new ItemTouchHelper(new ItemTouchHelper.Callback() {
             @Override
             public int getMovementFlags(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
@@ -200,6 +206,7 @@ public class MenuActivity extends AppCompatActivity {
                 return false;
             }
 
+            @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 //管理滑動情形
@@ -207,10 +214,11 @@ public class MenuActivity extends AppCompatActivity {
                 switch (direction) {
                     case ItemTouchHelper.LEFT:
                     case ItemTouchHelper.RIGHT:
-                        arrayList.remove(position);
                         trainMenu.remove(position);
                         tm.updateTrainMenu(trainMenu);
+                        getMenuToList();
                         myAdapter.notifyItemRemoved(position);
+                        myAdapter.notifyDataSetChanged();
                         break;
                 }
             }
@@ -234,7 +242,6 @@ public class MenuActivity extends AppCompatActivity {
         for(int i=0;i<menuLength;i++){
             Log.i("MenuActivity", ""+menu[i]);
         }
-        System.out.println("menuIn : "+menuLength);
 
         startDialog.show();
         btn_easy.setOnClickListener(new View.OnClickListener() {

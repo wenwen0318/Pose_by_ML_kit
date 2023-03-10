@@ -334,33 +334,18 @@ public class TrainMenu {
         }
     }
 
-    public void swap(int position_dragged, int position_target){
-        position_dragged += 1;
-        position_target += 1;
-        String poseDragged = getPose(position_dragged);
-        int timeDragged = getTime(position_dragged);
-        String poseTarget = getPose(position_target);
-        int timeTarget = getTime(position_target);
-        System.out.println(position_dragged + poseDragged + timeDragged);
-        System.out.println(position_target + poseTarget + timeTarget);
-        setPose(position_dragged,poseTarget);
-        setTime(position_dragged,timeTarget);
-        setPose(position_target,poseDragged);
-        setTime(position_target,timeDragged);
-    }
     public void remove(int ind){
         for (int i = ind + 1; i <= 20; i++){
             setPose(i,getPose(i+1));
             setTime(i,getTime(i+1));
-
         }
     }
     public void show(){
         System.out.println(getMenuName());
         for (int i = 1; i <= 20; i++){
-            System.out.print(getPose(i) + " ");
-            System.out.println(getTime(i));
+            System.out.print(i + " " + getPose(i) + " " + getTime(i) + "|");
         }
+        System.out.println();
     }
 
     public String getMenuName(){ return this.menuName;}

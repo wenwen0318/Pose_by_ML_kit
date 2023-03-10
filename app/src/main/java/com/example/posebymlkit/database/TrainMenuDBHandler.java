@@ -285,6 +285,22 @@ public class TrainMenuDBHandler extends SQLiteOpenHelper {
         return trainMenus;
     }
 
+    public ArrayList<String> getAllTrainMenuName(){
+        ArrayList<String> menuNames = new ArrayList<String>();
+
+        String selectQuery = "SELECT " + KEY_MENU_NAME + " FROM " + TABLE_TRAIN_MENU;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                menuNames.add(cursor.getString(0));
+            }while (cursor.moveToNext());
+        }
+        return menuNames;
+    }
+
     // code to update the single contact
     public int updateTrainMenu(TrainMenu trainMenu) {
         SQLiteDatabase db = this.getWritableDatabase();
