@@ -186,8 +186,6 @@
 
     <string name="language">English</string>
 
-    <string name="warrior2_ill">warrior2_ill</string>
-
     <string-array name="poseSpinner">
         <item>Warrior2</item>
         <item>Plank</item>
@@ -199,6 +197,18 @@
         <item>Rejuvenation</item>
         <item>Star</item>
         <item>Tree</item>
+        <item>Rest</item>
     </string-array>
+
+    <string name="warrior2_ill">warrior2_ill</string>
     <string name="plank_ill">plank_ill</string>
+    <string name="goddess_ill">goddess_ill</string>
+    <string name="chair_ill">chair_ill</string>
+    <string name="downdog_ill">downdog_ill</string>
+    <string name="four_limbed_staff_ill">four_limbed_staff_ill</string>
+    <string name="boat_ill">boat_ill</string>
+    <string name="rejuvenation_ill">rejuvenation_ill</string>
+    <string name="star_ill">star_ill</string>
+    <string name="tree_ill">tree_ill</string>
+
 </resources>
