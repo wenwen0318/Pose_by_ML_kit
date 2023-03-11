@@ -49,6 +49,8 @@ public class PoseDetectorProcessor
                         0, 0, 0};
     String classificationResult ;
     Boolean isCorrectPose;
+    Boolean isGetSkeleton;
+    float deviation = 0;
     static ArrayList<String> poseStandard;
 
     /** Internal class to hold Pose and classification results. */
@@ -154,8 +156,10 @@ public class PoseDetectorProcessor
                 cardView,
                 userLevel);
         angleStatus = Calculate.getAngleStatus();
+        isGetSkeleton = Calculate.isGetSkeleton();
         calWrongSum();
         calWrongTem();
+        calDeviation();
     }
 
     @Override
@@ -166,6 +170,12 @@ public class PoseDetectorProcessor
     @Override
     protected boolean isMlImageEnabled(Context context) {
         return true;
+    }
+
+    public void calDeviation(){
+        if(isGetSkeleton == false){
+            deviation++;
+        }
     }
 
     public void calWrongSum(){
@@ -218,6 +228,7 @@ public class PoseDetectorProcessor
     public float getOverallCompleteness(){
         float allWrong = 0;
         float standardNum = 0;
+        float completeness;
         switch (cardView){
             case "Warrior2": standardNum = 9;break;
             case "Plank": standardNum = 4;break;
@@ -225,7 +236,7 @@ public class PoseDetectorProcessor
             case "Chair": standardNum = 5;break;
             case "DownDog": standardNum = 5;break;
             case "Four_Limbed_Staff": standardNum = 3;break;
-            case "Boat": standardNum = 4;break;
+            case "Boat": standardNum = 2;break;
             case "Rejuvenation": standardNum = 2;break;
             case "Star": standardNum = 7;break;
             case "Tree": standardNum = 7;break;
@@ -235,9 +246,15 @@ public class PoseDetectorProcessor
         }
         System.out.println("allWrong :　"+allWrong);
         System.out.println("myFrame : "+frameNum);
-        float unCompleteness = allWrong/(frameNum*standardNum);
-        float completeness = 100 - unCompleteness*100;
-        completeness = (float)(Math.round(completeness*100.0)/100.0);
+        System.out.println(("myDeviation : "+deviation));
+        if(frameNum-deviation == 0){
+            completeness = 0;
+        }
+        else{
+            float unCompleteness = allWrong/(frameNum*standardNum-deviation);
+            completeness = 100 - unCompleteness*100;
+            completeness = (float)(Math.round(completeness*100.0)/100.0);
+        }
         return completeness;
     }
 
@@ -248,9 +265,15 @@ public class PoseDetectorProcessor
         PoseStandardDBHandler db = new PoseStandardDBHandler(context);
         poseStandard = db.getPoseStandard(cardView).getPoseStandard();
         for(int i=0;i<wrongSum.length;i++){
-            unCompleteness[i] = (wrongSum[i]/frameNum);
-            completeness[i] = 100 - unCompleteness[i]*100;
-            completeness[i] = (float)(Math.round(completeness[i]*100.0)/100.0);
+            if(frameNum-deviation == 0){
+                completeness[i] = 0;
+            }
+            else{
+                unCompleteness[i] = (wrongSum[i]/(frameNum-deviation));
+                completeness[i] = 100 - unCompleteness[i]*100;
+                completeness[i] = (float)(Math.round(completeness[i]*100.0)/100.0);
+
+            }
             if(poseStandard.get(i) == null || poseStandard.get(i).length() == 0){
                 jointCompleteness[i] = null;
             }

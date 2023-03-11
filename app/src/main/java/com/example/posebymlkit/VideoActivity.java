@@ -22,6 +22,7 @@ public class VideoActivity extends AppCompatActivity {
     MediaController mediaController;
     String cardView;
     int userLevel = 3,time;
+    String MODE = "pose";
 
     Dialog dialog;
     View viewDialog;
@@ -154,6 +155,7 @@ public class VideoActivity extends AppCompatActivity {
                 bundle.putString("cardView", cardView);
                 bundle.putInt("userLevel", userLevel);
                 bundle.putInt("time", time);
+                bundle.putString("mode", MODE);
                 intent.putExtras(bundle);
                 startActivity(intent);
                 dialog.dismiss();

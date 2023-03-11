@@ -55,6 +55,7 @@ public class MenuActivity extends AppCompatActivity {
     int userLevel = 3;
     int[] menu;
     int menuLength;
+    String MODE = "menu";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -156,7 +157,7 @@ public class MenuActivity extends AppCompatActivity {
         }
 
         @Override
-        public void onBindViewHolder(@NonNull MyListAdapter.ViewHolder holder, int position) {
+        public void onBindViewHolder(@NonNull MyListAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
 
             int resId = getApplicationContext().getResources().getIdentifier(
                             arrayList.get(position).get("poseName").toLowerCase(),
@@ -266,13 +267,10 @@ public class MenuActivity extends AppCompatActivity {
         btn_check.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                for(int i=2;i<menuLength;i+=3){
-                    menu[i] = userLevel;
-                }
                 intent.setClass(MenuActivity.this, LivePreviewActivity.class);
-                bundle.putIntArray("myMenu", menu);
+                bundle.putString("menuName", menuName);
                 bundle.putInt("userLevel", userLevel);
-                bundle.putInt("menuLength", menuLength);
+                bundle.putString("mode", MODE);
                 intent.putExtras(bundle);
                 startActivity(intent);
                 startDialog.dismiss();

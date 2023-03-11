@@ -170,6 +170,14 @@ public class PoseCalculate{
         return result;
     }
 
+    public boolean isGetSkeleton(){
+        if(getPose){
+            return getPose;
+        }
+        else{
+            return getPose;
+        }
+    }
     static double isKneeOverToe(double angle){
         if (angle <= 90){
             return 90;

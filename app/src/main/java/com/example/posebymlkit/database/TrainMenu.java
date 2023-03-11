@@ -1,5 +1,7 @@
 package com.example.posebymlkit.database;
 
+import java.util.ArrayList;
+
 public class TrainMenu {
     String menuName;
     String pose1;  int time1;
@@ -68,6 +70,26 @@ public class TrainMenu {
         this.pose18 = pose18; this.time18 = time18;
         this.pose19 = pose19; this.time19 = time19;
         this.pose20 = pose20; this.time20 = time20;
+    }
+
+    public ArrayList<String> getAllPose(){
+        ArrayList<String> poses = new ArrayList<String>();
+        for (int i = 1;i <= 20; i++) {
+            if (getPose(i) != null) {
+                poses.add(getPose(i));
+            } else break;
+        }
+        return poses;
+    }
+
+    public ArrayList<Integer> getAllTime(){
+        ArrayList<Integer> times = new ArrayList<Integer>();
+        for (int i = 1;i <= 20; i++) {
+            if (getTime(i) != 0) {
+                times.add(getTime(i));
+            } else break;
+        }
+        return times;
     }
 
     public String getPose(int ind){
@@ -340,6 +362,7 @@ public class TrainMenu {
             setTime(i,getTime(i+1));
         }
     }
+
     public void show(){
         System.out.println(getMenuName());
         for (int i = 1; i <= 20; i++){

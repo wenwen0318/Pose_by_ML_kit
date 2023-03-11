@@ -13,7 +13,6 @@ import android.os.Handler;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.SurfaceHolder;
-import android.view.View;
 import android.view.WindowManager;
 import android.widget.CompoundButton;
 import android.widget.TextView;
@@ -23,6 +22,8 @@ import android.widget.Toast;
 import com.example.posebymlkit.database.HistoricalRecord;
 import com.example.posebymlkit.database.HistoricalRecordDBHandler;
 import com.example.posebymlkit.database.PoseWrongTTSDBHandler;
+import com.example.posebymlkit.database.TrainMenu;
+import com.example.posebymlkit.database.TrainMenuDBHandler;
 import com.google.android.gms.common.annotation.KeepName;
 import com.example.posebymlkit.preference.PreferenceUtils;
 
@@ -40,6 +41,7 @@ import com.google.mlkit.vision.pose.PoseDetectorOptionsBase;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
@@ -75,24 +77,22 @@ public class LivePreviewActivity extends AppCompatActivity
 
     Intent intent = new Intent();
     Bundle bundle = new Bundle();
-    String cardView;
+    String poseName;
     int userLevel;
-    int time;
     String date;
-    TextView poseName;
-    int order = 0;
+    TextView currentPoseName;
+
 
     String label = "";
     int[] wrongHint;
     float overallCompleteness;
     String[] jointCompleteness;
 
-    int[] menu;
-    int menuLength;
-    String[] cardViewArray = new String[20];
-    int[] userLevelArray = new int[20];
-    int[] timeArray = new int[20];
     String MODE;
+    String menuName;
+    ArrayList<String> poseList = new ArrayList<String>();
+    ArrayList<Integer> timeList = new ArrayList<Integer>();
+    TrainMenu trainMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,56 +126,28 @@ public class LivePreviewActivity extends AppCompatActivity
         facingSwitch.setOnCheckedChangeListener(this);
 
         bundle = getIntent().getExtras();
-        menu = bundle.getIntArray("myMenu");
-        menuLength = bundle.getInt("menuLength");
-        for(int i=0;i<menuLength;i++){
-            Log.i("MenuActivity", ""+menu[i]);
+        MODE = bundle.getString("mode");
+        userLevel = bundle.getInt("userLevel");
+        if(MODE.equals("pose")){
+            poseList.add(bundle.getString("cardView"));
+            timeList.add(bundle.getInt("time"));
         }
-        int tem = 0;
-        int index = 0;
-
-        if(menu != null){
-            System.out.println("multi");
-            View view = getLayoutInflater().inflate(R.layout.activity_menu_pose, null);
-            while(true){
-                if(tem>=menuLength || tem>=60){
-                    break;
-                }
-                if(tem%3 == 0){
-                    cardViewArray[index] = view.findViewById(menu[tem]).getTransitionName();
-                }
-                else if(tem%3 == 1){
-                    timeArray[index] = Integer.parseInt(view.findViewById(menu[tem]).getTransitionName())*1000;
-                }
-                else if(tem%3 == 2){
-                    userLevelArray[index] = menu[tem];
-                    index++;
-                }
-                tem++;
-
-            }
-            for(String ints : cardViewArray){
-                System.out.println("posepose : "+ints);
-            }
-            for(int ints : timeArray){
-                System.out.println("timetime : "+ints);
-            }
-            for(int ints : userLevelArray){
-                System.out.println("levellevel : "+ints);
-            }
-            multiPoseTest();
+        else if(MODE.equals("menu")){
+            menuName = bundle.getString("menuName");
+            TrainMenuDBHandler db = new TrainMenuDBHandler(LivePreviewActivity.this);
+            trainMenu = db.getMenu(menuName);
+            poseList = trainMenu.getAllPose();
+            timeList = trainMenu.getAllTime();
         }
-        else{
-            singlePoseTest();
-        }
-
-        System.out.println("pose:"+ cardViewArray + " userLevel:"+ userLevelArray + " time:"+ timeArray);
-
+        System.out.println("poseList:" + poseList);
+        currentPoseName = findViewById(R.id.poseNameView);
+        currentPoseName.setText("");
+        createTTSSource();
+        handler.postDelayed(remindPose, 3000);
+        handler.postDelayed(readyTime, 10000);
 
 //        createCameraSource(OBJECT_DETECTION);
-
 //        handler.postDelayed(personDetection,100);
-
         //handler.postDelayed(runnable, 5000);
     }
 
@@ -191,32 +163,6 @@ public class LivePreviewActivity extends AppCompatActivity
         }
         preview.stop();
         startCameraSource();
-    }
-
-    // when use single pose
-    private void singlePoseTest(){
-        MODE = "single";
-
-        cardView = bundle.getString("cardView");
-        time = bundle.getInt("time")*1000;
-        userLevel = bundle.getInt("userLevel");
-        poseName = findViewById(R.id.poseNameView);
-        poseName.setText(cardView);
-        createTTSSource();
-        handler.postDelayed(startTrain,5000);
-    }
-
-    // when use multi poses
-    private void multiPoseTest(){
-        MODE = "multi";
-        cardView = cardViewArray[order];
-        time = timeArray[order];
-        userLevel = userLevelArray[order];
-        poseName = findViewById(R.id.poseNameView);
-        poseName.setText(cardView);
-        createTTSSource();
-        handler.postDelayed(remindPose, 3000);
-        handler.postDelayed(startTrain, 10000);
     }
 
     private void createCameraSource(String model) {
@@ -237,10 +183,6 @@ public class LivePreviewActivity extends AppCompatActivity
 //                    cameraSource.setMachineLearningFrameProcessor(
 //                            odp = new ObjectDetectorProcessor(this, customObjectDetectorOptions));
 //                    handler.postDelayed(personDetection,100);
-//                    if(MODE.equals("multi")){
-//                        handler.postDelayed(readyTime,5000);
-//                        createTTSSource();
-//                    }
                     break;
                 case POSE_DETECTION:
                     PoseDetectorOptionsBase poseDetectorOptions =
@@ -251,27 +193,26 @@ public class LivePreviewActivity extends AppCompatActivity
                     boolean visualizeZ = PreferenceUtils.shouldPoseDetectionVisualizeZ(this);
                     boolean rescaleZ = PreferenceUtils.shouldPoseDetectionRescaleZForVisualization(this);
                     boolean runClassification = PreferenceUtils.shouldPoseDetectionRunClassification(this);
-                    cameraSource.setMachineLearningFrameProcessor(
-                            pdp = new PoseDetectorProcessor(
-                                    this,
-                                    poseDetectorOptions,
-                                    shouldShowInFrameLikelihood,
-                                    visualizeZ,
-                                    rescaleZ,
-                                    runClassification,
-                                    /* isStreamMode = */ true,
-                                    cardView,
-                                    userLevel));
-                            if(MODE.equals("single")){
-                                handler.postDelayed(TTSWrongHint,5000);
-                                handler.postDelayed(timeCountdown, time);
-                            }
-                            else if(MODE.equals("multi")){
-                                handler.postDelayed(TTSWrongHint,5000);
-                                handler.postDelayed(timeCountdown, time);
-                            }
+                    if(poseList.get(0).equals("Rest")){
+                        handler.postDelayed(restRemind,10000);
+                    }
+                    else{
+                        cameraSource.setMachineLearningFrameProcessor(
+                                pdp = new PoseDetectorProcessor(
+                                        this,
+                                        poseDetectorOptions,
+                                        shouldShowInFrameLikelihood,
+                                        visualizeZ,
+                                        rescaleZ,
+                                        runClassification,
+                                        /* isStreamMode = */ true,
+                                        poseList.get(0),
+                                        userLevel));
+                        handler.postDelayed(TTSWrongHint,5000);
+                    }
+                    handler.postDelayed(timeCountdown, timeList.get(0)*1000);
                             break;
-                        }
+            }
         } catch (RuntimeException e) {
             Toast.makeText(
                             getApplicationContext(),
@@ -314,7 +255,7 @@ public class LivePreviewActivity extends AppCompatActivity
                             break;
                         case "繁體中文":
                             tts.setLanguage(Locale.CHINESE);
-                            tts.speak("請準備",TextToSpeech.QUEUE_ADD,null,null);
+//                            tts.speak("請準備",TextToSpeech.QUEUE_ADD,null,null);
                             break;
                         case "Deutsch":
                             tts.setLanguage(Locale.GERMAN);
@@ -335,7 +276,7 @@ public class LivePreviewActivity extends AppCompatActivity
     }
 
     private void TTS(){
-        List<String> poseWrongTTSList = pwt.getPoseWrongTTS(cardView).getWrongTTS();
+        List<String> poseWrongTTSList = pwt.getPoseWrongTTS(poseList.get(0)).getWrongTTS();
         String wrongStr = "";
         for(int i=0;i<poseWrongTTSList.size();i+=2){
             if(wrongHint[0] == (poseWrongTTSList.size()/2)){
@@ -362,7 +303,7 @@ public class LivePreviewActivity extends AppCompatActivity
         jointCompleteness = pdp.getJointsCompleteness();
 
         hr.addHistoricalRecord(new HistoricalRecord(
-                cardView,
+                poseName,
                 date,
                 userLevel,
                 overallCompleteness,
@@ -378,11 +319,6 @@ public class LivePreviewActivity extends AppCompatActivity
                 jointCompleteness[18], jointCompleteness[19],
                 jointCompleteness[20], jointCompleteness[21],
                 jointCompleteness[22]));
-        if (cameraSource != null) {
-            cameraSource.release();
-        }
-        handler.removeCallbacks(personDetection);
-        handler.removeCallbacks(TTSWrongHint);
         handler.removeCallbacks(timeCountdown);
         getResultDialog();
     }
@@ -403,7 +339,7 @@ public class LivePreviewActivity extends AppCompatActivity
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 intent.setClass(LivePreviewActivity.this, PracticeResultActivity.class);
-                bundle.putString("poseName", cardView);
+                bundle.putString("poseName", poseName);
                 bundle.putString("date",null);
                 intent.putExtras(bundle);
                 startActivity(intent);
@@ -429,10 +365,20 @@ public class LivePreviewActivity extends AppCompatActivity
         }
     };
 
-    Runnable startTrain = new Runnable() {
+    Runnable restRemind = new Runnable() {
+        @Override
+        public void run() {
+            handler.postDelayed(this, 10000);
+            timeList.set(0,timeList.get(0)-10);
+            tts.speak("休息時間還剩"+(timeList.get(0))+"秒", TextToSpeech.QUEUE_ADD,null,null);
+        }
+    };
+
+    Runnable readyTime = new Runnable() {
         @Override
         public void run() {
             tts.speak("開始練習", TextToSpeech.QUEUE_ADD,null,null);
+            poseName = poseList.get(0);
             model = POSE_DETECTION;
             createCameraSource(model);
         }
@@ -455,60 +401,51 @@ public class LivePreviewActivity extends AppCompatActivity
     Runnable remindPose = new Runnable() {
         @Override
         public void run() {
-            if(cardView.equals("Warrior2")){
-                if(order == 0){
-                    tts.speak("第一個姿勢為"+"Warrior"+"two",TextToSpeech.QUEUE_ADD,null,null);
-                }
-                else{
-                    tts.speak("下一個姿勢為"+"Warrior"+"two",TextToSpeech.QUEUE_ADD,null,null);
-                    tts.speak("請準備",TextToSpeech.QUEUE_ADD,null,null);
-                }
+            if(poseList.get(0).equals("Warrior2")){
+                tts.speak("下一個姿勢為"+"Warrior"+"two",TextToSpeech.QUEUE_ADD,null,null);
             }
             else{
-                if(order == 0){
-                    tts.speak("第一個姿勢為"+cardView,TextToSpeech.QUEUE_ADD,null,null);
-                }
-                else{
-                    tts.speak("下一個姿勢為"+cardView,TextToSpeech.QUEUE_ADD,null,null);
-                    tts.speak("請準備",TextToSpeech.QUEUE_ADD,null,null);
-                }
+                tts.speak("下一個姿勢為"+poseList.get(0),TextToSpeech.QUEUE_ADD,null,null);
             }
-
+            tts.speak("請準備",TextToSpeech.QUEUE_ADD,null,null);
+            currentPoseName = findViewById(R.id.poseNameView);
+            currentPoseName.setText(poseList.get(0));
         }
     };
 
     Runnable timeCountdown = new Runnable() {
         @Override
         public void run() {
-//            handler.postDelayed(this, time);
-            if(MODE.equals("single")){
-                tts.speak("練習結束",TextToSpeech.QUEUE_ADD,null,null);
-                getHistoricalRecord();
-            }
-            else if(MODE.equals("multi")){
+            if (cameraSource != null) {
                 cameraSource.release();
+            }
+            if(poseList.get(0).equals("Rest")){
+                handler.removeCallbacks(restRemind);
+                tts.speak("休息結束", TextToSpeech.QUEUE_ADD, null, null);
+            }
+            else{
+                tts.speak("練習結束", TextToSpeech.QUEUE_ADD, null, null);
+            }
+            poseList.remove(0);
+            timeList.remove(0);
+            handler.removeCallbacks(TTSWrongHint);
+            handler.removeCallbacks(remindPose);
+            handler.removeCallbacks(readyTime);
+            if (poseList.isEmpty()) {
+                switch(MODE){
+                    case "pose" : getHistoricalRecord();break;
+                    case "menu" :
+                        tts.speak("完成訓練",TextToSpeech.QUEUE_ADD,null,null);
+                        handler.removeCallbacks(timeCountdown);
+                        break;
+                }
+            }
+            else {
                 startCameraSource();
                 model = OBJECT_DETECTION;
                 createCameraSource(model);
-                handler.removeCallbacks(TTSWrongHint);
-
-                if((order == cardViewArray.length-1)||(cardViewArray[order+1] == null)){
-                    tts.speak("完成訓練",TextToSpeech.QUEUE_ADD,null,null);
-                    handler.removeCallbacks(timeCountdown);
-                    cameraSource.release();
-                }
-                else{
-                    tts.speak("練習結束",TextToSpeech.QUEUE_ADD,null,null);
-                    order++;
-                    cardView = cardViewArray[order];
-                    time = timeArray[order];
-                    userLevel = userLevelArray[order];
-                    poseName = findViewById(R.id.poseNameView);
-                    poseName.setText(cardView);
-                    handler.postDelayed(remindPose, 3000);
-                    handler.postDelayed(startTrain, 10000);
-                }
-
+                handler.postDelayed(remindPose, 3000);
+                handler.postDelayed(readyTime, 10000);
             }
         }
     };
@@ -553,7 +490,7 @@ public class LivePreviewActivity extends AppCompatActivity
             }
         }
         Log.d("filePath",file.toString());
-        String fileName = file.getPath() + File.separator + "VID_" + cardViewArray + "_" + date + ".mp4";
+        String fileName = file.getPath() + File.separator + "VID_"  + "_" + date + ".mp4";
         Log.d("fileName",fileName);
         mediaRecorder.setOutputFile(fileName);
     }
