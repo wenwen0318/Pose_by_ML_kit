@@ -82,7 +82,6 @@ public class LivePreviewActivity extends AppCompatActivity
     String date;
     TextView currentPoseName;
 
-
     String label = "";
     int[] wrongHint;
     float overallCompleteness;
@@ -326,23 +325,39 @@ public class LivePreviewActivity extends AppCompatActivity
     private void getResultDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(LivePreviewActivity.this);
         builder.setCancelable(false);
-        builder.setTitle("練習結束");
-        builder.setMessage("總體正確率： "+overallCompleteness+"%");
+        if(MODE.equals("pose")){
+            builder.setTitle("練習結束");
+            builder.setMessage("總體正確率： "+overallCompleteness+"%");
+            builder.setPositiveButton("詳細數據", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    intent.setClass(LivePreviewActivity.this, PracticeResultActivity.class);
+                    bundle.putString("poseName", poseName);
+                    bundle.putString("date",date);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                    finish();
+                }
+            });
+        }
+        else{
+            builder.setTitle("完成清單訓練");
+            builder.setPositiveButton("詳細數據", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    intent.setClass(LivePreviewActivity.this, MenuResultActivity.class);
+                    bundle.putString("menuName", menuName);
+                    bundle.putString("date",date);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                    finish();
+                }
+            });
+        }
         builder.setNegativeButton("回主頁面", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 dialogInterface.dismiss();
-                finish();
-            }
-        });
-        builder.setPositiveButton("詳細數據", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                intent.setClass(LivePreviewActivity.this, PracticeResultActivity.class);
-                bundle.putString("poseName", poseName);
-                bundle.putString("date",null);
-                intent.putExtras(bundle);
-                startActivity(intent);
                 finish();
             }
         });
@@ -377,7 +392,9 @@ public class LivePreviewActivity extends AppCompatActivity
     Runnable readyTime = new Runnable() {
         @Override
         public void run() {
-            tts.speak("開始練習", TextToSpeech.QUEUE_ADD,null,null);
+            if(!poseList.get(0).equals("Rest")){
+                tts.speak("開始練習", TextToSpeech.QUEUE_ADD,null,null);
+            }
             poseName = poseList.get(0);
             model = POSE_DETECTION;
             createCameraSource(model);
@@ -403,11 +420,15 @@ public class LivePreviewActivity extends AppCompatActivity
         public void run() {
             if(poseList.get(0).equals("Warrior2")){
                 tts.speak("下一個姿勢為"+"Warrior"+"two",TextToSpeech.QUEUE_ADD,null,null);
+                tts.speak("請準備",TextToSpeech.QUEUE_ADD,null,null);
+            }
+            else if(poseList.get(0).equals("Rest")){
+                tts.speak("休息時間",TextToSpeech.QUEUE_ADD,null,null);
             }
             else{
                 tts.speak("下一個姿勢為"+poseList.get(0),TextToSpeech.QUEUE_ADD,null,null);
+                tts.speak("請準備",TextToSpeech.QUEUE_ADD,null,null);
             }
-            tts.speak("請準備",TextToSpeech.QUEUE_ADD,null,null);
             currentPoseName = findViewById(R.id.poseNameView);
             currentPoseName.setText(poseList.get(0));
         }
@@ -437,6 +458,7 @@ public class LivePreviewActivity extends AppCompatActivity
                     case "menu" :
                         tts.speak("完成訓練",TextToSpeech.QUEUE_ADD,null,null);
                         handler.removeCallbacks(timeCountdown);
+                        getResultDialog();
                         break;
                 }
             }

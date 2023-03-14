@@ -21,24 +21,43 @@
 
 
             <TextView
-                android:id="@+id/menuNameTextView"
+                android:id="@+id/menuDataNameTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text=""
+                android:text="Menu Data"
                 android:layout_marginTop="15dp"
                 android:layout_marginStart="20dp"
+                android:layout_marginBottom="5dp"
                 android:textSize="30dp"
                 android:textColor="@color/black"
                 android:textStyle="bold"/>
 
-            <TextView
-                android:id="@+id/menuIllTextView"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="      核心肌群指的是環繞我們腹部的深層肌，分別是腹橫肌、骨盆底肌、多裂肌及橫隔膜。
-                \n      穩定核心可以幫助穩定腰椎、減少脊椎負擔、恢復腰椎與骨盆等，對身體多有益處，非常適合久坐的上班族及女性。"
-                android:layout_marginStart="25dp"
-                android:layout_marginTop="5dp"/>
+                android:orientation="horizontal"
+                android:layout_height="30dp"
+                android:layout_marginBottom="5dp">
+
+                <TextView
+                    android:id="@+id/menuDataTextView"
+                    android:layout_width="150dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="5dp"
+                    android:text="x秒鐘‧x運動"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/menuDateTextView"
+                    android:layout_width="150dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="5dp"
+                    android:text="yyyy-mm-dd"
+                    android:textStyle="bold"/>
+
+            </LinearLayout>
+
 
         </LinearLayout>
 
@@ -49,33 +68,13 @@
             android:orientation="vertical">
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/poseRecyclerView"
+                android:id="@+id/menuHistoryRecycleView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:listitem="@layout/menu_pose_layout"/>
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fab"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|end"
-                android:layout_marginEnd="16dp"
-                app:srcCompat="@android:drawable/ic_input_add" />
+                tools:listitem="@layout/menu_history_pose_layout"/>
+
 
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/btn_startPractice_menu"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="10dp"
-                android:text="開始練習" />
-
-        </LinearLayout>
 
     </LinearLayout>
 
