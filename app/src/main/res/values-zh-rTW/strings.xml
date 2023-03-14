@@ -195,7 +195,7 @@
     <string name="History_Record">\n歷史紀錄\n</string>
     <string name="Clear_Data">\n清除資料\n</string>
     <string name="Instructions_for_use">\n使用說明\n</string>
-    <string name="Contact_us">\nContact us\n</string>
+    <string name="Contact_us">"\n聯絡我們\n "</string>
     <string name="delete_record">清除歷史紀錄</string>
     <string name="delete_record_question">將刪除所有歷史紀錄，是否繼續？</string>
     <string name="cancel">取消</string>
