@@ -183,7 +183,7 @@
     <string name="star">Star</string>
     <string name="tree">Tree</string>
     <string name="rejuvenation">回春式</string>
-    <string name="plank_ill">plank</string>
+    <string name="plank_ill">平板支撑： 开始： 步骤1：四肢跪地。 步骤2：一次将腿向后伸直，保持肩膀，臀部和脚踝成一条直线。 步骤3：斜视前方。  结束： 步骤1：向下看。 步骤2：将膝盖放下，回到四肢跪地的姿势。  好处： 增强核心肌群，改善平衡，改善姿势。  正确的姿势：  手臂垂直于地面。 肩膀和手腕成一条直线。 从颈部、背部、臀部、膝盖到脚踝，与地面成45度角的斜线。 保持肩膀处于斜线上，不变成“鸡翅膀”（耸肩）。 保持臀部处于斜线上，不抬起或塌下。 膝盖保持180度。 保持颈部处于斜线上，不抬头或低头。</string>
     <string name="goddess_ill">goddess</string>
     <string name="chair_ill">chair</string>
     <string name="downdog_ill">downdog</string>
@@ -192,4 +192,27 @@
     <string name="rejuvenation_ill">rejuvenation</string>
     <string name="star_ill">star</string>
     <string name="tree_ill">tree</string>
+    <string name="History_Record">\n历史记录\n</string>
+    <string name="Clear_Data">\n清除数据\n</string>
+    <string name="Instructions_for_use">\n使用说明\n</string>
+    <string name="Contact_us">\n联系我们\n</string>
+    <string name="delete_record">清除历史记录</string>
+    <string name="delete_record_question">是否删除所有历史记录？继续吗？</string>
+    <string name="cancel">取消</string>
+    <string name="confirm">确定</string>
+    <string name="posture">姿势</string>
+    <string name="menu">训练清单</string>
+    <string name="settings">设定</string>
+    <string name="starting_practice">开始</string>
+    <string name="bake">返回</string>
+    <string name="add_posture">添加姿势</string>
+    <string name="add_list">添加列表</string>
+    <string name="list_name">列表名称</string>
+    <string name="list_ill">说明</string>
+    <string name="enter_menu_name">请输入列表名称</string>
+    <string name="menu_exists">列表已存在，请重新命名。</string>
+    <string name="list_full">列表已满</string>
+    <string name="Choose_difficulty">选择难度级别</string>
+    <string name="easy">简易</string>
+    <string name="hard">严谨</string>
 </resources>

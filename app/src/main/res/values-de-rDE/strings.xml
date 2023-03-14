@@ -192,4 +192,27 @@
     <string name="rejuvenation_ill">rejuvenation</string>
     <string name="star_ill">star</string>
     <string name="tree_ill">tree</string>
+    <string name="History_Record">\nVerlaufs Protokoll\n</string>
+    <string name="Clear_Data">\nDaten löschen\n</string>
+    <string name="Instructions_for_use">\nGebrauchsanweisung\n</string>
+    <string name="Contact_us">\nKontaktiere uns\n</string>
+    <string name="delete_record">Verlaufsprotokoll löschen</string>
+    <string name="delete_record_question">Alle Verlaufsprotokolle löschen, fortfahren?</string>
+    <string name="cancel">Stornieren</string>
+    <string name="confirm">Bestätigen</string>
+    <string name="posture">Haltung</string>
+    <string name="menu">Trainingsliste</string>
+    <string name="settings">Einstellungen</string>
+    <string name="starting_practice">Beginne</string>
+    <string name="bake">Zurück.</string>
+    <string name="add_posture">Haltung hinzufügen</string>
+    <string name="add_list">Zur Liste hinzufügen</string>
+    <string name="list_name">Listenname</string>
+    <string name="list_ill">Erklärung</string>
+    <string name="enter_menu_name">Bitte Listenname eingeben.</string>
+    <string name="menu_exists">Liste existiert bereits. Bitte umbenennen.</string>
+    <string name="list_full">Liste ist voll.</string>
+    <string name="Choose_difficulty">Schwierigkeitsgrad auswählen.</string>
+    <string name="easy">Mäßig</string>
+    <string name="hard">Schwierig</string>
 </resources>

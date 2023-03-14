@@ -263,12 +263,11 @@ public class HistoricalRecordDBHandler extends SQLiteOpenHelper {
         return historicalRecord;
     }
 
-//    public void deleteHistoricalRecord(HistoricalRecord historicalRecord) {
-//        SQLiteDatabase db = this.getWritableDatabase();
-//        db.delete(TABLE_HISTORICAL_RECORD, KEY_ID + " = ?",
-//                new String[] { String.valueOf(historicalRecord.getId()) });
-//        db.close();
-//    }
+    public void deleteHistoricalRecord() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DELETE FROM "+ TABLE_HISTORICAL_RECORD);
+        db.close();
+    }
 
     public int getHistoricalRecordCount() {
         String countQuery = "SELECT  * FROM " + TABLE_HISTORICAL_RECORD;

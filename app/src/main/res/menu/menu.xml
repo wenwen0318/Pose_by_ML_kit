@@ -4,14 +4,14 @@
     <item
         android:id="@+id/home"
         android:icon="@drawable/ic_baseline_home_24"
-        android:title="姿勢" />
+        android:title="@string/posture" />
     <item
         android:id="@+id/userData"
         android:icon="@drawable/ic_baseline_account_circle_24"
-        android:title="訓練清單"/>
+        android:title="@string/menu"/>
     <item
         android:id="@+id/set"
         android:icon="@drawable/ic_baseline_settings_24"
-        android:title="設定"/>
+        android:title="@string/settings"/>
 
 </menu>

@@ -94,7 +94,7 @@ public class MenuActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
                 else {
-                    Toast.makeText(MenuActivity.this,"清單已滿",Toast.LENGTH_LONG).show();
+                    Toast.makeText(MenuActivity.this,R.string.list_full,Toast.LENGTH_LONG).show();
                 }
             }
         });

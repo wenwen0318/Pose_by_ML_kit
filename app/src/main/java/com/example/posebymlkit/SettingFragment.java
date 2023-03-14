@@ -1,11 +1,13 @@
 package com.example.posebymlkit;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
@@ -14,6 +16,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
+import com.example.posebymlkit.database.HistoricalRecordDBHandler;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -56,7 +60,9 @@ public class SettingFragment extends Fragment {
     Intent intent = new Intent();
     Button historyBtn;
     Button removeSqlBtn;
+    Button illBtn;
     Button mailBtn;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -86,6 +92,14 @@ public class SettingFragment extends Fragment {
         removeSqlBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                getDialog();
+            }
+        });
+
+        illBtn = view.findViewById(R.id.illBtn);
+        illBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
             }
         });
@@ -98,6 +112,8 @@ public class SettingFragment extends Fragment {
             }
         });
 
+
+
         return view;
     }
     private void mailToDeveloper() {
@@ -108,4 +124,25 @@ public class SettingFragment extends Fragment {
         startActivity(Intent.createChooser(intent, "Send Email"));
     }
 
+    private void getDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setCancelable(false);
+        builder.setTitle(R.string.delete_record);
+        builder.setMessage(R.string.delete_record_question);
+        builder.setNegativeButton(R.string.confirm, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                HistoricalRecordDBHandler hr = new HistoricalRecordDBHandler(getActivity());
+                hr.deleteHistoricalRecord();
+                dialogInterface.dismiss();
+            }
+        });
+        builder.setPositiveButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+        builder.create().show();
+    }
 }

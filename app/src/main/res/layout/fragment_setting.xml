@@ -19,7 +19,7 @@
             android:gravity="center_vertical"
             android:textColor="@color/black"
             android:textSize="20sp"
-            android:text="\n 歷史紀錄 \n"
+            android:text="@string/History_Record"
             android:background="@drawable/roundbtn" />
         <Button
             android:id="@+id/removeSQL"
@@ -28,7 +28,7 @@
             android:gravity="center_vertical"
             android:textColor="@color/black"
             android:textSize="20sp"
-            android:text="\n 清除資料 \n"
+            android:text="@string/Clear_Data"
             android:background="@drawable/roundbtn" />
         <Button
             android:id="@+id/illBtn"
@@ -37,7 +37,7 @@
             android:gravity="center_vertical"
             android:textColor="@color/black"
             android:textSize="20sp"
-            android:text="\n 使用說明 \n"
+            android:text="@string/Instructions_for_use"
             android:background="@drawable/roundbtn" />
         <Button
             android:id="@+id/mailBtn"
@@ -46,7 +46,7 @@
             android:gravity="center_vertical"
             android:textColor="@color/black"
             android:textSize="20sp"
-            android:text="\n 聯絡我們 \n"
+            android:text="@string/Contact_us"
             android:background="@drawable/roundbtn" />
     </LinearLayout>
 

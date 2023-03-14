@@ -11,7 +11,7 @@
         android:layout_marginEnd="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="設定練習時長及難易度"
+        android:text="@string/Choose_difficulty"
         android:textSize="16sp"
         android:gravity="center"
         android:textColor="#000000"/>
@@ -63,7 +63,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="初學"
+            android:text="@string/easy"
             android:checked="true"/>
 
         <RadioButton
@@ -71,7 +71,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="進階" />
+            android:text="@string/hard" />
     </RadioGroup>
 
     <LinearLayout
@@ -86,7 +86,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
             android:layout_weight="1"
-            android:text="取消"
+            android:text="@string/cancel"
             android:textSize="16sp"
             android:layout_gravity="center"
             android:textColor="#ffffff"/>
@@ -97,7 +97,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_weight="1"
-            android:text="確定"
+            android:text="@string/confirm"
             android:textSize="16sp"
             android:layout_gravity="center"
             android:textColor="#ffffff" />

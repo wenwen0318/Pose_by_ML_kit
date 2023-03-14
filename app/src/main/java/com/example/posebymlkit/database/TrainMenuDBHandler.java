@@ -315,5 +315,4 @@ public class TrainMenuDBHandler extends SQLiteOpenHelper {
         db.delete(TABLE_TRAIN_MENU, KEY_MENU_NAME + " = ?",new String[]{menuName});
         db.close();
     }
-
 }

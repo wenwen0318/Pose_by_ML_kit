@@ -183,7 +183,7 @@
     <string name="star">Star</string>
     <string name="tree">Tree</string>
     <string name="rejuvenation">Rejuvenation</string>
-    <string name="plank_ill">plank</string>
+    <string name="plank_ill">Plank： 開始ステップ： step1.四つん這いの姿勢を保ちます。 step2.両足を後ろに伸ばし、肩関節、股関節、足首が斜線を形成します。 step3.斜め前方を見ます。  終了ステップ： step1.視線を戻します。 step2.両膝を曲げて四つん這いの姿勢に戻ります。  メリット： コアトレーニング、姿勢改善、バランス改善  ポーズの基準： 1.腕と床面は垂直を保ちます。 2.肩と手首は一直線です。 3.首、背中、お尻、膝、足首が斜線を形成し、床面と約45度の角度を作ります。 4.肩を斜線で保ち、鳥の羽のようにならないようにします。 5.お尻を斜線で保ち、突き出したり平たくならないようにします。 6.膝は180度に保ちます。 7.首を斜線で保ち、上げたり下げたりしないようにします。</string>
     <string name="goddess_ill">goddess</string>
     <string name="chair_ill">chair</string>
     <string name="downdog_ill">downdog</string>
@@ -192,4 +192,27 @@
     <string name="rejuvenation_ill">rejuvenation</string>
     <string name="star_ill">star</string>
     <string name="tree_ill">tree</string>
+    <string name="History_Record">\n履歴記録\n</string>
+    <string name="Clear_Data">\nデータのクリア\n</string>
+    <string name="Instructions_for_use">\n使用説明書\n</string>
+    <string name="Contact_us">\nお問い合わせ\n</string>
+    <string name="delete_record">履歴記録をクリアする</string>
+    <string name="delete_record_question">すべての履歴記録を削除しますか？続けますか？</string>
+    <string name="cancel">キャンセル</string>
+    <string name="confirm">確認する</string>
+    <string name="posture">姿勢</string>
+    <string name="menu">トレーニングリスト</string>
+    <string name="settings">設定</string>
+    <string name="starting_practice">始め</string>
+    <string name="bake">バック</string>
+    <string name="add_posture">ポーズを追加する</string>
+    <string name="add_list">リストに追加する</string>
+    <string name="list_name">リスト名</string>
+    <string name="list_ill">説明</string>
+    <string name="enter_menu_name">リスト名を入力してください</string>
+    <string name="menu_exists">リストが既に存在します。名前を変更してください。</string>
+    <string name="list_full">リストはいっぱいです</string>
+    <string name="Choose_difficulty">難易度を選択してください</string>
+    <string name="easy">簡易</string>
+    <string name="hard">難しい</string>
 </resources>
