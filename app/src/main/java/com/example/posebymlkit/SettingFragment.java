@@ -105,9 +105,7 @@ public class SettingFragment extends Fragment {
         intent.setData(Uri.parse("mailto:")); // only email apps should handle this
         intent.putExtra(Intent.EXTRA_EMAIL, new String[] {"wen0318asd@gmail.com"});
         intent.putExtra(Intent.EXTRA_SUBJECT, "App Question Request");
-        if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
-            startActivity(intent);
-        }
+        startActivity(Intent.createChooser(intent, "Send Email"));
     }
 
 }

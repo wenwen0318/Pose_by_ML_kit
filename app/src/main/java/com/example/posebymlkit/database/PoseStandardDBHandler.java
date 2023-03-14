@@ -78,144 +78,154 @@ public class PoseStandardDBHandler extends SQLiteOpenHelper {
     // Upgrading database
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // Drop older table if existed
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_POSE_STANDARD);
 
-        // Create tables again
         onCreate(db);
     }
 
     public void poseStandardInit(){
-        this.addPoseStandard(new PoseStandard("Warrior2",
-                null,null,
-                null,"170",
-                "170","170",
-                null,null,
-                "170","170",
-                "90", null,
-                "185", null,
-                null, "55",
-                null, null,
-                null, null,
-                null, null,
-                "90"));
-        this.addPoseStandard(new PoseStandard("Plank",
-                null,"170",
-                null,"170",
-                null,"170",
-                null,null,
-                null,null,
-                null, null,
-                null, null,
-                null, null,
-                null, "90",
-                null, null,
-                null, null,
-                null));
-        this.addPoseStandard(new PoseStandard("Goddess",
-                null,null,
-                "90","90",
-                "90","90",
-                null,null,
-                "170","170",
-                "90", "90",
-                "185", "185",
-                null, null,
-                null, null,
-                null, null,
-                null, null,
-                "90"));
-        this.addPoseStandard(new PoseStandard("Chair",
-                null,null,
-                "80",null,
-                "170",null,
-                "80",null,
-                null,null,
-                "90", null,
-                null, null,
-                null, null,
-                null, null,
-                "120", null,
-                null, null,
-                null));
-        this.addPoseStandard(new PoseStandard("DownDog",
-                "80",null,
-                "170",null,
-                "170",null,
-                "170",null,
-                null,null,
-                null, null,
-                null, null,
-                null, null,
-                null, null,
-                null, null,
-                "90", null,
-                null));
-        this.addPoseStandard(new PoseStandard("Four_Limbed_Staff",
-                "170",null,
-                "170",null,
-                "95",null,
-                null,null,
-                null,null,
-                null, null,
-                null, null,
-                null, null,
-                null, null,
-                null, null,
-                null, null,
-                null));
-        this.addPoseStandard(new PoseStandard("Boat",
-                null,null,
-                "170",null,
-                "170",null,
-                null,null,
-                null,null,
-                null, null,
-                null, null,
-                null, null,
-                null, null,
-                null, null,
-                null, null,
-                null));
-        this.addPoseStandard(new PoseStandard("Rejuvenation",
-                "90",null,
-                "170",null,
-                null,null,
-                null,null,
-                null,null,
-                null, null,
-                null, null,
-                null, null,
-                null, null,
-                null, null,
-                null, null,
-                null));
-        this.addPoseStandard(new PoseStandard("Star",
-                null,null,
-                "170","170",
-                "170","170",
-                null,null,
-                "170","170",
-                null, null,
-                null, null,
-                null, null,
-                null, null,
-                null, null,
-                null, null,
-                "90"));
-        this.addPoseStandard(new PoseStandard("Tree",
-                null,"170",
-                null,"170",
-                "170","170",
-                "170","170",
-                null,null,
-                null, null,
-                null, null,
-                null, null,
-                null, null,
-                null, null,
-                null, null,
-                "90"));
+        if (!poseStandardExist("Warrior2")){
+            this.addPoseStandard(new PoseStandard("Warrior2",
+            null,null,
+            null,"170",
+            "170","170",
+            null,null,
+            "170","170",
+            "90", null,
+            "185", null,
+            null, "55",
+            null, null,
+            null, null,
+            null, null,
+            "90"));
+        }
+        if (!poseStandardExist("Plank")){
+            this.addPoseStandard(new PoseStandard("Plank",
+            null,"170",
+            null,"170",
+            null,"170",
+            null,null,
+            null,null,
+            null, null,
+            null, null,
+            null, null,
+            null, "90",
+            null, null,
+            null, null,
+            null));
+        }
+        if (!poseStandardExist("Goddess")){
+            this.addPoseStandard(new PoseStandard("Goddess",
+            null,null,
+            "90","90",
+            "90","90",
+            null,null,
+            "170","170",
+            "90", "90",
+            "185", "185",
+            null, null,
+            null, null,
+            null, null,
+            null, null,
+            "90"));}
+        if (!poseStandardExist("Chair")){
+            this.addPoseStandard(new PoseStandard("Chair",
+            null,null,
+            "80",null,
+            "170",null,
+            "80",null,
+            null,null,
+            "90", null,
+            null, null,
+            null, null,
+            null, null,
+            "120", null,
+            null, null,
+            null));}
+        if (!poseStandardExist("DownDog")){
+            this.addPoseStandard(new PoseStandard("DownDog",
+            "80",null,
+            "170",null,
+            "170",null,
+            "170",null,
+            null,null,
+            null, null,
+            null, null,
+            null, null,
+            null, null,
+            null, null,
+            "90", null,
+            null));}
+        if (!poseStandardExist("Four_Limbed_Staff")){
+            this.addPoseStandard(new PoseStandard("Four_Limbed_Staff",
+            "170",null,
+            "170",null,
+            "95",null,
+            null,null,
+            null,null,
+            null, null,
+            null, null,
+            null, null,
+            null, null,
+            null, null,
+            null, null,
+            null));}
+        if (!poseStandardExist("Boat")){
+            this.addPoseStandard(new PoseStandard("Boat",
+            null,null,
+            "170",null,
+            "170",null,
+            null,null,
+            null,null,
+            null, null,
+            null, null,
+            null, null,
+            null, null,
+            null, null,
+            null, null,
+            null));}
+        if (!poseStandardExist("Rejuvenation")){
+            this.addPoseStandard(new PoseStandard("Rejuvenation",
+            "90",null,
+            "170",null,
+            null,null,
+            null,null,
+            null,null,
+            null, null,
+            null, null,
+            null, null,
+            null, null,
+            null, null,
+            null, null,
+            null));}
+        if (!poseStandardExist("Star")){
+            this.addPoseStandard(new PoseStandard("Star",
+            null,null,
+            "170","170",
+            "170","170",
+            null,null,
+            "170","170",
+            null, null,
+            null, null,
+            null, null,
+            null, null,
+            null, null,
+            null, null,
+            "90"));}
+        if (!poseStandardExist("Tree")){
+            this.addPoseStandard(new PoseStandard("Tree",
+            null,"170",
+            null,"170",
+            "170","170",
+            "170","170",
+            null,null,
+            null, null,
+            null, null,
+            null, null,
+            null, null,
+            null, null,
+            null, null,
+            "90"));}
     }
 
     // code to add the new contact
@@ -305,50 +315,25 @@ public class PoseStandardDBHandler extends SQLiteOpenHelper {
         return poseStandard;
     }
 
-    // code to get all contacts in a list view
-    public List<PoseStandard> getAllPoseStandard() {
-        List<PoseStandard> poseStandardList = new ArrayList<PoseStandard>();
-        // Select All Query
-        String selectQuery = "SELECT  * FROM " + TABLE_POSE_STANDARD;
+    public List<String> getAllPoseName() {
+        List<String> poseNames = new ArrayList<>();
+
+        String selectQuery = "SELECT " + KEY_POSE_NAME + " FROM " + TABLE_POSE_STANDARD;
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
 
-        // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
             do {
-                PoseStandard poseStandard = new PoseStandard();
-                poseStandard.setPoseName(cursor.getString(0));
-                poseStandard.setRHip(cursor.getString(1));
-                poseStandard.setLHip(cursor.getString(2));
-                poseStandard.setRKnee(cursor.getString(3));
-                poseStandard.setLKnee(cursor.getString(4));
-                poseStandard.setRElbow(cursor.getString(5));
-                poseStandard.setLElbow(cursor.getString(6));
-                poseStandard.setRArmpit(cursor.getString(7));
-                poseStandard.setLArmpit(cursor.getString(8));
-                poseStandard.setRShoulder(cursor.getString(9));
-                poseStandard.setLShoulder(cursor.getString(10));
-                poseStandard.setRKneeToe(cursor.getString(11));
-                poseStandard.setLKneeToe(cursor.getString(12));
-                poseStandard.setRThighHorizontal(cursor.getString(13));
-                poseStandard.setLThighHorizontal(cursor.getString(14));
-                poseStandard.setRCrotch(cursor.getString(15));
-                poseStandard.setLCrotch(cursor.getString(16));
-                poseStandard.setRShoulderGround(cursor.getString(17));
-                poseStandard.setLShoulderGround(cursor.getString(18));
-                poseStandard.setRElbowRaise(cursor.getString(19));
-                poseStandard.setLElbowRaise(cursor.getString(20));
-                poseStandard.setRHeelOnGround(cursor.getString(21));
-                poseStandard.setLHeelOnGround(cursor.getString(22));
-                poseStandard.setBodyVertical(cursor.getString(23));
-                // Adding contact to list
-                poseStandardList.add(poseStandard);
+                poseNames.add(cursor.getString(0));
             } while (cursor.moveToNext());
         }
+        return poseNames;
+    }
 
-        // return contact list
-        return poseStandardList;
+    public boolean poseStandardExist(String poseName) {
+        List<String> poseNames = getAllPoseName();
+        return poseNames.contains(poseName);
     }
 
     // code to update the single contact
@@ -384,25 +369,6 @@ public class PoseStandardDBHandler extends SQLiteOpenHelper {
         // updating row
         return db.update(TABLE_POSE_STANDARD, values, KEY_POSE_NAME + " = ?",
                 new String[] { String.valueOf(poseStandard.getPoseName()) });
-    }
-
-    // Deleting single contact
-    public void deletePoseStandard(PoseStandard poseStandard) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_POSE_STANDARD, KEY_POSE_NAME + " = ?",
-                new String[] { String.valueOf(poseStandard.getPoseName()) });
-        db.close();
-    }
-
-    // Getting contacts Count
-    public int getPoseStandardCount() {
-        String countQuery = "SELECT  * FROM " + TABLE_POSE_STANDARD;
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery(countQuery, null);
-        cursor.close();
-
-        // return count
-        return cursor.getCount();
     }
 
 }

@@ -36,10 +36,10 @@ public class MenuActivity extends AppCompatActivity {
     String menuName;
 
     TextView menuNameTextView;
-    TextView menuIll;
+    TextView menuIllTextView;
 
-    RecyclerView menuRecyclerView;
-    MyListAdapter menuListAdapter;
+    RecyclerView poseRecyclerView;
+    MyListAdapter poseListAdapter;
     ArrayList<HashMap<String,String>> arrayList = new ArrayList<>();
 
     FloatingActionButton fab;
@@ -69,14 +69,17 @@ public class MenuActivity extends AppCompatActivity {
         menuNameTextView = findViewById(R.id.menuNameTextView);
         menuNameTextView.setText(menuName);
 
-        getMenuToList();
+        getPoseToList();
 
-        menuRecyclerView = findViewById(R.id.menuRecycleView);
-        menuRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        menuRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-        menuListAdapter = new MyListAdapter();
-        menuRecyclerView.setAdapter(menuListAdapter);
-        recyclerViewAction(menuRecyclerView, menuListAdapter);
+        menuIllTextView = findViewById(R.id.menuIllTextView);
+        menuIllTextView.setText(trainMenu.getIll());
+
+        poseRecyclerView = findViewById(R.id.poseRecyclerView);
+        poseRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        poseRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+        poseListAdapter = new MyListAdapter();
+        poseRecyclerView.setAdapter(poseListAdapter);
+        recyclerViewAction(poseRecyclerView, poseListAdapter);
 
         fab = findViewById(R.id.fab);
 
@@ -111,11 +114,11 @@ public class MenuActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        getMenuToList();
-        menuListAdapter.notifyDataSetChanged();
+        getPoseToList();
+        poseListAdapter.notifyDataSetChanged();
     }
 
-    private void getMenuToList(){
+    private void getPoseToList(){
         menuLength = 0;
         trainMenu = tm.getMenu(menuName);
         arrayList.clear();
@@ -217,7 +220,7 @@ public class MenuActivity extends AppCompatActivity {
                     case ItemTouchHelper.RIGHT:
                         trainMenu.remove(position);
                         tm.updateTrainMenu(trainMenu);
-                        getMenuToList();
+                        getPoseToList();
                         myAdapter.notifyItemRemoved(position);
                         myAdapter.notifyDataSetChanged();
                         break;

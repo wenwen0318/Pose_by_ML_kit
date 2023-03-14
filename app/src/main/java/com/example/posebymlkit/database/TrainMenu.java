@@ -24,6 +24,7 @@ public class TrainMenu {
     String pose18; int time18;
     String pose19; int time19;
     String pose20; int time20;
+    String ill;
 
     public TrainMenu(){}
     public TrainMenu(
@@ -47,7 +48,8 @@ public class TrainMenu {
             String pose17, int time17,
             String pose18, int time18,
             String pose19, int time19,
-            String pose20, int time20
+            String pose20, int time20,
+            String ill
     ){
         this.menuName = poseName;
         this.pose1 = pose1; this.time1 = time1;
@@ -70,6 +72,7 @@ public class TrainMenu {
         this.pose18 = pose18; this.time18 = time18;
         this.pose19 = pose19; this.time19 = time19;
         this.pose20 = pose20; this.time20 = time20;
+        this.ill = ill;
     }
 
     public ArrayList<String> getAllPose(){
@@ -473,5 +476,8 @@ public class TrainMenu {
     public void setPose20(String pose20){ this.pose20 = pose20;}
     public int getTime20(){ return this.time20;}
     public void setTime20(int time20){ this.time20 = time20;}
+
+    public String getIll(){ return this.ill;}
+    public void setIll(String ill){ this.ill = ill;}
 
 }

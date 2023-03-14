@@ -19,7 +19,7 @@ import java.util.ArrayList;
 
 public class AddMenuActivity extends AppCompatActivity {
 
-    String menuName;
+    String menuName,menuIll;
 
     EditText editMenuName,editMenuIll;
     Button btn_addPose_cancel,btn_addPose_check;
@@ -48,6 +48,7 @@ public class AddMenuActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //add pose to recycleView and DB
                 menuName = editMenuName.getText().toString();
+                menuIll = editMenuIll.getText().toString();
                 if (menuName.equals("")){
                     Toast.makeText(AddMenuActivity.this,"請輸入清單名稱",Toast.LENGTH_LONG).show();
                 }
@@ -77,7 +78,8 @@ public class AddMenuActivity extends AppCompatActivity {
                             null,0,
                             null,0,
                             null,0,
-                            null,0
+                            null,0,
+                                menuIll
                         ));
                         finish();
                     }

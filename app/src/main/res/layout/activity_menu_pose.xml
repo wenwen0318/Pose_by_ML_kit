@@ -37,6 +37,7 @@
                 android:textStyle="bold"/>
 
             <TextView
+                android:id="@+id/menuIllTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="      核心肌群指的是環繞我們腹部的深層肌，分別是腹橫肌、骨盆底肌、多裂肌及橫隔膜。
@@ -53,7 +54,7 @@
             android:orientation="vertical">
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/menuRecycleView"
+                android:id="@+id/poseRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 tools:listitem="@layout/menu_pose_layout"/>
