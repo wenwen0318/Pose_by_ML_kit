@@ -21,6 +21,8 @@ import android.widget.Toast;
 
 import com.example.posebymlkit.database.HistoricalRecord;
 import com.example.posebymlkit.database.HistoricalRecordDBHandler;
+import com.example.posebymlkit.database.MenuHistory;
+import com.example.posebymlkit.database.MenuHistoryDBHandler;
 import com.example.posebymlkit.database.PoseWrongTTSDBHandler;
 import com.example.posebymlkit.database.TrainMenu;
 import com.example.posebymlkit.database.TrainMenuDBHandler;
@@ -74,10 +76,12 @@ public class LivePreviewActivity extends AppCompatActivity
 
     HistoricalRecordDBHandler hr = new HistoricalRecordDBHandler(this);
     PoseWrongTTSDBHandler pwt = new PoseWrongTTSDBHandler(this);
+    MenuHistoryDBHandler mh = new MenuHistoryDBHandler(this);
 
     Intent intent = new Intent();
     Bundle bundle = new Bundle();
     String poseName;
+    int time;
     int userLevel;
     String date;
     TextView currentPoseName;
@@ -92,6 +96,8 @@ public class LivePreviewActivity extends AppCompatActivity
     ArrayList<String> poseList = new ArrayList<String>();
     ArrayList<Integer> timeList = new ArrayList<Integer>();
     TrainMenu trainMenu;
+    MenuHistory menuHistory;
+    int index;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,6 +143,10 @@ public class LivePreviewActivity extends AppCompatActivity
             trainMenu = db.getMenu(menuName);
             poseList = trainMenu.getAllPose();
             timeList = trainMenu.getAllTime();
+            menuHistory = new MenuHistory();
+            menuHistory.set(1, menuName);
+            menuHistory.set(2, date);
+            index = 3;
         }
         System.out.println("poseList:" + poseList);
         currentPoseName = findViewById(R.id.poseNameView);
@@ -305,6 +315,7 @@ public class LivePreviewActivity extends AppCompatActivity
                 poseName,
                 date,
                 userLevel,
+                time,
                 overallCompleteness,
                 jointCompleteness[0], jointCompleteness[1],
                 jointCompleteness[2], jointCompleteness[3],
@@ -318,8 +329,8 @@ public class LivePreviewActivity extends AppCompatActivity
                 jointCompleteness[18], jointCompleteness[19],
                 jointCompleteness[20], jointCompleteness[21],
                 jointCompleteness[22]));
+
         handler.removeCallbacks(timeCountdown);
-        getResultDialog();
     }
 
     private void getResultDialog() {
@@ -341,6 +352,7 @@ public class LivePreviewActivity extends AppCompatActivity
             });
         }
         else{
+            mh.addMenuHistory(menuHistory);
             builder.setTitle("完成清單訓練");
             builder.setPositiveButton("詳細數據", new DialogInterface.OnClickListener() {
                 @Override
@@ -395,7 +407,13 @@ public class LivePreviewActivity extends AppCompatActivity
             if(!poseList.get(0).equals("Rest")){
                 tts.speak("開始練習", TextToSpeech.QUEUE_ADD,null,null);
             }
+            Calendar calendar= Calendar.getInstance();
+            SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd   hh:mm:ss");
+            date = dateFormat.format(calendar.getTime());
+            menuHistory.set(index, date);
+            index++;
             poseName = poseList.get(0);
+            time = timeList.get(0);
             model = POSE_DETECTION;
             createCameraSource(model);
         }
@@ -447,20 +465,17 @@ public class LivePreviewActivity extends AppCompatActivity
             else{
                 tts.speak("練習結束", TextToSpeech.QUEUE_ADD, null, null);
             }
+            getHistoricalRecord();
             poseList.remove(0);
             timeList.remove(0);
             handler.removeCallbacks(TTSWrongHint);
             handler.removeCallbacks(remindPose);
             handler.removeCallbacks(readyTime);
             if (poseList.isEmpty()) {
-                switch(MODE){
-                    case "pose" : getHistoricalRecord();break;
-                    case "menu" :
-                        tts.speak("完成訓練",TextToSpeech.QUEUE_ADD,null,null);
-                        handler.removeCallbacks(timeCountdown);
-                        getResultDialog();
-                        break;
+                if(MODE.equals("menu")){
+                    tts.speak("完成訓練",TextToSpeech.QUEUE_ADD,null,null);
                 }
+                getResultDialog();
             }
             else {
                 startCameraSource();
@@ -471,63 +486,6 @@ public class LivePreviewActivity extends AppCompatActivity
             }
         }
     };
-
-    private final SurfaceHolder.Callback surfaceCallback = new SurfaceHolder.Callback() {
-
-        @Override
-        public void surfaceDestroyed(SurfaceHolder holder) {
-            isSurfaceCreated = false;
-        }
-
-        @Override
-        public void surfaceCreated(SurfaceHolder holder) {
-            isSurfaceCreated = true;
-        }
-
-        @Override
-        public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-            startCameraSource();
-        }
-    };
-
-    private void initMediaRecorder() {
-        mediaRecorder = new MediaRecorder();//例項化
-
-        //mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC); // 設定從麥克風採集聲音
-        mediaRecorder.setVideoSource(MediaRecorder.VideoSource.CAMERA); // 設定從攝像頭採集影象
-        mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4); // 設定視訊的輸出格式 為MP4
-        //mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.DEFAULT); // 設定音訊的編碼格式
-        mediaRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.H264); // 設定視訊的編碼格式
-        mediaRecorder.setVideoSize(352, 288); // 設定視訊大小
-        mediaRecorder.setVideoFrameRate(20); // 設定幀率
-        mediaRecorder.setPreviewDisplay(surfaceHolder.getSurface());
-
-        //設定視訊儲存路徑0
-        File file = new File(ContextCompat.getExternalFilesDirs(this,Environment.DIRECTORY_DCIM)[0].getAbsolutePath()+File.separator + "VideoRecorder");;
-        if (!file.exists()) {
-            //多級目錄的建立
-            boolean mkdir = file.mkdir();
-            if (!mkdir) {
-                Log.e(TAG, file.getPath() + "Directory creation failed.");
-            }
-        }
-        Log.d("filePath",file.toString());
-        String fileName = file.getPath() + File.separator + "VID_"  + "_" + date + ".mp4";
-        Log.d("fileName",fileName);
-        mediaRecorder.setOutputFile(fileName);
-    }
-
-    private void startRecording() {
-        if (mediaRecorder != null) {
-            try {
-                mediaRecorder.prepare();
-                mediaRecorder.start();
-            } catch (Exception e) {
-                isRecording = false;
-                Log.e(TAG, e.getMessage());
-            }
-        }
-    }
 
     @Override
     public void onResume() {

@@ -16,6 +16,8 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.posebymlkit.database.MenuHistory;
+import com.example.posebymlkit.database.MenuHistoryDBHandler;
 import com.example.posebymlkit.database.TrainMenu;
 import com.example.posebymlkit.database.TrainMenuDBHandler;
 
@@ -39,6 +41,8 @@ public class MenuResultActivity extends AppCompatActivity {
     MyListAdapter menuHistoryListAdapter;
     ArrayList<HashMap<String,String>> arrayList = new ArrayList<>();
     int menuLength;
+    MenuHistory menuHistory;
+    MenuHistoryDBHandler mh = new MenuHistoryDBHandler(MenuResultActivity.this);
 
     @SuppressLint({"MissingInflatedId", "SetTextI18n"})
     @Override
@@ -50,6 +54,7 @@ public class MenuResultActivity extends AppCompatActivity {
         bundle = getIntent().getExtras();
         menuName = bundle.getString("menuName");
         date = bundle.getString("date");
+//        menuHistory = mh.getAllMenuHistory();
         trainMenu = db.getMenu(menuName);
         poseList = trainMenu.getAllPose();
         timeList = trainMenu.getAllTime();

@@ -4,6 +4,7 @@ public class HistoricalRecord {
     String poseName;
     String date;
     int level;
+    int time;
     float allComplete;
     String RHip, LHip;
     String RKnee, LKnee;
@@ -23,6 +24,7 @@ public class HistoricalRecord {
             String poseName,
             String date,
             int level,
+            int time,
             float allComplete,
             String RHip, String LHip,
             String RKnee, String LKnee,
@@ -40,6 +42,7 @@ public class HistoricalRecord {
         this.poseName = poseName;
         this.date = date;
         this.level = level;
+        this.time = time;
         this.allComplete = allComplete;
         this.RHip = RHip;   this.LHip = LHip;
         this.RKnee = RKnee; this.LKnee = LKnee;
@@ -68,75 +71,78 @@ public class HistoricalRecord {
                 item = Integer.toString(this.level);
                 break;
             case 4:
-                item = Float.toString(this.allComplete);
+                item = Integer.toString(this.time);
                 break;
             case 5:
-                item = this.RHip;
+                item = Float.toString(this.allComplete);
                 break;
             case 6:
-                item = this.LHip;
+                item = this.RHip;
                 break;
             case 7:
-                item = this.RKnee;
+                item = this.LHip;
                 break;
             case 8:
-                item = this.LKnee;
+                item = this.RKnee;
                 break;
             case 9:
-                item = this.RElbow;
+                item = this.LKnee;
                 break;
             case 10:
-                item = this.LElbow;
+                item = this.RElbow;
                 break;
             case 11:
-                item = this.RArmpit;
+                item = this.LElbow;
                 break;
             case 12:
-                item = this.LArmpit;
+                item = this.RArmpit;
                 break;
             case 13:
-                item = this.RShoulder;
+                item = this.LArmpit;
                 break;
             case 14:
-                item = this.LShoulder;
+                item = this.RShoulder;
                 break;
             case 15:
-                item = this.RKneeToe;
+                item = this.LShoulder;
                 break;
             case 16:
-                item = this.LKneeToe;
+                item = this.RKneeToe;
                 break;
             case 17:
-                item = this.RThighHorizontal;
+                item = this.LKneeToe;
                 break;
             case 18:
-                item = this.LThighHorizontal;
+                item = this.RThighHorizontal;
                 break;
             case 19:
-                item = this.RCrotch;
+                item = this.LThighHorizontal;
                 break;
             case 20:
-                item = this.LCrotch;
+                item = this.RCrotch;
                 break;
             case 21:
-                item = this.RShoulderGround;
+                item = this.LCrotch;
                 break;
             case 22:
-                item = this.LShoulderGround;
+                item = this.RShoulderGround;
                 break;
             case 23:
-                item = this.RElbowRaise;
+                item = this.LShoulderGround;
                 break;
             case 24:
-                item = this.LElbowRaise;
+                item = this.RElbowRaise;
                 break;
             case 25:
-                item = this.RHeelOnGround;
+                item = this.LElbowRaise;
                 break;
             case 26:
-                item = this.LHeelOnGround;
+                item = this.RHeelOnGround;
                 break;
             case 27:
+                item = this.LHeelOnGround;
+                break;
+            case 28:
                 item = this.bodyVertical;
                 break;
             default:
@@ -153,6 +159,9 @@ public class HistoricalRecord {
 
     public int getLevel(){ return this.level;}
     public void setLevel(int level){ this.level = level;}
+
+    public int getTime(){ return this.time;}
+    public void setTime(int time){ this.time = time;}
 
     public float getAllComplete(){ return this.allComplete;}
     public void setAllComplete(float allComplete){ this.allComplete = allComplete;}
