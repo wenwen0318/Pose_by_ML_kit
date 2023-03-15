@@ -16,6 +16,8 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.posebymlkit.database.HistoricalRecord;
+import com.example.posebymlkit.database.HistoricalRecordDBHandler;
 import com.example.posebymlkit.database.MenuHistory;
 import com.example.posebymlkit.database.MenuHistoryDBHandler;
 import com.example.posebymlkit.database.TrainMenu;
@@ -28,21 +30,19 @@ public class MenuResultActivity extends AppCompatActivity {
 
     Intent intent;
     Bundle bundle;
-    TrainMenuDBHandler db = new TrainMenuDBHandler(MenuResultActivity.this);
-    TrainMenu trainMenu;
     String menuName;
     String date;
     TextView menuDataNameTextView, menuDataTextView, menuDateTextView;
     int sumTime = 0;
     int poseNum = 0;
-    ArrayList<String> poseList = new ArrayList<String>();
-    ArrayList<Integer> timeList = new ArrayList<Integer>();
     RecyclerView menuHistoryRecyclerView;
     MyListAdapter menuHistoryListAdapter;
     ArrayList<HashMap<String,String>> arrayList = new ArrayList<>();
     int menuLength;
-    MenuHistory menuHistory;
+    MenuHistory menuHistory = new MenuHistory();
     MenuHistoryDBHandler mh = new MenuHistoryDBHandler(MenuResultActivity.this);
+    HistoricalRecordDBHandler hr = new HistoricalRecordDBHandler(MenuResultActivity.this);
+    HistoricalRecord historicalRecord;
 
     @SuppressLint({"MissingInflatedId", "SetTextI18n"})
     @Override
@@ -53,19 +53,19 @@ public class MenuResultActivity extends AppCompatActivity {
         intent = new Intent();
         bundle = getIntent().getExtras();
         menuName = bundle.getString("menuName");
-        date = bundle.getString("date");
-//        menuHistory = mh.getAllMenuHistory();
-        trainMenu = db.getMenu(menuName);
-        poseList = trainMenu.getAllPose();
-        timeList = trainMenu.getAllTime();
-        for(int ints : timeList){
-            sumTime += ints;
-        }
-        for(String str : poseList){
-            if(!str.equals("Rest")){
+        date = bundle.getString("menuDate");
+        menuHistory = mh.getMenuHistoryByMenuDate(date, 22);
+        for(int i=3;i<22;i++){
+            if(menuHistory.get(i) == null){
+                break;
+            }
+            historicalRecord = hr.getHistoricalRecordByDate(menuHistory.get(i));
+            sumTime += historicalRecord.getTime();
+            if(!historicalRecord.getPoseName().equals("Rest")){
                 poseNum += 1;
             }
         }
+
         menuDataNameTextView = findViewById(R.id.menuDataNameTextView);
         menuDataNameTextView.setText(menuName);
 
@@ -87,16 +87,18 @@ public class MenuResultActivity extends AppCompatActivity {
     private void getMenuToList(){
         menuLength = 0;
         arrayList.clear();
-        for (int i = 1;i<=20;i++){
+        for (int i = 1;i<23;i++){
             HashMap<String,String> hashMap = new HashMap<>();
-            if (trainMenu.getPose(i) == null){
+            historicalRecord = hr.getHistoricalRecordByDate(menuHistory.get(i+2));
+            if (menuHistory.get(i+2) == null){
                 break;
             }
             hashMap.put("num",String.format("%02d",i));
-            hashMap.put("poseName",trainMenu.getPose(i));
-            hashMap.put("poseTime",trainMenu.getTime(i) + "s");
-//            hashMap.put("poseCompleteness", );
+            hashMap.put("poseName",historicalRecord.getPoseName());
+            hashMap.put("poseTime",historicalRecord.getTime() + "s");
+            hashMap.put("poseCompleteness", Float.toString(historicalRecord.getAllComplete())+"%");
             arrayList.add(hashMap);
+            System.out.println("arrayList : "+arrayList);
             menuLength = i;
         }
     }
@@ -136,6 +138,7 @@ public class MenuResultActivity extends AppCompatActivity {
             holder.poseNum.setText(arrayList.get(position).get("num"));
             holder.poseName.setText(arrayList.get(position).get("poseName"));
             holder.poseTime.setText(arrayList.get(position).get("poseTime"));
+            holder.poseCompleteness.setText(arrayList.get(position).get("poseCompleteness"));
             holder.poseImage.setImageResource(resId);
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {

@@ -106,8 +106,8 @@ public class MenuHistoryDBHandler extends SQLiteOpenHelper{
         db.close();
     }
 
-    public List<MenuHistory> getAllMenuHistory() {
-        List<MenuHistory> menuHistories = new ArrayList<>();
+    public ArrayList<MenuHistory> getAllMenuHistory() {
+        ArrayList<MenuHistory> menuHistories = new ArrayList<>();
         // Select All Query
         String selectQuery = "SELECT  * FROM " + TABLE_MENU_HISTORY;
 
@@ -147,57 +147,51 @@ public class MenuHistoryDBHandler extends SQLiteOpenHelper{
         return menuHistories;
     }
 
-//    public List<MenuHistory> getMenuHistoryByPoseName(String poseName,int limit) {
-//        List<MenuHistory> menuHistory = new ArrayList<>();
-//        // Select All Query
-//        String selectQuery =
-//                " SELECT  * FROM " + TABLE_MENU_HISTORY +
-//                        " WHERE " + KEY_POSE_NAME + " = '" + poseName +
-//                        "' ORDER BY "+ KEY_DATE +
-//                        " DESC LIMIT " + limit;
-//
-//        SQLiteDatabase db = this.getWritableDatabase();
-//        Cursor cursor = db.rawQuery(selectQuery, null);
-//
-//        // looping through all rows and adding to list
-//        if (cursor.moveToFirst()) {
-//            do {
-//                MenuHistory historicalRecord = new MenuHistory();
-//                historicalRecord.setPoseName(cursor.getString(0));
-//                historicalRecord.setDate(cursor.getString(1));
-//                historicalRecord.setLevel(Integer.parseInt(cursor.getString(2)));
-//                historicalRecord.setAllComplete(Float.parseFloat(cursor.getString(3)));
-//                historicalRecord.setRHip(cursor.getString(4));
-//                historicalRecord.setLHip(cursor.getString(5));
-//                historicalRecord.setRKnee(cursor.getString(6));
-//                historicalRecord.setLKnee(cursor.getString(7));
-//                historicalRecord.setRElbow(cursor.getString(8));
-//                historicalRecord.setLElbow(cursor.getString(9));
-//                historicalRecord.setRArmpit(cursor.getString(10));
-//                historicalRecord.setLArmpit(cursor.getString(11));
-//                historicalRecord.setRShoulder(cursor.getString(12));
-//                historicalRecord.setLShoulder(cursor.getString(13));
-//                historicalRecord.setRKneeToe(cursor.getString(14));
-//                historicalRecord.setLKneeToe(cursor.getString(15));
-//                historicalRecord.setRThighHorizontal(cursor.getString(16));
-//                historicalRecord.setLThighHorizontal(cursor.getString(17));
-//                historicalRecord.setRCrotch(cursor.getString(18));
-//                historicalRecord.setLCrotch(cursor.getString(19));
-//                historicalRecord.setRShoulderGround(cursor.getString(20));
-//                historicalRecord.setLShoulderGround(cursor.getString(21));
-//                historicalRecord.setRElbowRaise(cursor.getString(22));
-//                historicalRecord.setLElbowRaise(cursor.getString(23));
-//                historicalRecord.setRHeelOnGround(cursor.getString(24));
-//                historicalRecord.setLHeelOnGround(cursor.getString(25));
-//                historicalRecord.setBodyVertical(cursor.getString(26));
-//                // Adding contact to list
-//                historicalRecords.add(historicalRecord);
-//            } while (cursor.moveToNext());
-//        }
-//
-//        // return contact list
-//        return historicalRecords;
-//    }
+    public MenuHistory getMenuHistoryByMenuDate(String menuDate,int limit) {
+        MenuHistory menuHistory = new MenuHistory();
+        // Select All Query
+        String selectQuery =
+                " SELECT  * FROM " + TABLE_MENU_HISTORY +
+                        " WHERE " + KEY_MENU_DATE + " = '" + menuDate +
+                        "' ORDER BY "+ KEY_MENU_NAME +
+                        " DESC LIMIT " + limit;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                menuHistory.setMenuName(cursor.getString(0));
+                menuHistory.setMenuDate(cursor.getString(1));
+                menuHistory.setPoseDate1(cursor.getString(2));
+                menuHistory.setPoseDate2(cursor.getString(3));
+                menuHistory.setPoseDate3(cursor.getString(4));
+                menuHistory.setPoseDate4(cursor.getString(5));
+                menuHistory.setPoseDate5(cursor.getString(6));
+                menuHistory.setPoseDate6(cursor.getString(7));
+                menuHistory.setPoseDate7(cursor.getString(8));
+                menuHistory.setPoseDate8(cursor.getString(9));
+                menuHistory.setPoseDate9(cursor.getString(10));
+                menuHistory.setPoseDate10(cursor.getString(11));
+                menuHistory.setPoseDate11(cursor.getString(12));
+                menuHistory.setPoseDate12(cursor.getString(13));
+                menuHistory.setPoseDate13(cursor.getString(14));
+                menuHistory.setPoseDate14(cursor.getString(15));
+                menuHistory.setPoseDate15(cursor.getString(16));
+                menuHistory.setPoseDate16(cursor.getString(17));
+                menuHistory.setPoseDate17(cursor.getString(18));
+                menuHistory.setPoseDate18(cursor.getString(19));
+                menuHistory.setPoseDate19(cursor.getString(20));
+                menuHistory.setPoseDate20(cursor.getString(21));
+                // Adding contact to list
+
+            } while (cursor.moveToNext());
+        }
+
+        // return contact list
+        return menuHistory;
+    }
 
 
 

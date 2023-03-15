@@ -308,9 +308,17 @@ public class LivePreviewActivity extends AppCompatActivity
     }
 
     private void getHistoricalRecord(){
-        overallCompleteness = pdp.getOverallCompleteness();
-        jointCompleteness = pdp.getJointsCompleteness();
-
+        if(poseName.equals("Rest")){
+            jointCompleteness = new String[23];
+            overallCompleteness = 100;
+            for(int i=0;i<23;i++){
+                jointCompleteness[i] = "100";
+            }
+        }
+        else{
+            overallCompleteness = pdp.getOverallCompleteness();
+            jointCompleteness = pdp.getJointsCompleteness();
+        }
         hr.addHistoricalRecord(new HistoricalRecord(
                 poseName,
                 date,
@@ -329,7 +337,6 @@ public class LivePreviewActivity extends AppCompatActivity
                 jointCompleteness[18], jointCompleteness[19],
                 jointCompleteness[20], jointCompleteness[21],
                 jointCompleteness[22]));
-
         handler.removeCallbacks(timeCountdown);
     }
 
@@ -359,7 +366,7 @@ public class LivePreviewActivity extends AppCompatActivity
                 public void onClick(DialogInterface dialogInterface, int i) {
                     intent.setClass(LivePreviewActivity.this, MenuResultActivity.class);
                     bundle.putString("menuName", menuName);
-                    bundle.putString("date",date);
+                    bundle.putString("menuDate", menuHistory.get(2));
                     intent.putExtras(bundle);
                     startActivity(intent);
                     finish();
@@ -397,7 +404,9 @@ public class LivePreviewActivity extends AppCompatActivity
         public void run() {
             handler.postDelayed(this, 10000);
             timeList.set(0,timeList.get(0)-10);
-            tts.speak("休息時間還剩"+(timeList.get(0))+"秒", TextToSpeech.QUEUE_ADD,null,null);
+            if(timeList.get(0) != 0){
+                tts.speak("休息時間還剩"+(timeList.get(0))+"秒", TextToSpeech.QUEUE_ADD,null,null);
+            }
         }
     };
 
@@ -471,6 +480,7 @@ public class LivePreviewActivity extends AppCompatActivity
             handler.removeCallbacks(TTSWrongHint);
             handler.removeCallbacks(remindPose);
             handler.removeCallbacks(readyTime);
+            handler.removeCallbacks(restRemind);
             if (poseList.isEmpty()) {
                 if(MODE.equals("menu")){
                     tts.speak("完成訓練",TextToSpeech.QUEUE_ADD,null,null);
