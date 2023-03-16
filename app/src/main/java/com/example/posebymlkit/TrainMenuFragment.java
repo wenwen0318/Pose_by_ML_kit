@@ -1,5 +1,7 @@
 package com.example.posebymlkit;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -14,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.posebymlkit.database.HistoricalRecord;
 import com.example.posebymlkit.database.HistoricalRecordDBHandler;
@@ -64,6 +67,7 @@ public class TrainMenuFragment extends Fragment {
         }
     }
 
+    ArrayList<HashMap<String, String>> arrayList = new ArrayList<>();
     Intent intent = new Intent();
     Bundle bundle = new Bundle();
 
@@ -78,8 +82,6 @@ public class TrainMenuFragment extends Fragment {
         tm = new TrainMenuDBHandler(getActivity());
         menuNames = tm.getAllTrainMenuName();
 
-        final ArrayList<HashMap<String, String>> arrayList = new ArrayList<>();
-
         for (String menuName:menuNames) {
             HashMap<String, String> hashMap = new HashMap<>();
             Log.d("menu:", menuName);
@@ -93,6 +95,7 @@ public class TrainMenuFragment extends Fragment {
         menuListView.setAdapter(simpleAdapter);
 
         menuListView.setOnItemClickListener(onItemClickListener);
+        menuListView.setOnItemLongClickListener(onItemLongClickListener);
 
         fab = view.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -115,6 +118,32 @@ public class TrainMenuFragment extends Fragment {
             bundle.putString("menuName",menuName.getText().toString());
             intent.putExtras(bundle);
             startActivity(intent);
+        }
+    };
+
+    private final AdapterView.OnItemLongClickListener onItemLongClickListener = new AdapterView.OnItemLongClickListener() {
+        @Override
+        public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setMessage("刪除清單?");
+
+            builder.setPositiveButton("確定", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    arrayList.remove(position);
+                    simpleAdapter.notifyDataSetChanged();
+                }
+            });
+            builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                }
+            });
+
+            builder.create().show();
+            return true;
         }
     };
 }
