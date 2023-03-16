@@ -416,11 +416,15 @@ public class LivePreviewActivity extends AppCompatActivity
             if(!poseList.get(0).equals("Rest")){
                 tts.speak("開始練習", TextToSpeech.QUEUE_ADD,null,null);
             }
-            Calendar calendar= Calendar.getInstance();
-            SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd   hh:mm:ss");
-            date = dateFormat.format(calendar.getTime());
-            menuHistory.set(index, date);
-            index++;
+
+            if(MODE.equals("menu")){
+                Calendar calendar= Calendar.getInstance();
+                SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd   hh:mm:ss");
+                date = dateFormat.format(calendar.getTime());
+                menuHistory.set(index, date);
+                index++;
+            }
+
             poseName = poseList.get(0);
             time = timeList.get(0);
             model = POSE_DETECTION;

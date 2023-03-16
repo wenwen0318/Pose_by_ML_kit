@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -34,7 +35,41 @@ public class HistoryListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history_list);
 
+        Button button2 = findViewById(R.id.toMenuBtn);
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toMenuLayout();
+            }
+        });
+
         displayListView();
+    }
+
+    public void toUniLayout(){
+        setContentView(R.layout.activity_history_list);
+
+        Button button2 = findViewById(R.id.toMenuBtn);
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toMenuLayout();
+            }
+        });
+
+        displayListView();
+    }
+
+    public void toMenuLayout(){
+        setContentView(R.layout.activity_menu_list);
+
+        Button button1 = findViewById(R.id.toUniBtn);
+        button1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toUniLayout();
+            }
+        });
     }
 
     private void displayListView() {
