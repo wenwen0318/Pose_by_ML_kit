@@ -97,6 +97,7 @@ public class MenuResultActivity extends AppCompatActivity {
             hashMap.put("poseName",historicalRecord.getPoseName());
             hashMap.put("poseTime",historicalRecord.getTime() + "s");
             hashMap.put("poseCompleteness", Float.toString(historicalRecord.getAllComplete())+"%");
+            hashMap.put("menuDate", menuHistory.get(i+2));
             arrayList.add(hashMap);
             System.out.println("arrayList : "+arrayList);
             menuLength = i;
@@ -144,20 +145,14 @@ public class MenuResultActivity extends AppCompatActivity {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    intent.setClass(MenuResultActivity.this, PracticeResultActivity.class);
+                    bundle.putString("cardView", arrayList.get(position).get("poseName"));
+                    bundle.putString("date", arrayList.get(position).get("menuDate"));
+                    intent.putExtras(bundle);
+                    startActivity(intent);
 
                 }
             });
-//            holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
-//                @Override
-//                public boolean onLongClick(View v) {
-//                    intent.setClass(MenuActivity.this, AddPoseActivity.class);
-//                    bundle.putString("menuName", menuName);
-//                    bundle.putInt("menuLength", position+1);
-//                    intent.putExtras(bundle);
-//                    startActivity(intent);
-//                    return false;
-//                }
-//            });
 
         }
 
@@ -176,37 +171,7 @@ public class MenuResultActivity extends AppCompatActivity {
         menuHistoryListAdapter.notifyDataSetChanged();
     }
 
-//    private void recyclerViewAction(RecyclerView recyclerView, final MyListAdapter myAdapter){
-//        ItemTouchHelper helper = new ItemTouchHelper(new ItemTouchHelper.Callback() {
-//            @Override
-//            public int getMovementFlags(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
-//                return makeMovementFlags(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT); //RecyclerView操作類型
-//            }
-//
-//            @Override
-//            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-//                return false;
-//            }
-//
-//            @SuppressLint("NotifyDataSetChanged")
-//            @Override
-//            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-//                //管理滑動情形
-//                int position = viewHolder.getAdapterPosition();
-//                switch (direction) {
-//                    case ItemTouchHelper.LEFT:
-//                    case ItemTouchHelper.RIGHT:
-//                        trainMenu.remove(position);
-//                        tm.updateTrainMenu(trainMenu);
-//                        getMenuToList();
-//                        myAdapter.notifyItemRemoved(position);
-//                        myAdapter.notifyDataSetChanged();
-//                        break;
-//                }
-//            }
-//        });
-//        helper.attachToRecyclerView(recyclerView);
-//    }
+
 }
 
 

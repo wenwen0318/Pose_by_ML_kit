@@ -50,6 +50,8 @@ public class PracticeResultActivity extends AppCompatActivity {
         bundle = getIntent().getExtras();
         cardView = bundle.getString("cardView");
         date = bundle.getString("date");
+        System.out.println("cardView : "+cardView);
+        System.out.println("date : "+date);
 
         List<HistoricalRecord> historicalRecord = hr.getHistoricalRecordByPoseName(cardView,8);
         Collections.reverse(historicalRecord);

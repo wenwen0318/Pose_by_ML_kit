@@ -1,6 +1,7 @@
 package com.example.posebymlkit.database;
 
 public class HistoricalRecord {
+    String mode;
     String poseName;
     String date;
     int level;
@@ -21,6 +22,7 @@ public class HistoricalRecord {
 
     public HistoricalRecord(){}
     public HistoricalRecord(
+            String mode,
             String poseName,
             String date,
             int level,
@@ -39,6 +41,7 @@ public class HistoricalRecord {
             String RHeelOnGround, String LHeelOnGround,
             String bodyVertical
     ){
+        this.mode = mode;
         this.poseName = poseName;
         this.date = date;
         this.level = level;
@@ -61,6 +64,9 @@ public class HistoricalRecord {
     public String get(int i){
         String item;
         switch (i){
+            case 0:
+                item = this.mode;
+                break;
             case 1:
                 item = this.poseName;
                 break;
@@ -150,6 +156,9 @@ public class HistoricalRecord {
         }
         return item;
     }
+
+    public String getMode(){ return this.mode;}
+    public void setMode(String mode){ this.mode = mode;}
 
     public String getPoseName(){ return this.poseName;}
     public void setPoseName(String poseName){ this.poseName = poseName;}

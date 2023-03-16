@@ -320,6 +320,7 @@ public class LivePreviewActivity extends AppCompatActivity
             jointCompleteness = pdp.getJointsCompleteness();
         }
         hr.addHistoricalRecord(new HistoricalRecord(
+                MODE,
                 poseName,
                 date,
                 userLevel,
