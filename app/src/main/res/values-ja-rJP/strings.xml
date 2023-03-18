@@ -196,6 +196,7 @@
     <string name="Clear_Data">\nデータのクリア\n</string>
     <string name="Instructions_for_use">\n使用説明書\n</string>
     <string name="Contact_us">\nお問い合わせ\n</string>
+    <string name="cameraLen_transform">\カメラレンズ変換\n</string>
     <string name="delete_record">履歴記録をクリアする</string>
     <string name="delete_record_question">すべての履歴記録を削除しますか？続けますか？</string>
     <string name="cancel">キャンセル</string>

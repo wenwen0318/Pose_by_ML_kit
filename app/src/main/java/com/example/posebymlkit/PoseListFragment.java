@@ -1,10 +1,15 @@
 package com.example.posebymlkit;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.hardware.Camera;
+import android.hardware.camera2.CameraCharacteristics;
+import android.hardware.camera2.CameraManager;
 import android.os.Bundle;
 
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.preference.PreferenceManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +31,7 @@ public class PoseListFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    int cameraFacing;
 
     public PoseListFragment() {
         // Required empty public constructor
@@ -80,6 +86,9 @@ public class PoseListFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_pose_list, container, false);
 
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        cameraFacing = preferences.getInt("camera_facing", CameraCharacteristics.LENS_FACING_BACK);
+
         for (int[] ints : poseList) {
             CardView cardView = view.findViewById(ints[0]);
             TextView poseName = view.findViewById(ints[1]);
@@ -88,6 +97,7 @@ public class PoseListFragment extends Fragment {
                 public void onClick(View view) {
                     intent.setClass(PoseListFragment.this.getContext(), VideoActivity.class);
                     bundle.putString("cardView", cardView.getTransitionName());
+                    bundle.putInt("camera_facing", cameraFacing);
                     intent.putExtras(bundle);
                     startActivity(intent);
                 }

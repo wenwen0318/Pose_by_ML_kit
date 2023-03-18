@@ -56,6 +56,7 @@ public class MenuActivity extends AppCompatActivity {
     int[] menu;
     int menuLength;
     String MODE = "menu";
+    int cameraFacing;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +66,7 @@ public class MenuActivity extends AppCompatActivity {
         intent = new Intent();
         bundle = getIntent().getExtras();
         menuName = bundle.getString("menuName");
+        cameraFacing = bundle.getInt("camera_facing");
 
         menuNameTextView = findViewById(R.id.menuNameTextView);
         menuNameTextView.setText(menuName);
@@ -274,6 +276,7 @@ public class MenuActivity extends AppCompatActivity {
                 bundle.putString("menuName", menuName);
                 bundle.putInt("userLevel", userLevel);
                 bundle.putString("mode", MODE);
+                bundle.putInt("camera_facing", cameraFacing);
                 intent.putExtras(bundle);
                 startActivity(intent);
                 startDialog.dismiss();

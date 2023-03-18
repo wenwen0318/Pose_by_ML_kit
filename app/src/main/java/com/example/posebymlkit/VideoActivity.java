@@ -23,6 +23,7 @@ public class VideoActivity extends AppCompatActivity {
     String cardView;
     int userLevel = 3,time;
     String MODE = "pose";
+    int camera_facing;
 
     Dialog dialog;
     View viewDialog;
@@ -44,6 +45,7 @@ public class VideoActivity extends AppCompatActivity {
         intent = new Intent();
         bundle = getIntent().getExtras();
         cardView = bundle.getString("cardView");
+        camera_facing = bundle.getInt("camera_facing");
 
         poseIllustrate = findViewById(R.id.poseIllustrate);
         videoView = findViewById(R.id.videoView);
@@ -156,6 +158,7 @@ public class VideoActivity extends AppCompatActivity {
                 bundle.putInt("userLevel", userLevel);
                 bundle.putInt("time", time);
                 bundle.putString("mode", MODE);
+                bundle.putInt("camera_facing", camera_facing);
                 intent.putExtras(bundle);
                 startActivity(intent);
                 dialog.dismiss();

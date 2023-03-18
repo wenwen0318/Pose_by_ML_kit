@@ -275,6 +275,60 @@ public class HistoricalRecordDBHandler extends SQLiteOpenHelper {
         return historicalRecord;
     }
 
+    public List<HistoricalRecord> getHistoricalRecordByMode(String mode,int limit) {
+        List<HistoricalRecord> historicalRecords = new ArrayList<>();
+        // Select All Query
+        String selectQuery =
+                " SELECT  * FROM " + TABLE_HISTORICAL_RECORD +
+                        " WHERE " + KEY_MODE + " = '" + mode +
+                        "' ORDER BY "+ KEY_DATE +
+                        " DESC LIMIT " + limit;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                HistoricalRecord historicalRecord = new HistoricalRecord();
+                historicalRecord.setMode(cursor.getString(0));
+                historicalRecord.setPoseName(cursor.getString(1));
+                historicalRecord.setDate(cursor.getString(2));
+                historicalRecord.setLevel(Integer.parseInt(cursor.getString(3)));
+                historicalRecord.setTime(Integer.parseInt(cursor.getString(4)));
+                historicalRecord.setAllComplete(Float.parseFloat(cursor.getString(5)));
+                historicalRecord.setRHip(cursor.getString(6));
+                historicalRecord.setLHip(cursor.getString(7));
+                historicalRecord.setRKnee(cursor.getString(8));
+                historicalRecord.setLKnee(cursor.getString(9));
+                historicalRecord.setRElbow(cursor.getString(10));
+                historicalRecord.setLElbow(cursor.getString(11));
+                historicalRecord.setRArmpit(cursor.getString(12));
+                historicalRecord.setLArmpit(cursor.getString(13));
+                historicalRecord.setRShoulder(cursor.getString(14));
+                historicalRecord.setLShoulder(cursor.getString(15));
+                historicalRecord.setRKneeToe(cursor.getString(16));
+                historicalRecord.setLKneeToe(cursor.getString(17));
+                historicalRecord.setRThighHorizontal(cursor.getString(18));
+                historicalRecord.setLThighHorizontal(cursor.getString(19));
+                historicalRecord.setRCrotch(cursor.getString(20));
+                historicalRecord.setLCrotch(cursor.getString(21));
+                historicalRecord.setRShoulderGround(cursor.getString(22));
+                historicalRecord.setLShoulderGround(cursor.getString(23));
+                historicalRecord.setRElbowRaise(cursor.getString(24));
+                historicalRecord.setLElbowRaise(cursor.getString(25));
+                historicalRecord.setRHeelOnGround(cursor.getString(26));
+                historicalRecord.setLHeelOnGround(cursor.getString(27));
+                historicalRecord.setBodyVertical(cursor.getString(28));
+                // Adding contact to list
+                historicalRecords.add(historicalRecord);
+            } while (cursor.moveToNext());
+        }
+
+        // return contact list
+        return historicalRecords;
+    }
+
     public void deleteHistoricalRecord() {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("DELETE FROM "+ TABLE_HISTORICAL_RECORD);

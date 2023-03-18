@@ -99,7 +99,6 @@ public class MenuResultActivity extends AppCompatActivity {
             hashMap.put("poseCompleteness", Float.toString(historicalRecord.getAllComplete())+"%");
             hashMap.put("menuDate", menuHistory.get(i+2));
             arrayList.add(hashMap);
-            System.out.println("arrayList : "+arrayList);
             menuLength = i;
         }
     }
@@ -145,12 +144,13 @@ public class MenuResultActivity extends AppCompatActivity {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    intent.setClass(MenuResultActivity.this, PracticeResultActivity.class);
-                    bundle.putString("cardView", arrayList.get(position).get("poseName"));
-                    bundle.putString("date", arrayList.get(position).get("menuDate"));
-                    intent.putExtras(bundle);
-                    startActivity(intent);
-
+                    if(!arrayList.get(position).get("poseName").equals("Rest")){
+                        intent.setClass(MenuResultActivity.this, PracticeResultActivity.class);
+                        bundle.putString("cardView", arrayList.get(position).get("poseName"));
+                        bundle.putString("date", arrayList.get(position).get("menuDate"));
+                        intent.putExtras(bundle);
+                        startActivity(intent);
+                    }
                 }
             });
 

@@ -214,6 +214,7 @@
     <string name="Clear_Data">\nClear data\n</string>
     <string name="Instructions_for_use">\nInstructions for use\n</string>
     <string name="Contact_us">\nContact us\n</string>
+    <string name="cameraLen_transform">\ncameraLen_conversion\n</string>
     <string name="delete_record">Clear history records</string>
     <string name="delete_record_question">Delete all history records, continue?</string>
     <string name="cancel">cancel</string>

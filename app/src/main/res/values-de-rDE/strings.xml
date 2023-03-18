@@ -196,6 +196,7 @@
     <string name="Clear_Data">\nDaten löschen\n</string>
     <string name="Instructions_for_use">\nGebrauchsanweisung\n</string>
     <string name="Contact_us">\nKontaktiere uns\n</string>
+    <string name="cameraLen_transform">\nKameraobjektiv Konvertieren\n</string>
     <string name="delete_record">Verlaufsprotokoll löschen</string>
     <string name="delete_record_question">Alle Verlaufsprotokolle löschen, fortfahren?</string>
     <string name="cancel">Stornieren</string>

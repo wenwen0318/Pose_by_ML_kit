@@ -93,6 +93,7 @@ public class LivePreviewActivity extends AppCompatActivity
 
     String MODE;
     String menuName;
+    int camera_facing;
     ArrayList<String> poseList = new ArrayList<String>();
     ArrayList<Integer> timeList = new ArrayList<Integer>();
     TrainMenu trainMenu;
@@ -133,6 +134,7 @@ public class LivePreviewActivity extends AppCompatActivity
         bundle = getIntent().getExtras();
         MODE = bundle.getString("mode");
         userLevel = bundle.getInt("userLevel");
+        camera_facing = bundle.getInt("camera_facing");
         if(MODE.equals("pose")){
             poseList.add(bundle.getString("cardView"));
             timeList.add(bundle.getInt("time"));
@@ -178,6 +180,7 @@ public class LivePreviewActivity extends AppCompatActivity
         // If there's no existing cameraSource, create one.
         if (cameraSource == null) {
             cameraSource = new CameraSource(this, graphicOverlay);
+            cameraSource.setFacing(camera_facing);
         }
 
         try {
@@ -240,6 +243,7 @@ public class LivePreviewActivity extends AppCompatActivity
                 if (graphicOverlay == null) {
                     Log.d(TAG, "resume: graphOverlay is null");
                 }
+                cameraSource.setFacing(camera_facing);
                 preview.start(cameraSource, graphicOverlay);
             } catch (IOException e) {
                 Log.e(TAG, "Unable to start camera source.", e);

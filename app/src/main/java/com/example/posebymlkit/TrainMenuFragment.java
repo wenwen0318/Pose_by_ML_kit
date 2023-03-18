@@ -3,10 +3,13 @@ package com.example.posebymlkit;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.hardware.camera2.CameraCharacteristics;
 import android.os.Bundle;
 
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.preference.PreferenceManager;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -70,6 +73,7 @@ public class TrainMenuFragment extends Fragment {
     ArrayList<HashMap<String, String>> arrayList = new ArrayList<>();
     Intent intent = new Intent();
     Bundle bundle = new Bundle();
+    int cameraFacing;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -81,6 +85,9 @@ public class TrainMenuFragment extends Fragment {
 
         tm = new TrainMenuDBHandler(getActivity());
         menuNames = tm.getAllTrainMenuName();
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        cameraFacing = preferences.getInt("camera_facing", CameraCharacteristics.LENS_FACING_FRONT);
 
         for (String menuName:menuNames) {
             HashMap<String, String> hashMap = new HashMap<>();
@@ -116,6 +123,7 @@ public class TrainMenuFragment extends Fragment {
             System.out.println(menuName.getText().toString());
             intent.setClass(getActivity(),MenuActivity.class);
             bundle.putString("menuName",menuName.getText().toString());
+            bundle.putInt("camera_facing", cameraFacing);
             intent.putExtras(bundle);
             startActivity(intent);
         }

@@ -20,17 +20,17 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/poseName"
+                android:id="@+id/menuName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="start"
                 android:text="menuName"
                 android:textSize="30sp" />
             <TextView
-                android:id="@+id/poseTime"
+                android:id="@+id/menuDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="end"
+                android:gravity="center"
                 android:text="menuDate"
                 android:textColor="#666666"
                 android:textSize="15sp" />
@@ -38,10 +38,10 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/poseCompleteness"
+            android:id="@+id/menuTime"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="100%"
+            android:text="120s"
             android:textSize="20sp"
             android:gravity="center"/>
     </LinearLayout>

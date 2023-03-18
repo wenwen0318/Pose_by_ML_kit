@@ -1,21 +1,25 @@
 package com.example.posebymlkit;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
+import android.content.SharedPreferences;
+import android.hardware.camera2.CameraCharacteristics;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
-import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.preference.PreferenceManager;
 
-import android.preference.PreferenceFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.Switch;
+import android.widget.Toast;
 
 import com.example.posebymlkit.database.HistoricalRecordDBHandler;
 
@@ -60,9 +64,14 @@ public class SettingFragment extends Fragment {
     Intent intent = new Intent();
     Button historyBtn;
     Button removeSqlBtn;
+    Button transformCameraLen;
+    Switch sw;
     Button illBtn;
     Button mailBtn;
-
+    SharedPreferences cameraSource;
+    SharedPreferences.Editor editor;
+    int camera_facing = CameraCharacteristics.LENS_FACING_BACK;
+    boolean status;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -73,11 +82,13 @@ public class SettingFragment extends Fragment {
         }
     }
 
+    @SuppressLint("MissingInflatedId")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_setting, container, false);
+
 
         historyBtn = view.findViewById(R.id.historyBtn);
         historyBtn.setOnClickListener(new View.OnClickListener() {
@@ -93,6 +104,32 @@ public class SettingFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 getDialog();
+            }
+        });
+
+        cameraSource = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        camera_facing = cameraSource.getInt("camera_facing", CameraCharacteristics.LENS_FACING_BACK);
+        sw = view.findViewById(R.id.cameraSwitch);
+        sw.setChecked(camera_facing == CameraCharacteristics.LENS_FACING_FRONT);
+        sw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                transformCamera(isChecked);
+                editor = cameraSource.edit();
+                editor.putInt("camera_facing", camera_facing);
+                editor.apply();
+            }
+        });
+
+        transformCameraLen = view.findViewById(R.id.transformCameraLen);
+        transformCameraLen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean isChecked = !sw.isChecked();
+                transformCamera(isChecked);
+                sw.setChecked(isChecked);
+                editor.putInt("camera_facing", camera_facing);
+                editor.apply();
             }
         });
 
@@ -112,10 +149,9 @@ public class SettingFragment extends Fragment {
             }
         });
 
-
-
         return view;
     }
+
     private void mailToDeveloper() {
         Intent intent = new Intent(Intent.ACTION_SENDTO);
         intent.setData(Uri.parse("mailto:")); // only email apps should handle this
@@ -145,4 +181,18 @@ public class SettingFragment extends Fragment {
         });
         builder.create().show();
     }
+
+    public void transformCamera(boolean isChecked){
+        if(isChecked){
+            camera_facing = CameraCharacteristics.LENS_FACING_FRONT;
+        }
+        else{
+            camera_facing = CameraCharacteristics.LENS_FACING_BACK;
+
+        }
+
+    }
+
+
+
 }

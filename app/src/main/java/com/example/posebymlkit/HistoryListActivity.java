@@ -14,6 +14,8 @@ import android.widget.TextView;
 
 import com.example.posebymlkit.database.HistoricalRecord;
 import com.example.posebymlkit.database.HistoricalRecordDBHandler;
+import com.example.posebymlkit.database.MenuHistory;
+import com.example.posebymlkit.database.MenuHistoryDBHandler;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -26,6 +28,7 @@ public class HistoryListActivity extends AppCompatActivity {
     SimpleAdapter simpleAdapter;
 
     HistoricalRecordDBHandler hr = new HistoricalRecordDBHandler(this);
+    MenuHistoryDBHandler mh = new MenuHistoryDBHandler(this);
 
     Intent intent = new Intent();
     Bundle bundle = new Bundle();
@@ -43,7 +46,7 @@ public class HistoryListActivity extends AppCompatActivity {
             }
         });
 
-        displayListView();
+        displayUniListView();
     }
 
     public void toUniLayout(){
@@ -57,7 +60,7 @@ public class HistoryListActivity extends AppCompatActivity {
             }
         });
 
-        displayListView();
+        displayUniListView();
     }
 
     public void toMenuLayout(){
@@ -70,13 +73,14 @@ public class HistoryListActivity extends AppCompatActivity {
                 toUniLayout();
             }
         });
+        displayMenuListView();
     }
 
-    private void displayListView() {
+    private void displayUniListView() {
 
         listView = findViewById(R.id.listView);
 
-        List<HistoricalRecord> historicalRecord = hr.getAllHistoricalRecord();
+        List<HistoricalRecord> historicalRecord = hr.getHistoricalRecordByMode("pose", 29);
         Collections.reverse(historicalRecord);
 
         final ArrayList<HashMap<String, String>> arrayList = new ArrayList<>();
@@ -101,10 +105,44 @@ public class HistoryListActivity extends AppCompatActivity {
                 new SimpleAdapter(this, arrayList, R.layout.history_list_layout, from, value);
         listView.setAdapter(simpleAdapter);
 
-        listView.setOnItemClickListener(onItemClickListener);
+        listView.setOnItemClickListener(onUniItemClickListener);
     }
 
-    private final AdapterView.OnItemClickListener onItemClickListener = new AdapterView.OnItemClickListener(){
+    private void displayMenuListView() {
+
+        listView = findViewById(R.id.listView);
+
+        List<MenuHistory> menuHistory = mh.getAllMenuHistory();
+        Collections.reverse(menuHistory);
+
+        final ArrayList<HashMap<String, String>> arrayList = new ArrayList<>();
+
+        for (MenuHistory history : menuHistory) {
+            HashMap<String, String> hashMap = new HashMap<>();
+            int menuTime = 0;
+            hashMap.put("menuName", history.getMenuName());
+            hashMap.put("menuDate", history.getMenuDate());
+            for(int i=3;i<22;i++){
+                if(history.get(i) == null){
+                    break;
+                }
+                HistoricalRecord historicalRecord = hr.getHistoricalRecordByDate(history.get(i));
+                menuTime += historicalRecord.getTime();
+            }
+            hashMap.put("menuTime", Integer.toString(menuTime)+"s");
+            arrayList.add(hashMap);
+
+        }
+        String[] from = {"menuName", "menuDate", "menuTime"};
+        int[] value = {R.id.menuName, R.id.menuDate, R.id.menuTime};
+        simpleAdapter =
+                new SimpleAdapter(this, arrayList, R.layout.menu_history_layout, from, value);
+        listView.setAdapter(simpleAdapter);
+
+        listView.setOnItemClickListener(onMenuItemClickListener);
+    }
+
+    private final AdapterView.OnItemClickListener onUniItemClickListener = new AdapterView.OnItemClickListener(){
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             TextView poseName = view.findViewById(R.id.poseName);
@@ -114,6 +152,20 @@ public class HistoryListActivity extends AppCompatActivity {
             bundle.putString("date",date.getText().toString());
             intent.putExtras(bundle);
             startActivity(intent);
+        }
+    };
+
+    private final AdapterView.OnItemClickListener onMenuItemClickListener = new AdapterView.OnItemClickListener(){
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            TextView menuName = view.findViewById(R.id.menuName);
+            TextView menuDate = view.findViewById(R.id.menuDate);
+            intent.setClass(HistoryListActivity.this, MenuResultActivity.class);
+            bundle.putString("menuName",menuName.getText().toString());
+            bundle.putString("menuDate",menuDate.getText().toString());
+            intent.putExtras(bundle);
+            startActivity(intent);
+
         }
     };
 }

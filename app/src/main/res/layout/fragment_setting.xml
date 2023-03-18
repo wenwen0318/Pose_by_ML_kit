@@ -30,6 +30,38 @@
             android:textSize="20sp"
             android:text="@string/Clear_Data"
             android:background="@drawable/roundbtn" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="10dp">
+
+            <Button
+                android:id="@+id/transformCameraLen"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:text="@string/cameraLen_transform"
+                android:background="@drawable/roundbtn" />
+
+            <Switch
+                android:id="@+id/cameraSwitch"
+                android:elevation="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:thumb="@drawable/switch_thumb"
+                android:track="@drawable/switch_track"
+                android:layout_alignTop="@id/transformCameraLen"
+                android:layout_alignBottom="@id/transformCameraLen"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="16dp"
+                android:layout_centerVertical="true"
+                tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+        </RelativeLayout>
+
         <Button
             android:id="@+id/illBtn"
             android:layout_width="match_parent"

@@ -12,6 +12,8 @@ import android.util.Log;
 import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.WindowManager;
+import android.widget.Button;
+
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresPermission;
 import com.google.android.gms.common.images.Size;
@@ -117,6 +119,13 @@ public class CameraSource {
                 frameProcessor.stop();
             }
         }
+    }
+
+    public void switchCamera(){
+        if ((facing != CAMERA_FACING_BACK) && (facing != CAMERA_FACING_FRONT)) {
+            throw new IllegalArgumentException("Invalid camera: " + facing);
+        }
+
     }
 
     /**
