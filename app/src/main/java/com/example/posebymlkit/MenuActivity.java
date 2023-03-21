@@ -15,9 +15,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RadioButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,12 +52,18 @@ public class MenuActivity extends AppCompatActivity {
     RadioButton btn_easy,btn_hard;
     Button btn_cancel,btn_check;
 
+    Dialog setPoseDialog;
+    View viewSetPoseDialog;
+    Spinner poseSpinner;
+    TextView setPoseMode,timeSet;
+    Button btn_timeSub,btn_timeAdd, btn_setPose_cancel, btn_setPose_check;
+
     TrainMenu trainMenu;
-    TrainMenuDBHandler tm = new TrainMenuDBHandler(this);
+    TrainMenuDBHandler tm;
 
     int userLevel = 3;
     int[] menu;
-    int menuLength;
+    int menuLength = 0;
     String MODE = "menu";
     int cameraFacing;
 
@@ -71,7 +80,20 @@ public class MenuActivity extends AppCompatActivity {
         menuNameTextView = findViewById(R.id.menuNameTextView);
         menuNameTextView.setText(menuName);
 
-        getPoseToList();
+        tm = new TrainMenuDBHandler(this);
+        trainMenu = tm.getMenu(menuName);
+
+        for (int i = 1;i<=20;i++){
+            HashMap<String,String> hashMap = new HashMap<>();
+            if (trainMenu.getPose(i) == null){
+                break;
+            }
+            hashMap.put("num",String.format("%02d",i));
+            hashMap.put("poseName",trainMenu.getPose(i));
+            hashMap.put("poseTime",Integer.toString(trainMenu.getTime(i)));
+            arrayList.add(hashMap);
+            menuLength = i;
+        }
 
         menuIllTextView = findViewById(R.id.menuIllTextView);
         menuIllTextView.setText(trainMenu.getIll());
@@ -84,16 +106,11 @@ public class MenuActivity extends AppCompatActivity {
         recyclerViewAction(poseRecyclerView, poseListAdapter);
 
         fab = findViewById(R.id.fab);
-
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (menuLength < 20){
-                    intent.setClass(MenuActivity.this, AddPoseActivity.class);
-                    bundle.putString("menuName", menuName);
-                    bundle.putInt("menuLength", menuLength+1);
-                    intent.putExtras(bundle);
-                    startActivity(intent);
+                    getSetPoseDialog("Add",null,null,menuLength);
                 }
                 else {
                     Toast.makeText(MenuActivity.this,R.string.list_full,Toast.LENGTH_LONG).show();
@@ -101,40 +118,19 @@ public class MenuActivity extends AppCompatActivity {
             }
         });
 
-
         Button btn_startPractice = findViewById(R.id.btn_startPractice_menu);
 
         btn_startPractice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getStartDialog();
+                if (menuLength == 0){
+                    Toast.makeText(MenuActivity.this,"清單為空，無法訓練",Toast.LENGTH_LONG).show();
+                }
+                else {
+                    getStartDialog();
+                }
             }
         });
-    }
-
-    @SuppressLint("NotifyDataSetChanged")
-    @Override
-    protected void onResume() {
-        super.onResume();
-        getPoseToList();
-        poseListAdapter.notifyDataSetChanged();
-    }
-
-    private void getPoseToList(){
-        menuLength = 0;
-        trainMenu = tm.getMenu(menuName);
-        arrayList.clear();
-        for (int i = 1;i<=20;i++){
-            HashMap<String,String> hashMap = new HashMap<>();
-            if (trainMenu.getPose(i) == null){
-                break;
-            }
-            hashMap.put("num",String.format("%02d",i));
-            hashMap.put("poseName",trainMenu.getPose(i));
-            hashMap.put("poseTime",trainMenu.getTime(i) + "s");
-            arrayList.add(hashMap);
-            menuLength = i;
-        }
     }
 
     private class MyListAdapter extends RecyclerView.Adapter<MyListAdapter.ViewHolder>{
@@ -164,14 +160,17 @@ public class MenuActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(@NonNull MyListAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
 
-            int resId = getApplicationContext().getResources().getIdentifier(
-                            arrayList.get(position).get("poseName").toLowerCase(),
-                            "drawable",
-                            getPackageName());
-            holder.poseNum.setText(arrayList.get(position).get("num"));
-            holder.poseName.setText(arrayList.get(position).get("poseName"));
-            holder.poseTime.setText(arrayList.get(position).get("poseTime"));
-            holder.poseImage.setImageResource(resId);
+            String poseName = arrayList.get(position).get("poseName");
+            if (poseName != null){
+                int resId = getApplicationContext().getResources().getIdentifier(
+                        arrayList.get(position).get("poseName").toLowerCase(),
+                        "drawable",
+                        getPackageName());
+                holder.poseNum.setText(arrayList.get(position).get("num"));
+                holder.poseName.setText(arrayList.get(position).get("poseName"));
+                holder.poseTime.setText(arrayList.get(position).get("poseTime"));
+                holder.poseImage.setImageResource(resId);
+            }
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -187,11 +186,10 @@ public class MenuActivity extends AppCompatActivity {
             holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    intent.setClass(MenuActivity.this, AddPoseActivity.class);
-                    bundle.putString("menuName", menuName);
-                    bundle.putInt("menuLength", position+1);
-                    intent.putExtras(bundle);
-                    startActivity(intent);
+                    getSetPoseDialog("Edit",
+                            arrayList.get(position).get("poseName"),
+                            arrayList.get(position).get("poseTime"),
+                            position);
                     return false;
                 }
             });
@@ -227,7 +225,18 @@ public class MenuActivity extends AppCompatActivity {
                     case ItemTouchHelper.RIGHT:
                         trainMenu.remove(position);
                         tm.updateTrainMenu(trainMenu);
-                        getPoseToList();
+                        arrayList.clear();
+                        for (int i = 1;i<=20;i++){
+                            HashMap<String,String> hashMap = new HashMap<>();
+                            if (trainMenu.getPose(i) == null){
+                                break;
+                            }
+                            hashMap.put("num",String.format("%02d",i));
+                            hashMap.put("poseName",trainMenu.getPose(i));
+                            hashMap.put("poseTime",Integer.toString(trainMenu.getTime(i)));
+                            arrayList.add(hashMap);
+                            menuLength = i;
+                        }
                         myAdapter.notifyItemRemoved(position);
                         myAdapter.notifyDataSetChanged();
                         break;
@@ -289,4 +298,97 @@ public class MenuActivity extends AppCompatActivity {
         });
     }
 
+    private void getSetPoseDialog(String mode,String pose,String time,int position) {
+        setPoseDialog = new Dialog(MenuActivity.this);
+
+        String[] poses = {"Warrior2", "Plank", "Goddess", "Chair", "Downdog", "Four_Limbed_staff",
+                "Boat", "Rejuvenation", "Star", "Tree", "Rest"};
+        String[] selectedPose = new String[1];
+
+        viewSetPoseDialog = getLayoutInflater().inflate(R.layout.add_pose_dialog_layout, null);
+        setPoseDialog.setContentView(viewSetPoseDialog);
+
+        setPoseMode = viewSetPoseDialog.findViewById(R.id.setPoseMode);
+        poseSpinner = viewSetPoseDialog.findViewById(R.id.poseSpinner);
+        btn_timeAdd = viewSetPoseDialog.findViewById(R.id.btn_timeAdd);
+        timeSet = viewSetPoseDialog.findViewById(R.id.timeSet);
+        btn_timeSub = viewSetPoseDialog.findViewById(R.id.btn_timeSub);
+        btn_setPose_cancel = viewSetPoseDialog.findViewById(R.id.cancel);
+        btn_setPose_check = viewSetPoseDialog.findViewById(R.id.check);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, poses);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        poseSpinner.setAdapter(adapter);
+
+        int spinnerPosition = adapter.getPosition(pose);
+        poseSpinner.setSelection(spinnerPosition);
+
+        switch (mode){
+            case "Add" : {
+                setPoseMode.setText("添加姿勢");
+                break;
+            }
+            case "Edit" : {
+                setPoseMode.setText("編輯姿勢");
+                timeSet.setText(time);
+                break;
+            }
+        }
+
+        setPoseDialog.show();
+
+        poseSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+
+            @Override
+            public void onItemSelected(AdapterView parent, View view, int position, long id) {
+                selectedPose[0] = parent.getSelectedItem().toString();
+            }
+        });
+        btn_timeSub.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int time = Integer.parseInt(timeSet.getText().toString());
+                time -= 10;
+                if (time < 10) time = 10;
+                timeSet.setText(String.valueOf(time));
+            }
+        });
+        btn_timeAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int time = Integer.parseInt(timeSet.getText().toString());
+                time += 10;
+                if (time > 60) time = 60;
+                timeSet.setText(String.valueOf(time));
+            }
+        });
+
+        btn_setPose_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setPoseDialog.dismiss();
+            }
+        });
+        btn_setPose_check.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //add pose to recycleView and DB
+                trainMenu.setPose(position+1, selectedPose[0]);
+                trainMenu.setTime(position+1, Integer.parseInt(timeSet.getText().toString()));
+                tm.updateTrainMenu(trainMenu);
+                HashMap<String,String> hashMap = new HashMap<>();
+                hashMap.put("num",String.format("%02d",position+1));
+                hashMap.put("poseName",trainMenu.getPose(position+1));
+                hashMap.put("poseTime",Integer.toString(trainMenu.getTime(position+1)));
+                arrayList.set(position,hashMap);
+                poseListAdapter.notifyItemChanged(position);
+                setPoseDialog.dismiss();
+            }
+        });
+    }
 }

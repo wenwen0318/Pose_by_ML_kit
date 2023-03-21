@@ -1,6 +1,7 @@
 package com.example.posebymlkit;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -16,6 +17,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -31,6 +34,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class TrainMenuFragment extends Fragment {
 
@@ -47,6 +51,11 @@ public class TrainMenuFragment extends Fragment {
 
     ArrayList<String> menuNames;
     TrainMenuDBHandler tm;
+
+    Dialog addMenuDialog;
+    View viewAddMenuDialog;
+    EditText editMenuName,editMenuIll;
+    Button btn_addPose_cancel,btn_addPose_check;
 
     public TrainMenuFragment() {
 
@@ -108,12 +117,79 @@ public class TrainMenuFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                intent.setClass(getActivity(),AddMenuActivity.class);
-                startActivity(intent);
+                getAddMenuDialog();
             }
         });
 
         return view;
+    }
+
+    private void getAddMenuDialog() {
+        addMenuDialog = new Dialog(getActivity());
+
+        viewAddMenuDialog = getLayoutInflater().inflate(R.layout.add_menu_dialog_layout , null);
+        addMenuDialog.setContentView(viewAddMenuDialog);
+
+        editMenuName = viewAddMenuDialog.findViewById(R.id.editMenuName);
+        editMenuIll = viewAddMenuDialog.findViewById(R.id.editMenuIll);
+        btn_addPose_cancel = viewAddMenuDialog.findViewById(R.id.cancel);
+        btn_addPose_check  = viewAddMenuDialog.findViewById(R.id.check);
+
+        addMenuDialog.show();
+
+        btn_addPose_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addMenuDialog.dismiss();
+            }
+        });
+        btn_addPose_check.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //add pose to recycleView and DB
+                String menuName = editMenuName.getText().toString();
+                String menuIll = editMenuIll.getText().toString();
+                if (menuName.equals("")){
+                    Toast.makeText(getActivity(),R.string.enter_menu_name,Toast.LENGTH_LONG).show();
+                }
+                else {
+                    ArrayList<String> menuNames = tm.getAllTrainMenuName();
+                    if (menuNames.contains(menuName)){
+                        Toast.makeText(getActivity(),R.string.menu_exists,Toast.LENGTH_LONG).show();
+                    }
+                    else{
+                        tm.addTrainMenu(new TrainMenu(menuName,
+                                null,0,
+                                null,0,
+                                null,0,
+                                null,0,
+                                null,0,
+                                null,0,
+                                null,0,
+                                null,0,
+                                null,0,
+                                null,0,
+                                null,0,
+                                null,0,
+                                null,0,
+                                null,0,
+                                null,0,
+                                null,0,
+                                null,0,
+                                null,0,
+                                null,0,
+                                null,0,
+                                menuIll
+                        ));
+                        HashMap<String, String> hashMap = new HashMap<>();
+                        hashMap.put("menuName", menuName);
+                        arrayList.add(hashMap);
+                        simpleAdapter.notifyDataSetChanged();
+                        addMenuDialog.dismiss();
+                    }
+                }
+            }
+        });
     }
 
     private final AdapterView.OnItemClickListener onItemClickListener = new AdapterView.OnItemClickListener(){
@@ -138,6 +214,8 @@ public class TrainMenuFragment extends Fragment {
             builder.setPositiveButton("確定", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
+                    String menuName = arrayList.get(position).get("menuName");
+                    tm.deleteTrainMenu(menuName);
                     arrayList.remove(position);
                     simpleAdapter.notifyDataSetChanged();
                 }

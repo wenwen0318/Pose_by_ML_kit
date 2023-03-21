@@ -186,12 +186,12 @@ public class SettingFragment extends Fragment {
     public void transformCamera(boolean isChecked){
         if(isChecked){
             camera_facing = CameraCharacteristics.LENS_FACING_FRONT;
+            Toast.makeText(getContext(),"前鏡頭",Toast.LENGTH_SHORT).show();
         }
         else{
             camera_facing = CameraCharacteristics.LENS_FACING_BACK;
-
+            Toast.makeText(getContext(),"後鏡頭",Toast.LENGTH_SHORT).show();
         }
-
     }
 
 }
