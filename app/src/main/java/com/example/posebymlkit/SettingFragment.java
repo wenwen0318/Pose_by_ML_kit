@@ -137,7 +137,8 @@ public class SettingFragment extends Fragment {
         illBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                intent.setClass(SettingFragment.this.getContext(), appIllActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -192,7 +193,5 @@ public class SettingFragment extends Fragment {
         }
 
     }
-
-
 
 }

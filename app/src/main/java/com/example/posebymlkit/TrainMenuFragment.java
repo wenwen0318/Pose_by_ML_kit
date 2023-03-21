@@ -87,7 +87,7 @@ public class TrainMenuFragment extends Fragment {
         menuNames = tm.getAllTrainMenuName();
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        cameraFacing = preferences.getInt("camera_facing", CameraCharacteristics.LENS_FACING_FRONT);
+        cameraFacing = preferences.getInt("camera_facing", CameraCharacteristics.LENS_FACING_BACK);
 
         for (String menuName:menuNames) {
             HashMap<String, String> hashMap = new HashMap<>();
@@ -120,7 +120,6 @@ public class TrainMenuFragment extends Fragment {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             TextView menuName = view.findViewById(R.id.menuName);
-            System.out.println(menuName.getText().toString());
             intent.setClass(getActivity(),MenuActivity.class);
             bundle.putString("menuName",menuName.getText().toString());
             bundle.putInt("camera_facing", cameraFacing);

@@ -195,6 +195,7 @@
     <string name="History_Record">\n歷史紀錄\n</string>
     <string name="Clear_Data">\n清除資料\n</string>
     <string name="Instructions_for_use">\n使用說明\n</string>
+    <string name="Instructions_for_use_content">\n\n</string>
     <string name="Contact_us">"\n聯絡我們\n "</string>
     <string name="cameraLen_transform">\n相機鏡頭轉換\n</string>
     <string name="delete_record">清除歷史紀錄</string>

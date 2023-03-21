@@ -28,6 +28,20 @@
         android:theme="@style/Theme.PoseByMLKit"
         tools:targetApi="31">
         <activity
+            android:name=".uniPoseInMenuIllActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".appIllActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".AddMenuActivity"
             android:exported="false">
             <meta-data

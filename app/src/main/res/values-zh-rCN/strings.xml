@@ -195,6 +195,7 @@
     <string name="History_Record">\n历史记录\n</string>
     <string name="Clear_Data">\n清除数据\n</string>
     <string name="Instructions_for_use">\n使用说明\n</string>
+    <string name="Instructions_for_use_content">\nInstructions for use\n</string>
     <string name="Contact_us">\n联系我们\n</string>
     <string name="cameraLen_transform">\n摄像头切换\n</string>
     <string name="delete_record">清除历史记录</string>

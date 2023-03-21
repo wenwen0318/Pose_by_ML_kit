@@ -50,8 +50,7 @@ import java.util.Locale;
 
 /** Live preview demo for ML Kit APIs. */
 @KeepName
-public class LivePreviewActivity extends AppCompatActivity
-        implements CompoundButton.OnCheckedChangeListener{
+public class LivePreviewActivity extends AppCompatActivity {
 
     private static final String POSE_DETECTION = "Pose Detection";
     private static final String OBJECT_DETECTION = "Object Detection";
@@ -128,9 +127,6 @@ public class LivePreviewActivity extends AppCompatActivity
             Log.d(TAG, "graphicOverlay is null");
         }
 
-        ToggleButton facingSwitch = findViewById(R.id.facing_switch);
-        facingSwitch.setOnCheckedChangeListener(this);
-
         bundle = getIntent().getExtras();
         MODE = bundle.getString("mode");
         userLevel = bundle.getInt("userLevel");
@@ -160,20 +156,6 @@ public class LivePreviewActivity extends AppCompatActivity
 //        createCameraSource(OBJECT_DETECTION);
 //        handler.postDelayed(personDetection,100);
         //handler.postDelayed(runnable, 5000);
-    }
-
-    @Override
-    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        Log.d(TAG, "Set facing");
-        if (cameraSource != null) {
-            if (isChecked) {
-                cameraSource.setFacing(CameraSource.CAMERA_FACING_FRONT);
-            } else {
-                cameraSource.setFacing(CameraSource.CAMERA_FACING_BACK);
-            }
-        }
-        preview.stop();
-        startCameraSource();
     }
 
     private void createCameraSource(String model) {

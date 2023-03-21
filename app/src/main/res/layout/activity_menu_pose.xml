@@ -35,8 +35,7 @@
                 android:id="@+id/menuIllTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="      核心肌群指的是環繞我們腹部的深層肌，分別是腹橫肌、骨盆底肌、多裂肌及橫隔膜。
-                \n      穩定核心可以幫助穩定腰椎、減少脊椎負擔、恢復腰椎與骨盆等，對身體多有益處，非常適合久坐的上班族及女性。"
+                android:text="Introduction"
                 android:layout_marginStart="25dp"
                 android:layout_marginTop="5dp"/>
 

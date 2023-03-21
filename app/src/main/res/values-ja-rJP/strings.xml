@@ -195,6 +195,7 @@
     <string name="History_Record">\n履歴記録\n</string>
     <string name="Clear_Data">\nデータのクリア\n</string>
     <string name="Instructions_for_use">\n使用説明書\n</string>
+    <string name="Instructions_for_use_content">\nInstructions for use\n</string>
     <string name="Contact_us">\nお問い合わせ\n</string>
     <string name="cameraLen_transform">\カメラレンズ変換\n</string>
     <string name="delete_record">履歴記録をクリアする</string>

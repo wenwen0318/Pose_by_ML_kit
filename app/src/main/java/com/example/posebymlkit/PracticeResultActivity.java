@@ -88,12 +88,12 @@ public class PracticeResultActivity extends AppCompatActivity {
 
         final ArrayList<HashMap<String, String>> arrayList = new ArrayList<>();
 
-        for (int i = 5; i <= 27; i++) {
+        for (int i = 6; i <= 28; i++) {
             HashMap<String, String> hashMap = new HashMap<>();
             String complete = historicalRecord.get(i);
             Log.d("joint_complete",i + " " + complete);
             if (historicalRecord.get(i) != null){
-                hashMap.put("joint", joint[i-5]);
+                hashMap.put("joint", joint[i-6]);
                 hashMap.put("complete", complete);
                 arrayList.add(hashMap);
             }

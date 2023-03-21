@@ -176,7 +176,12 @@ public class MenuActivity extends AppCompatActivity {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    if(!arrayList.get(position).get("poseName").equals("Rest")){
+                        intent.setClass(MenuActivity.this, uniPoseInMenuIllActivity.class);
+                        bundle.putString("poseName", arrayList.get(position).get("poseName"));
+                        intent.putExtras(bundle);
+                        startActivity(intent);
+                    }
                 }
             });
             holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
