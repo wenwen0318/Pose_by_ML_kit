@@ -385,7 +385,13 @@ public class MenuActivity extends AppCompatActivity {
                 hashMap.put("num",String.format("%02d",position+1));
                 hashMap.put("poseName",trainMenu.getPose(position+1));
                 hashMap.put("poseTime",Integer.toString(trainMenu.getTime(position+1)));
-                arrayList.set(position,hashMap);
+                if (arrayList.size() == position){
+                    arrayList.add(hashMap);
+                    menuLength += 1;
+                }
+                else {
+                    arrayList.set(position,hashMap);
+                }
                 poseListAdapter.notifyItemChanged(position);
                 setPoseDialog.dismiss();
             }
