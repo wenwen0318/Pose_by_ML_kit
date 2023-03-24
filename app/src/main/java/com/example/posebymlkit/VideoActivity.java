@@ -8,9 +8,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.MediaController;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.VideoView;
@@ -19,9 +18,10 @@ public class VideoActivity extends AppCompatActivity {
 
     TextView poseIllustrate;
     VideoView videoView;
-    MediaController mediaController;
+    ImageView videoStatusView;
     String cardView;
-    int userLevel = 3,time;
+    int userLevel = 3;
+    int time;
     String MODE = "pose";
     int camera_facing;
 
@@ -49,13 +49,38 @@ public class VideoActivity extends AppCompatActivity {
 
         poseIllustrate = findViewById(R.id.poseIllustrate);
         videoView = findViewById(R.id.videoView);
-        mediaController = new MediaController(this);
+        videoStatusView = findViewById(R.id.videoStatusView);
+        //mediaController = new MediaController(this);
 
         getIllustrate(cardView);
         poseIllustrate.setMovementMethod(new ScrollingMovementMethod());
-        videoView.setMediaController(mediaController);
-        mediaController.setAnchorView(videoView);
         getVideo(cardView);
+
+        videoView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(videoStatusView.getVisibility() == View.GONE){
+                    videoStatusView.setVisibility(View.VISIBLE);
+                }
+                else {
+                    videoStatusView.setVisibility(View.GONE);
+                }
+            }
+        });
+
+        videoStatusView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (videoView.isPlaying()){
+                    videoStatusView.setImageResource(android.R.drawable.ic_media_play);
+                    videoView.pause();
+                }
+                else {
+                    videoStatusView.setImageResource(android.R.drawable.ic_media_pause);
+                    videoView.start();
+                }
+            }
+        });
 
         //切換至練習頁面
         btn_startPractice.setOnClickListener(new View.OnClickListener() {
@@ -111,23 +136,28 @@ public class VideoActivity extends AppCompatActivity {
         btn_cancel = viewDialog.findViewById(R.id.cancel);
         btn_check  = viewDialog.findViewById(R.id.check);
 
+        String timeStr = timeSet.getText().toString() + getResources().getString(R.string.second);
+        timeSet.setText(timeStr);
+
         dialog.show();
         btn_timeSub.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int time = Integer.parseInt(timeSet.getText().toString());
-                time-=10;
-                if (time<10) time = 10;
-                timeSet.setText(String.valueOf(time));
+                int time = Integer.parseInt(timeSet.getText().toString().substring(0,2));
+                time -= 10;
+                if (time < 10) time = 10;
+                String timeStr = time + getResources().getString(R.string.second);
+                timeSet.setText(timeStr);
             }
         });
         btn_timeAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int time = Integer.parseInt(timeSet.getText().toString());
-                time+=10;
-                if (time>60) time = 60;
-                timeSet.setText(String.valueOf(time));
+                int time = Integer.parseInt(timeSet.getText().toString().substring(0,2));
+                time += 10;
+                if (time > 60) time = 60;
+                String timeStr = time + getResources().getString(R.string.second);
+                timeSet.setText(timeStr);
             }
         });
         btn_easy.setOnClickListener(new View.OnClickListener() {
@@ -152,7 +182,7 @@ public class VideoActivity extends AppCompatActivity {
         btn_check.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                time = Integer.parseInt(timeSet.getText().toString());
+                time = Integer.parseInt(timeSet.getText().toString().substring(0,2));
                 intent.setClass(VideoActivity.this, LivePreviewActivity.class);
                 bundle.putString("cardView", cardView);
                 bundle.putInt("userLevel", userLevel);

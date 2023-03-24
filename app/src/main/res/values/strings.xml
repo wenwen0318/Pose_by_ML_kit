@@ -235,5 +235,11 @@
     <string name="Choose_difficulty">Choose the difficulty level.</string>
     <string name="easy">Easy</string>
     <string name="hard">Difficult</string>
+    <string name="second">s</string>
+    <string name="straighten_left_knee">straighten left knee</string>
+    <string name="straighten_right_hand">straighten right hand</string>
+    <string name="straighten_left_hand">straighten left hand</string>
+    <string name="next_pose">next pose is</string>
+    <string name="ready">ready</string>
 
 </resources>

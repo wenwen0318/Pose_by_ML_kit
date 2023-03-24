@@ -90,7 +90,7 @@ public class MenuActivity extends AppCompatActivity {
             }
             hashMap.put("num",String.format("%02d",i));
             hashMap.put("poseName",trainMenu.getPose(i));
-            hashMap.put("poseTime",Integer.toString(trainMenu.getTime(i)));
+            hashMap.put("poseTime",trainMenu.getTime(i) + getResources().getString(R.string.second));
             arrayList.add(hashMap);
             menuLength = i;
         }
@@ -110,7 +110,7 @@ public class MenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (menuLength < 20){
-                    getSetPoseDialog("Add",null,null,menuLength);
+                    getSetPoseDialog("Add",null,30 + getResources().getString(R.string.second),menuLength);
                 }
                 else {
                     Toast.makeText(MenuActivity.this,R.string.list_full,Toast.LENGTH_LONG).show();
@@ -233,7 +233,7 @@ public class MenuActivity extends AppCompatActivity {
                             }
                             hashMap.put("num",String.format("%02d",i));
                             hashMap.put("poseName",trainMenu.getPose(i));
-                            hashMap.put("poseTime",Integer.toString(trainMenu.getTime(i)));
+                            hashMap.put("poseTime",trainMenu.getTime(i) + getResources().getString(R.string.second));
                             arrayList.add(hashMap);
                             menuLength = i;
                         }
@@ -316,6 +316,8 @@ public class MenuActivity extends AppCompatActivity {
         btn_setPose_cancel = viewSetPoseDialog.findViewById(R.id.cancel);
         btn_setPose_check = viewSetPoseDialog.findViewById(R.id.check);
 
+        timeSet.setText(time);
+
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, poses);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -331,7 +333,6 @@ public class MenuActivity extends AppCompatActivity {
             }
             case "Edit" : {
                 setPoseMode.setText("編輯姿勢");
-                timeSet.setText(time);
                 break;
             }
         }
@@ -352,19 +353,21 @@ public class MenuActivity extends AppCompatActivity {
         btn_timeSub.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int time = Integer.parseInt(timeSet.getText().toString());
+                int time = Integer.parseInt(timeSet.getText().toString().substring(0,2));
                 time -= 10;
                 if (time < 10) time = 10;
-                timeSet.setText(String.valueOf(time));
+                String timeStr = time + getResources().getString(R.string.second);
+                timeSet.setText(timeStr);
             }
         });
         btn_timeAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int time = Integer.parseInt(timeSet.getText().toString());
+                int time = Integer.parseInt(timeSet.getText().toString().substring(0,2));
                 time += 10;
                 if (time > 60) time = 60;
-                timeSet.setText(String.valueOf(time));
+                String timeStr = time + getResources().getString(R.string.second);
+                timeSet.setText(timeStr);
             }
         });
 
@@ -379,12 +382,12 @@ public class MenuActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //add pose to recycleView and DB
                 trainMenu.setPose(position+1, selectedPose[0]);
-                trainMenu.setTime(position+1, Integer.parseInt(timeSet.getText().toString()));
+                trainMenu.setTime(position+1, Integer.parseInt(timeSet.getText().toString().substring(0,2)));
                 tm.updateTrainMenu(trainMenu);
                 HashMap<String,String> hashMap = new HashMap<>();
                 hashMap.put("num",String.format("%02d",position+1));
                 hashMap.put("poseName",trainMenu.getPose(position+1));
-                hashMap.put("poseTime",Integer.toString(trainMenu.getTime(position+1)));
+                hashMap.put("poseTime",trainMenu.getTime(position+1) + getResources().getString(R.string.second));
                 if (arrayList.size() == position){
                     arrayList.add(hashMap);
                     menuLength += 1;

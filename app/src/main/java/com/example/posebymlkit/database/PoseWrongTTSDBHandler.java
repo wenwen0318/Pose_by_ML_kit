@@ -1,14 +1,22 @@
 package com.example.posebymlkit.database;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import com.example.posebymlkit.R;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class PoseWrongTTSDBHandler extends SQLiteOpenHelper{
+
+    private Context mContext;
+
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "poseWrongTTS.db";
     private static final String TABLE_POSE_WRONG_TTS = "poseWrongTTS";
@@ -61,6 +69,7 @@ public class PoseWrongTTSDBHandler extends SQLiteOpenHelper{
 
     public PoseWrongTTSDBHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        mContext = context;
     }
 
     // Creating Tables
@@ -132,9 +141,9 @@ public class PoseWrongTTSDBHandler extends SQLiteOpenHelper{
                 null,null,
                 null,null,
                 null,null,
-                "左膝伸直","左膝伸直",
-                "右手伸直","右手伸直",
-                "左手伸直", "左手伸直",
+                mContext.getString(R.string.straighten_left_knee),mContext.getString(R.string.straighten_left_knee),
+                mContext.getString(R.string.straighten_right_hand),mContext.getString(R.string.straighten_right_hand),
+                mContext.getString(R.string.straighten_left_hand), mContext.getString(R.string.straighten_left_hand),
                 null, null,
                 null, null,
                 "右肩保持平坦", "右肩保持平坦",

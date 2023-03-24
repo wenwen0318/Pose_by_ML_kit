@@ -437,15 +437,15 @@ public class LivePreviewActivity extends AppCompatActivity {
         @Override
         public void run() {
             if(poseList.get(0).equals("Warrior2")){
-                tts.speak("下一個姿勢為"+"Warrior"+"two",TextToSpeech.QUEUE_ADD,null,null);
-                tts.speak("請準備",TextToSpeech.QUEUE_ADD,null,null);
+                tts.speak(getResources().getString(R.string.next_pose)+"Warrior"+"two",TextToSpeech.QUEUE_ADD,null,null);
+                tts.speak(getResources().getString(R.string.ready),TextToSpeech.QUEUE_ADD,null,null);
             }
             else if(poseList.get(0).equals("Rest")){
                 tts.speak("休息時間",TextToSpeech.QUEUE_ADD,null,null);
             }
             else{
-                tts.speak("下一個姿勢為"+poseList.get(0),TextToSpeech.QUEUE_ADD,null,null);
-                tts.speak("請準備",TextToSpeech.QUEUE_ADD,null,null);
+                tts.speak(getResources().getString(R.string.next_pose)+poseList.get(0),TextToSpeech.QUEUE_ADD,null,null);
+                tts.speak(getResources().getString(R.string.ready),TextToSpeech.QUEUE_ADD,null,null);
             }
             currentPoseName = findViewById(R.id.poseNameView);
             currentPoseName.setText(poseList.get(0));

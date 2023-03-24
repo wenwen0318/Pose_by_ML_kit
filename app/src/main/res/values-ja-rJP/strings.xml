@@ -217,4 +217,10 @@
     <string name="Choose_difficulty">難易度を選択してください</string>
     <string name="easy">簡易</string>
     <string name="hard">難しい</string>
+    <string name="second">秒</string>
+    <string name="straighten_left_knee">左膝を伸ばす</string>
+    <string name="straighten_right_hand">右手を伸ばす</string>
+    <string name="straighten_left_hand">左手を伸ばす</string>
+    <string name="next_pose">次のポーズは</string>
+    <string name="ready">準備して</string>
 </resources>

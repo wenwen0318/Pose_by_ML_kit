@@ -193,16 +193,11 @@ public class MenuHistoryDBHandler extends SQLiteOpenHelper{
         return menuHistory;
     }
 
-
-
-
-
-//    public void deleteHistoricalRecord(HistoricalRecord historicalRecord) {
-//        SQLiteDatabase db = this.getWritableDatabase();
-//        db.delete(TABLE_HISTORICAL_RECORD, KEY_ID + " = ?",
-//                new String[] { String.valueOf(historicalRecord.getId()) });
-//        db.close();
-//    }
+    public void deleteMenuHistoricalRecord() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DELETE FROM "+ TABLE_MENU_HISTORY);
+        db.close();
+    }
 
 
 }

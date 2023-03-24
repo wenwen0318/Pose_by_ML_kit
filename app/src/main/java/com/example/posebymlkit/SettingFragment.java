@@ -22,6 +22,8 @@ import android.widget.Switch;
 import android.widget.Toast;
 
 import com.example.posebymlkit.database.HistoricalRecordDBHandler;
+import com.example.posebymlkit.database.MenuHistory;
+import com.example.posebymlkit.database.MenuHistoryDBHandler;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -171,6 +173,8 @@ public class SettingFragment extends Fragment {
             public void onClick(DialogInterface dialogInterface, int i) {
                 HistoricalRecordDBHandler hr = new HistoricalRecordDBHandler(getActivity());
                 hr.deleteHistoricalRecord();
+                MenuHistoryDBHandler mh = new MenuHistoryDBHandler(getActivity());
+                mh.deleteMenuHistoricalRecord();
                 dialogInterface.dismiss();
             }
         });
@@ -186,11 +190,11 @@ public class SettingFragment extends Fragment {
     public void transformCamera(boolean isChecked){
         if(isChecked){
             camera_facing = CameraCharacteristics.LENS_FACING_FRONT;
-            Toast.makeText(getContext(),"前鏡頭",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(),"後鏡頭",Toast.LENGTH_SHORT).show();
         }
         else{
             camera_facing = CameraCharacteristics.LENS_FACING_BACK;
-            Toast.makeText(getContext(),"後鏡頭",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(),"前鏡頭",Toast.LENGTH_SHORT).show();
         }
     }
 

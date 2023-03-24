@@ -217,5 +217,11 @@
     <string name="Choose_difficulty">選擇難易度</string>
     <string name="easy">簡易</string>
     <string name="hard">嚴謹</string>
+    <string name="second">秒</string>
+    <string name="straighten_left_knee">左膝伸直</string>
+    <string name="straighten_right_hand">右手伸直</string>
+    <string name="straighten_left_hand">左手伸直</string>
+    <string name="next_pose">下一個姿勢為</string>
+    <string name="ready">請準備</string>
 
 </resources>
