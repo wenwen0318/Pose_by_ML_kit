@@ -241,5 +241,33 @@
     <string name="straighten_left_hand">straighten left hand</string>
     <string name="next_pose">next pose is</string>
     <string name="ready">ready</string>
+    <string name="flat_right_shoulder">Keep right shoulder flat</string>
+    <string name="flat_left_shoulder">Keep left shoulder flat</string>
+    <string name="left">left</string>
+    <string name="right">right</string>
+    <string name="hip">hip</string>
+    <string name="knee">knee</string>
+    <string name="elbow">elbow</string>
+    <string name="armpit">armpit</string>
+    <string name="shoulder">shoulder</string>
+    <string name="tiptop">tiptop</string>
+    <string name="thigh">thigh</string>
+    <string name="crotch">crotch</string>
+    <string name="leg">leg</string>
+    <string name="both">both</string>
+    <string name="body">body</string>
+    <string name="parallel_to_the_floor">parallel to the floor</string>
+    <string name="not_exceed_the_toes">don\'t exceed the toes</string>
+    <string name="perpendicular_to_the_floor">perpendicular to the floor</string>
+    <string name="keep_flat">keep flat</string>
+    <string name="straight">straighten</string>
+    <string name="arm">arm</string>
+    <string name="start_practice">start practice</string>
+    <string name="rest_time">rest time</string>
+    <string name="rest_over">rest over</string>
+    <string name="finish_practice">practice finished</string>
+    <string name="training_completed">training completed</string>
+    <string name="rest_time_remaining">rest time remaining</string>
+    <string name="seconds">seconds</string>
 
 </resources>

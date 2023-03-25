@@ -243,26 +243,21 @@ public class LivePreviewActivity extends AppCompatActivity {
                     switch (getString(R.string.language)){
                         case "English":
                             tts.setLanguage(Locale.ENGLISH);
-                            tts.speak("Hello",TextToSpeech.QUEUE_ADD,null,null);
                             break;
                         case "简体中文":
                             tts.setLanguage(Locale.CHINA);
                             break;
                         case "繁體中文":
                             tts.setLanguage(Locale.CHINESE);
-//                            tts.speak("請準備",TextToSpeech.QUEUE_ADD,null,null);
                             break;
                         case "Deutsch":
                             tts.setLanguage(Locale.GERMAN);
-                            tts.speak("Guten Tag",TextToSpeech.QUEUE_ADD,null,null);
                             break;
                         case "日本語":
                             tts.setLanguage(Locale.JAPANESE);
-                            tts.speak("こにちは",TextToSpeech.QUEUE_ADD,null,null);
                             break;
                         default :
                             tts.setLanguage(Locale.ENGLISH);
-                            tts.speak("Hi",TextToSpeech.QUEUE_ADD,null,null);
                             break;
                     }
                 }
@@ -392,7 +387,7 @@ public class LivePreviewActivity extends AppCompatActivity {
             handler.postDelayed(this, 10000);
             timeList.set(0,timeList.get(0)-10);
             if(timeList.get(0) != 0){
-                tts.speak("休息時間還剩"+(timeList.get(0))+"秒", TextToSpeech.QUEUE_ADD,null,null);
+                tts.speak(getResources().getString(R.string.rest_time_remaining)+(timeList.get(0))+ getResources().getString(R.string.seconds), TextToSpeech.QUEUE_ADD,null,null);
             }
         }
     };
@@ -401,7 +396,7 @@ public class LivePreviewActivity extends AppCompatActivity {
         @Override
         public void run() {
             if(!poseList.get(0).equals("Rest")){
-                tts.speak("開始練習", TextToSpeech.QUEUE_ADD,null,null);
+                tts.speak(getResources().getString(R.string.start_practice), TextToSpeech.QUEUE_ADD,null,null);
             }
 
             if(MODE.equals("menu")){
@@ -441,7 +436,7 @@ public class LivePreviewActivity extends AppCompatActivity {
                 tts.speak(getResources().getString(R.string.ready),TextToSpeech.QUEUE_ADD,null,null);
             }
             else if(poseList.get(0).equals("Rest")){
-                tts.speak("休息時間",TextToSpeech.QUEUE_ADD,null,null);
+                tts.speak(getResources().getString(R.string.rest_time),TextToSpeech.QUEUE_ADD,null,null);
             }
             else{
                 tts.speak(getResources().getString(R.string.next_pose)+poseList.get(0),TextToSpeech.QUEUE_ADD,null,null);
@@ -460,10 +455,10 @@ public class LivePreviewActivity extends AppCompatActivity {
             }
             if(poseList.get(0).equals("Rest")){
                 handler.removeCallbacks(restRemind);
-                tts.speak("休息結束", TextToSpeech.QUEUE_ADD, null, null);
+                tts.speak(getResources().getString(R.string.rest_over), TextToSpeech.QUEUE_ADD, null, null);
             }
             else{
-                tts.speak("練習結束", TextToSpeech.QUEUE_ADD, null, null);
+                tts.speak(getResources().getString(R.string.finish_practice), TextToSpeech.QUEUE_ADD, null, null);
             }
             getHistoricalRecord();
             poseList.remove(0);
@@ -474,7 +469,7 @@ public class LivePreviewActivity extends AppCompatActivity {
             handler.removeCallbacks(restRemind);
             if (poseList.isEmpty()) {
                 if(MODE.equals("menu")){
-                    tts.speak("完成訓練",TextToSpeech.QUEUE_ADD,null,null);
+                    tts.speak(getResources().getString(R.string.training_completed),TextToSpeech.QUEUE_ADD,null,null);
                 }
                 getResultDialog();
             }

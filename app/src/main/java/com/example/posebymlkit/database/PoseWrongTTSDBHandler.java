@@ -137,20 +137,41 @@ public class PoseWrongTTSDBHandler extends SQLiteOpenHelper{
     }
 
     public void poseWrongTTSInit(){
-        this.addPoseWrongTTS(new PoseWrongTTS("Warrior2",
+
+        String right = mContext.getString(R.string.right);
+        String left  = mContext.getString(R.string.left);
+        String arm = mContext.getString(R.string.arm);
+        String hip = mContext.getString(R.string.hip);
+        String knee = mContext.getString(R.string.knee);
+        String elbow = mContext.getString(R.string.elbow);
+        String armpit = mContext.getString(R.string.armpit);
+        String shoulder = mContext.getString(R.string.shoulder);
+        String tiptop = mContext.getString(R.string.tiptop);
+        String thigh = mContext.getString(R.string.thigh);
+        String crotch = mContext.getString(R.string.crotch);
+        String leg = mContext.getString(R.string.leg);
+        String both = mContext.getString(R.string.both);
+        String body = mContext.getString(R.string.body);
+        String parallel_to_the_floor = mContext.getString(R.string.parallel_to_the_floor);
+        String perpendicular_to_the_floor = mContext.getString(R.string.perpendicular_to_the_floor);
+        String not_exceed_the_toes = mContext.getString(R.string.not_exceed_the_toes);
+        String keep_flat = mContext.getString(R.string.keep_flat);
+        String straight = mContext.getString(R.string.straight);
+
+        this.updatePoseWrongTTS(new PoseWrongTTS("Warrior2",
                 null,null,
                 null,null,
                 null,null,
-                mContext.getString(R.string.straighten_left_knee),mContext.getString(R.string.straighten_left_knee),
-                mContext.getString(R.string.straighten_right_hand),mContext.getString(R.string.straighten_right_hand),
-                mContext.getString(R.string.straighten_left_hand), mContext.getString(R.string.straighten_left_hand),
+                left + knee + straight,left + knee + straight,
+                right + arm + straight,right + arm + straight,
+                left + arm + straight,left + arm + straight,
                 null, null,
                 null, null,
-                "右肩保持平坦", "右肩保持平坦",
-                "左肩保持平坦", "左肩保持平坦",
-                "右膝勿超過腳尖", "右膝勿超過腳尖",
+                right + shoulder + keep_flat, right + shoulder + keep_flat,
+                left + shoulder + keep_flat, left + shoulder + keep_flat,
+                right + knee + not_exceed_the_toes, right + knee + not_exceed_the_toes,
                 null, null,
-                "右大腿與地板平行", "右大腿與地板平行",
+                right + thigh + parallel_to_the_floor, right + thigh + parallel_to_the_floor,
                 null, null,
                 null, null,
                 "左腳張開往下坐", "左腳張太開",
@@ -160,8 +181,9 @@ public class PoseWrongTTSDBHandler extends SQLiteOpenHelper{
                 null, null,
                 null, null,
                 null, null,
-                "身體保持垂直"
-                ));
+                body + perpendicular_to_the_floor
+        ));
+
         this.addPoseWrongTTS(new PoseWrongTTS("Plank",
                 null,null,
                 "臀部與身體呈直線","臀部與身體呈直線",
@@ -531,73 +553,6 @@ public class PoseWrongTTSDBHandler extends SQLiteOpenHelper{
         return poseWrongTTS;
     }
 
-    public List<PoseWrongTTS> getAllPoseWrongTTS() {
-        List<PoseWrongTTS> poseWrongTTSList = new ArrayList<>();
-        // Select All Query
-        String selectQuery = "SELECT  * FROM " + TABLE_POSE_WRONG_TTS;
-
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery(selectQuery, null);
-
-        // looping through all rows and adding to list
-        if (cursor.moveToFirst()) {
-            do {
-                PoseWrongTTS poseWrongTTS = new PoseWrongTTS();
-                poseWrongTTS.setPoseName(cursor.getString(0));
-                poseWrongTTS.setRHip1(cursor.getString(1));
-                poseWrongTTS.setRHip2(cursor.getString(2));
-                poseWrongTTS.setLHip1(cursor.getString(3));
-                poseWrongTTS.setLHip2(cursor.getString(4));
-                poseWrongTTS.setRKnee1(cursor.getString(5));
-                poseWrongTTS.setRKnee2(cursor.getString(6));
-                poseWrongTTS.setLKnee1(cursor.getString(7));
-                poseWrongTTS.setLKnee2(cursor.getString(8));
-                poseWrongTTS.setRElbow1(cursor.getString(9));
-                poseWrongTTS.setRElbow2(cursor.getString(10));
-                poseWrongTTS.setLElbow1(cursor.getString(11));
-                poseWrongTTS.setLElbow2(cursor.getString(12));
-                poseWrongTTS.setRArmpit1(cursor.getString(13));
-                poseWrongTTS.setRArmpit2(cursor.getString(14));
-                poseWrongTTS.setLArmpit1(cursor.getString(15));
-                poseWrongTTS.setLArmpit2(cursor.getString(16));
-                poseWrongTTS.setRShoulder1(cursor.getString(17));
-                poseWrongTTS.setRShoulder2(cursor.getString(18));
-                poseWrongTTS.setLShoulder1(cursor.getString(19));
-                poseWrongTTS.setLShoulder2(cursor.getString(20));
-                poseWrongTTS.setRKneeToe1(cursor.getString(21));
-                poseWrongTTS.setRKneeToe2(cursor.getString(22));
-                poseWrongTTS.setLKneeToe1(cursor.getString(23));
-                poseWrongTTS.setLKneeToe2(cursor.getString(24));
-                poseWrongTTS.setRThighHorizontal1(cursor.getString(25));
-                poseWrongTTS.setRThighHorizontal2(cursor.getString(26));
-                poseWrongTTS.setLThighHorizontal1(cursor.getString(27));
-                poseWrongTTS.setLThighHorizontal2(cursor.getString(28));
-                poseWrongTTS.setRCrotch1(cursor.getString(29));
-                poseWrongTTS.setRCrotch2(cursor.getString(30));
-                poseWrongTTS.setLCrotch1(cursor.getString(31));
-                poseWrongTTS.setLCrotch2(cursor.getString(32));
-                poseWrongTTS.setRShoulderGround1(cursor.getString(33));
-                poseWrongTTS.setRShoulderGround2(cursor.getString(34));
-                poseWrongTTS.setLShoulderGround1(cursor.getString(35));
-                poseWrongTTS.setLShoulderGround2(cursor.getString(36));
-                poseWrongTTS.setRElbowRaise1(cursor.getString(37));
-                poseWrongTTS.setRElbowRaise2(cursor.getString(38));
-                poseWrongTTS.setLElbowRaise1(cursor.getString(39));
-                poseWrongTTS.setLElbowRaise2(cursor.getString(40));
-                poseWrongTTS.setRHeelOnGround1(cursor.getString(41));
-                poseWrongTTS.setRHeelOnGround2(cursor.getString(42));
-                poseWrongTTS.setLHeelOnGround1(cursor.getString(43));
-                poseWrongTTS.setLHeelOnGround2(cursor.getString(44));
-                poseWrongTTS.setBodyVertical(cursor.getString(45));
-                // Adding contact to list
-                poseWrongTTSList.add(poseWrongTTS);
-            } while (cursor.moveToNext());
-        }
-
-        // return contact list
-        return poseWrongTTSList;
-    }
-
     // code to update the single contact
     public int updatePoseWrongTTS(PoseWrongTTS poseWrongTTS) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -650,27 +605,33 @@ public class PoseWrongTTSDBHandler extends SQLiteOpenHelper{
         values.put(KEY_LEFT_HEEL_ON_GROUND_2, poseWrongTTS.getLHeelOnGround2());
         values.put(KEY_BODY_VERTICAL, poseWrongTTS.getBodyVertical());
 
+        if (!poseWrongTTSExist(poseWrongTTS.getPoseName())){
+            addPoseWrongTTS(poseWrongTTS);
+        }
         // updating row
         return db.update(TABLE_POSE_WRONG_TTS, values, KEY_POSE_NAME + " = ?",
                 new String[] { String.valueOf(poseWrongTTS.getPoseName()) });
     }
 
-    // Deleting single contact
-    public void deletePoseWrongTTS(PoseWrongTTS poseWrongTTS) {
+    public List<String> getAllPoseWrongTTS() {
+        List<String> PoseWrongTTSs = new ArrayList<>();
+
+        String selectQuery = "SELECT " + KEY_POSE_NAME + " FROM " + TABLE_POSE_WRONG_TTS;
+
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_POSE_WRONG_TTS, KEY_POSE_NAME + " = ?",
-                new String[] { String.valueOf(poseWrongTTS.getPoseName()) });
-        db.close();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                PoseWrongTTSs.add(cursor.getString(0));
+            } while (cursor.moveToNext());
+        }
+        return PoseWrongTTSs;
     }
 
-    // Getting contacts Count
-    public int getPoseWrongTTSCount() {
-        String countQuery = "SELECT  * FROM " + TABLE_POSE_WRONG_TTS;
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery(countQuery, null);
-        cursor.close();
-
-        // return count
-        return cursor.getCount();
+    public boolean poseWrongTTSExist(String poseName) {
+        List<String> PoseWrongTTSs = getAllPoseWrongTTS();
+        return PoseWrongTTSs.contains(poseName);
     }
+
 }
