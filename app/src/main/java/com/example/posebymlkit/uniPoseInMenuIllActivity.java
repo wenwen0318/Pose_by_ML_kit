@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.MediaController;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -18,6 +19,7 @@ public class uniPoseInMenuIllActivity extends AppCompatActivity {
 
     TextView poseIllustrate;
     VideoView videoView;
+    ImageView videoStatusView;
     MediaController mediaController;
     String poseName;
     Intent intent;
@@ -34,13 +36,37 @@ public class uniPoseInMenuIllActivity extends AppCompatActivity {
 
         poseIllustrate = findViewById(R.id.poseIllustrate);
         videoView = findViewById(R.id.videoView);
-        mediaController = new MediaController(this);
+        videoStatusView = findViewById(R.id.videoStatusView);
 
         getIllustrate(poseName);
         poseIllustrate.setMovementMethod(new ScrollingMovementMethod());
-        videoView.setMediaController(mediaController);
-        mediaController.setAnchorView(videoView);
         getVideo(poseName);
+
+        videoView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(videoStatusView.getVisibility() == View.GONE){
+                    videoStatusView.setVisibility(View.VISIBLE);
+                }
+                else {
+                    videoStatusView.setVisibility(View.GONE);
+                }
+            }
+        });
+
+        videoStatusView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (videoView.isPlaying()){
+                    videoStatusView.setImageResource(android.R.drawable.ic_media_play);
+                    videoView.pause();
+                }
+                else {
+                    videoStatusView.setImageResource(android.R.drawable.ic_media_pause);
+                    videoView.start();
+                }
+            }
+        });
 
     }
 

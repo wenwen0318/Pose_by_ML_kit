@@ -50,7 +50,6 @@ public class VideoActivity extends AppCompatActivity {
         poseIllustrate = findViewById(R.id.poseIllustrate);
         videoView = findViewById(R.id.videoView);
         videoStatusView = findViewById(R.id.videoStatusView);
-        //mediaController = new MediaController(this);
 
         getIllustrate(cardView);
         poseIllustrate.setMovementMethod(new ScrollingMovementMethod());
