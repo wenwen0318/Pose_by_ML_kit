@@ -1,18 +1,25 @@
 package com.example.posebymlkit.database;
 
+import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.net.Uri;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.example.posebymlkit.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class TrainMenuDBHandler extends SQLiteOpenHelper {
+
+    private Context mContext;
+
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "trainMenu.db";
     private static final String TABLE_TRAIN_MENU = "trainMenu";
@@ -58,9 +65,11 @@ public class TrainMenuDBHandler extends SQLiteOpenHelper {
     private static final String KEY_TIME19 = "time19";
     private static final String KEY_TIME20 = "time20";
     private static final String KEY_ILL = "ill";
+    private static final String KEY_IMAGE = "image";
 
     public TrainMenuDBHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        mContext = context;
     }
 
 
@@ -89,7 +98,8 @@ public class TrainMenuDBHandler extends SQLiteOpenHelper {
                 + KEY_POSE18 + " TEXT," + KEY_TIME18 + " INTEGER,"
                 + KEY_POSE19 + " TEXT," + KEY_TIME19 + " INTEGER,"
                 + KEY_POSE20 + " TEXT," + KEY_TIME20 + " INTEGER,"
-                + KEY_ILL + " TEXT"
+                + KEY_ILL + " TEXT,"
+                + KEY_IMAGE + " TEXT"
                 + ")";
         db.execSQL(CREATE_CONTACTS_TABLE);
     }
@@ -103,6 +113,12 @@ public class TrainMenuDBHandler extends SQLiteOpenHelper {
 
     public void trainMenuInit(){
         if (!trainMenuExist("核心訓練清單")){
+            int resId = mContext.getResources().getIdentifier("core", "drawable", mContext.getPackageName());
+            Uri imageUri = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE + "://" +
+                    mContext.getResources().getResourcePackageName(resId) + '/' +
+                    mContext.getResources().getResourceTypeName(resId) + '/' +
+                    mContext.getResources().getResourceEntryName(resId));
+            String imageUriStr = imageUri.toString();
             this.addTrainMenu(new TrainMenu
                 ("核心訓練清單",
                 "Plank",30,
@@ -126,11 +142,18 @@ public class TrainMenuDBHandler extends SQLiteOpenHelper {
                 "Boat",30,
                 "Rest",20,
                 "       核心肌群指的是位於腹部、腰部和骨盆周圍的肌肉，包含腹直肌、腰方肌、骨盆底肌、多裂肌等，負責許多與身體活動相關的運動，包含扭轉身體、平衡能力、彎曲身體、控制呼吸等。\n" +
-                        "       穩定核心可以幫助穩定腰椎、減少脊椎負擔、恢復腰椎與骨盆、提高身體平衡能力及穩定性等，對任何年齡和體能水平的人都十分友好，尤其是久坐上班族、女性及運動員或健身愛好者等。"
+                        "       穩定核心可以幫助穩定腰椎、減少脊椎負擔、恢復腰椎與骨盆、提高身體平衡能力及穩定性等，對任何年齡和體能水平的人都十分友好，尤其是久坐上班族、女性及運動員或健身愛好者等。",
+                        imageUriStr
                 )
             );
         }
         if (!trainMenuExist("手臂訓練清單")){
+            int resId = mContext.getResources().getIdentifier("arm", "drawable", mContext.getPackageName());
+            Uri imageUri = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE + "://" +
+                    mContext.getResources().getResourcePackageName(resId) + '/' +
+                    mContext.getResources().getResourceTypeName(resId) + '/' +
+                    mContext.getResources().getResourceEntryName(resId));
+            String imageUriStr = imageUri.toString();
             this.addTrainMenu(new TrainMenu
                 ("手臂訓練清單",
                 "Plank",30,
@@ -154,11 +177,18 @@ public class TrainMenuDBHandler extends SQLiteOpenHelper {
                 null,0,
                 null,0,
                 "       手臂肌群包含肩膀肌肉、肱三頭肌、橈骨與尺骨肌肉，肩膀肌肉負責支撐肩膀和手臂運動；肱三頭肌位於上臂背部，負責手臂伸展和收縮；橈骨與尺骨肌肉負責手腕和手指動作。\n"+
-                        "       手臂訓練能增加肌肉力量、增加柔韌性以及改善姿勢，適合長時間使用電腦、老年人、長期缺乏運動等族群。"
+                        "       手臂訓練能增加肌肉力量、增加柔韌性以及改善姿勢，適合長時間使用電腦、老年人、長期缺乏運動等族群。",
+                        imageUriStr
                 )
             );
         }
         if (!trainMenuExist("大腿訓練清單")){
+            int resId = mContext.getResources().getIdentifier("leg", "drawable", mContext.getPackageName());
+            Uri imageUri = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE + "://" +
+                    mContext.getResources().getResourcePackageName(resId) + '/' +
+                    mContext.getResources().getResourceTypeName(resId) + '/' +
+                    mContext.getResources().getResourceEntryName(resId));
+            String imageUriStr = imageUri.toString();
             this.addTrainMenu(new TrainMenu
                 ("大腿訓練清單",
                 "Warrior2",30,
@@ -182,7 +212,8 @@ public class TrainMenuDBHandler extends SQLiteOpenHelper {
                 "Goddess",30,
                 "Rest",30,
                 "       大腿肌群包含股四頭肌、臀大肌、半腱肌和半膜肌，股四頭肌由四個肌肉組成，主要負責大腿伸展和膝關節伸展；臀大肌由三個肌肉組成，用於大腿伸展、旋轉和外展；半腱肌和半膜肌主要都是負責大腿彎曲和膝關節伸展。\n"+
-                        "       大腿訓練能改善下肢支撐力、增加靈活性、促進血液循環和幫助塑形，適合長時間跑動的上班族、運動員或學生、老人族群以及想瘦腿的女性。"
+                        "       大腿訓練能改善下肢支撐力、增加靈活性、促進血液循環和幫助塑形，適合長時間跑動的上班族、運動員或學生、老人族群以及想瘦腿的女性。",
+                        imageUriStr
                 )
             );
         }
@@ -215,6 +246,7 @@ public class TrainMenuDBHandler extends SQLiteOpenHelper {
         values.put(KEY_POSE19, trainMenu.getPose19()); values.put(KEY_TIME19, trainMenu.getTime19());
         values.put(KEY_POSE20, trainMenu.getPose20()); values.put(KEY_TIME20, trainMenu.getTime20());
         values.put(KEY_ILL, trainMenu.getIll());
+        values.put(KEY_IMAGE, trainMenu.getImageUri());
 
         // Inserting Row
         db.insert(TABLE_TRAIN_MENU, null, values);
@@ -252,6 +284,7 @@ public class TrainMenuDBHandler extends SQLiteOpenHelper {
                 trainMenu.setPose19(cursor.getString(37)); trainMenu.setTime19(Integer.parseInt(cursor.getString(38)));
                 trainMenu.setPose20(cursor.getString(39)); trainMenu.setTime20(Integer.parseInt(cursor.getString(40)));
                 trainMenu.setIll(cursor.getString(41));
+                trainMenu.setImageUri(cursor.getString(42));
                 // Adding contact to list
             } while (cursor.moveToNext());
         }
@@ -272,6 +305,23 @@ public class TrainMenuDBHandler extends SQLiteOpenHelper {
             }while (cursor.moveToNext());
         }
         return menuNames;
+    }
+
+    public ArrayList<String> getTrainMenuNameAndImageUri(){
+        ArrayList<String> menuImages = new ArrayList<String>();
+
+        String selectQuery = "SELECT " + KEY_MENU_NAME + "," + KEY_IMAGE + " FROM " + TABLE_TRAIN_MENU;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                menuImages.add(cursor.getString(0));
+                menuImages.add(cursor.getString(1));
+            }while (cursor.moveToNext());
+        }
+        return menuImages;
     }
 
     public boolean trainMenuExist(String menuName){
@@ -306,6 +356,7 @@ public class TrainMenuDBHandler extends SQLiteOpenHelper {
         values.put(KEY_POSE19, trainMenu.getPose19() ); values.put(KEY_TIME19, trainMenu.getTime19() );
         values.put(KEY_POSE20, trainMenu.getPose20() ); values.put(KEY_TIME20, trainMenu.getTime20() );
         values.put(KEY_ILL, trainMenu.getIll() );
+        values.put(KEY_IMAGE,trainMenu.getImageUri().toString());
 
         // updating row
         return db.update(TABLE_TRAIN_MENU, values, KEY_MENU_NAME + " = ?",

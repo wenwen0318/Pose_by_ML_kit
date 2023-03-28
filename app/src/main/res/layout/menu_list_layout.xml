@@ -4,15 +4,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="5dp"
-    android:layout_marginBottom="5dp">
+    android:layout_height="wrap_content">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/suggestMenuCardView"
         android:transitionName="sugMenu1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_margin="10dp"
         app:cardBackgroundColor="#EEEEEE"
         app:cardCornerRadius="10dp"
@@ -28,8 +26,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:layout_margin="5dp"
-                android:adjustViewBounds="true"
-                app:srcCompat="@drawable/anya" />
+                android:adjustViewBounds="true" />
 
             <TextView
                 android:id="@+id/menuName"

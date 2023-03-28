@@ -1,5 +1,7 @@
 package com.example.posebymlkit.database;
 
+import android.net.Uri;
+
 import java.util.ArrayList;
 
 public class TrainMenu {
@@ -25,6 +27,7 @@ public class TrainMenu {
     String pose19; int time19;
     String pose20; int time20;
     String ill;
+    String imageUri;
 
     public TrainMenu(){}
     public TrainMenu(
@@ -49,7 +52,8 @@ public class TrainMenu {
             String pose18, int time18,
             String pose19, int time19,
             String pose20, int time20,
-            String ill
+            String ill,
+            String imageUri
     ){
         this.menuName = poseName;
         this.pose1 = pose1; this.time1 = time1;
@@ -73,6 +77,7 @@ public class TrainMenu {
         this.pose19 = pose19; this.time19 = time19;
         this.pose20 = pose20; this.time20 = time20;
         this.ill = ill;
+        this.imageUri = imageUri;
     }
 
     public ArrayList<String> getAllPose(){
@@ -480,4 +485,6 @@ public class TrainMenu {
     public String getIll(){ return this.ill;}
     public void setIll(String ill){ this.ill = ill;}
 
+    public String getImageUri(){ return this.imageUri;}
+    public void setImageUri(String imageUri){ this.imageUri = imageUri;}
 }

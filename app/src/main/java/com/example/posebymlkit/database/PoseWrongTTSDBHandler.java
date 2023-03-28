@@ -218,12 +218,12 @@ public class PoseWrongTTSDBHandler extends SQLiteOpenHelper{
                 "左手肘張不夠開", "左手肘張太開",
                 null, null,
                 null, null,
-                "右手與地板平行", "右手與地板平行",
-                "左手與地板平行", "左手與地板平行",
-                "右膝勿超過腳尖", "右膝勿超過腳尖",
-                "左膝勿超過腳尖", "左膝勿超過腳尖",
-                "右大腿與地板平行", "右大腿與地板平行",
-                "左大腿與地板平行", "右大腿與地板平行",
+                right + arm + parallel_to_the_floor, right + arm + parallel_to_the_floor,
+                left + arm + parallel_to_the_floor, left + arm + parallel_to_the_floor,
+                right+ knee + not_exceed_the_toes, right+ knee + not_exceed_the_toes,
+                left+ knee + not_exceed_the_toes, left+ knee + not_exceed_the_toes,
+                right + thigh + parallel_to_the_floor, right + thigh + parallel_to_the_floor,
+                left + thigh + parallel_to_the_floor, left + thigh + parallel_to_the_floor,
                 null, null,
                 null, null,
                 null, null,
@@ -232,7 +232,7 @@ public class PoseWrongTTSDBHandler extends SQLiteOpenHelper{
                 null, null,
                 null, null,
                 null, null,
-                "身體保持垂直"
+                body + perpendicular_to_the_floor
         ));
         this.addPoseWrongTTS(new PoseWrongTTS("Chair",
                 null,null,

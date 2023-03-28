@@ -11,7 +11,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="1dp" />
+        tools:layout_editor_absoluteY="1dp"
+        android:divider="#00ffffff"
+        android:dividerHeight="18dp"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"

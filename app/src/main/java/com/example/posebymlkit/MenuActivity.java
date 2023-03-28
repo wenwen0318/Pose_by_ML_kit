@@ -235,7 +235,7 @@ public class MenuActivity extends AppCompatActivity {
                             hashMap.put("poseName",trainMenu.getPose(i));
                             hashMap.put("poseTime",trainMenu.getTime(i) + getResources().getString(R.string.second));
                             arrayList.add(hashMap);
-                            menuLength = i;
+                            menuLength = i - 1;
                         }
                         myAdapter.notifyItemRemoved(position);
                         myAdapter.notifyDataSetChanged();

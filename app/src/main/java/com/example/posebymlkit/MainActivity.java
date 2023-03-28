@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.Manifest;
@@ -93,7 +94,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.R)
     public void getStoragePermission(){
         if (ActivityCompat.checkSelfPermission(this,Manifest.permission.MANAGE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED){

@@ -1,17 +1,25 @@
 package com.example.posebymlkit;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.hardware.camera2.CameraCharacteristics;
+import android.net.Uri;
 import android.os.Bundle;
 
-import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.preference.PreferenceManager;
 
+import android.os.ParcelFileDescriptor;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,22 +27,22 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.posebymlkit.database.HistoricalRecord;
-import com.example.posebymlkit.database.HistoricalRecordDBHandler;
 import com.example.posebymlkit.database.TrainMenu;
 import com.example.posebymlkit.database.TrainMenuDBHandler;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.io.FileDescriptor;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class TrainMenuFragment extends Fragment {
 
@@ -49,13 +57,8 @@ public class TrainMenuFragment extends Fragment {
 
     FloatingActionButton fab;
 
-    ArrayList<String> menuNames;
+    ArrayList<String> menuNames,menuNamesAndImages;
     TrainMenuDBHandler tm;
-
-    Dialog addMenuDialog;
-    View viewAddMenuDialog;
-    EditText editMenuName,editMenuIll;
-    Button btn_addPose_cancel,btn_addPose_check;
 
     public TrainMenuFragment() {
 
@@ -79,6 +82,20 @@ public class TrainMenuFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+        arrayList.clear();
+        menuNamesAndImages = tm.getTrainMenuNameAndImageUri();
+        for (int i = 0; i < menuNamesAndImages.size(); i++){
+            HashMap<String, String> hashMap = new HashMap<>();
+            hashMap.put("menuName",menuNamesAndImages.get(i));
+            hashMap.put("menuImageUri",menuNamesAndImages.get(++i));
+            arrayList.add(hashMap);
+        }
+        simpleAdapter.notifyDataSetChanged();
+    }
+
     ArrayList<HashMap<String, String>> arrayList = new ArrayList<>();
     Intent intent = new Intent();
     Bundle bundle = new Bundle();
@@ -94,20 +111,34 @@ public class TrainMenuFragment extends Fragment {
 
         tm = new TrainMenuDBHandler(getActivity());
         menuNames = tm.getAllTrainMenuName();
+        menuNamesAndImages = tm.getTrainMenuNameAndImageUri();
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
         cameraFacing = preferences.getInt("camera_facing", CameraCharacteristics.LENS_FACING_BACK);
 
-        for (String menuName:menuNames) {
+        for (int i = 0; i < menuNamesAndImages.size(); i++){
             HashMap<String, String> hashMap = new HashMap<>();
-            Log.d("menu:", menuName);
-            hashMap.put("menuName", menuName);
+            hashMap.put("menuName",menuNamesAndImages.get(i));
+            hashMap.put("menuImageUri",menuNamesAndImages.get(++i));
             arrayList.add(hashMap);
         }
-        String[] from = {"menuName"};
-        int[] value = {R.id.menuName};
+
+        String[] from = {"menuName","menuImageUri"};
+        int[] value = {R.id.menuName,R.id.menuImageView};
         simpleAdapter =
-                new SimpleAdapter(requireActivity(), arrayList, R.layout.menu_list_layout, from, value);
+                new SimpleAdapter(getContext(), arrayList, R.layout.menu_list_layout, from, value);
+        simpleAdapter.setViewBinder(new SimpleAdapter.ViewBinder() {
+            @Override
+            public boolean setViewValue(View view, Object data, String textRepresentation) {
+                if (view instanceof ImageView && data instanceof Uri) {
+                    ImageView imageView = (ImageView) view;
+                    Uri imageUri = (Uri) data;
+                    imageView.setImageURI(imageUri);
+                    return true;
+                }
+                return false;
+            }
+        });
         menuListView.setAdapter(simpleAdapter);
 
         menuListView.setOnItemClickListener(onItemClickListener);
@@ -117,80 +148,13 @@ public class TrainMenuFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getAddMenuDialog();
+                intent.setClass(getActivity(),AddMenuActivity.class);
+                startActivity(intent);
             }
         });
 
         return view;
-    }
-
-    private void getAddMenuDialog() {
-        addMenuDialog = new Dialog(getActivity());
-
-        viewAddMenuDialog = getLayoutInflater().inflate(R.layout.add_menu_dialog_layout , null);
-        addMenuDialog.setContentView(viewAddMenuDialog);
-
-        editMenuName = viewAddMenuDialog.findViewById(R.id.editMenuName);
-        editMenuIll = viewAddMenuDialog.findViewById(R.id.editMenuIll);
-        btn_addPose_cancel = viewAddMenuDialog.findViewById(R.id.cancel);
-        btn_addPose_check  = viewAddMenuDialog.findViewById(R.id.check);
-
-        addMenuDialog.show();
-
-        btn_addPose_cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addMenuDialog.dismiss();
-            }
-        });
-        btn_addPose_check.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //add pose to recycleView and DB
-                String menuName = editMenuName.getText().toString();
-                String menuIll = editMenuIll.getText().toString();
-                if (menuName.equals("")){
-                    Toast.makeText(getActivity(),R.string.enter_menu_name,Toast.LENGTH_LONG).show();
-                }
-                else {
-                    ArrayList<String> menuNames = tm.getAllTrainMenuName();
-                    if (menuNames.contains(menuName)){
-                        Toast.makeText(getActivity(),R.string.menu_exists,Toast.LENGTH_LONG).show();
-                    }
-                    else{
-                        tm.addTrainMenu(new TrainMenu(menuName,
-                                null,0,
-                                null,0,
-                                null,0,
-                                null,0,
-                                null,0,
-                                null,0,
-                                null,0,
-                                null,0,
-                                null,0,
-                                null,0,
-                                null,0,
-                                null,0,
-                                null,0,
-                                null,0,
-                                null,0,
-                                null,0,
-                                null,0,
-                                null,0,
-                                null,0,
-                                null,0,
-                                menuIll
-                        ));
-                        HashMap<String, String> hashMap = new HashMap<>();
-                        hashMap.put("menuName", menuName);
-                        arrayList.add(hashMap);
-                        simpleAdapter.notifyDataSetChanged();
-                        addMenuDialog.dismiss();
-                    }
-                }
-            }
-        });
-    }
+    };
 
     private final AdapterView.OnItemClickListener onItemClickListener = new AdapterView.OnItemClickListener(){
         @Override
