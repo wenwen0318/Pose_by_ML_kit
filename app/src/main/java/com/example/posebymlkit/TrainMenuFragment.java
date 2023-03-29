@@ -11,6 +11,8 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.ImageDecoder;
+import android.graphics.drawable.Drawable;
 import android.hardware.camera2.CameraCharacteristics;
 import android.net.Uri;
 import android.os.Bundle;
@@ -37,8 +39,11 @@ import com.example.posebymlkit.database.TrainMenu;
 import com.example.posebymlkit.database.TrainMenuDBHandler;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.io.File;
 import java.io.FileDescriptor;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -57,7 +62,7 @@ public class TrainMenuFragment extends Fragment {
 
     FloatingActionButton fab;
 
-    ArrayList<String> menuNames,menuNamesAndImages;
+    ArrayList<String> menuNames;
     TrainMenuDBHandler tm;
 
     public TrainMenuFragment() {
@@ -82,19 +87,6 @@ public class TrainMenuFragment extends Fragment {
         }
     }
 
-    @Override
-    public void onResume(){
-        super.onResume();
-        arrayList.clear();
-        menuNamesAndImages = tm.getTrainMenuNameAndImageUri();
-        for (int i = 0; i < menuNamesAndImages.size(); i++){
-            HashMap<String, String> hashMap = new HashMap<>();
-            hashMap.put("menuName",menuNamesAndImages.get(i));
-            hashMap.put("menuImageUri",menuNamesAndImages.get(++i));
-            arrayList.add(hashMap);
-        }
-        simpleAdapter.notifyDataSetChanged();
-    }
 
     ArrayList<HashMap<String, String>> arrayList = new ArrayList<>();
     Intent intent = new Intent();
@@ -111,34 +103,14 @@ public class TrainMenuFragment extends Fragment {
 
         tm = new TrainMenuDBHandler(getActivity());
         menuNames = tm.getAllTrainMenuName();
-        menuNamesAndImages = tm.getTrainMenuNameAndImageUri();
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
         cameraFacing = preferences.getInt("camera_facing", CameraCharacteristics.LENS_FACING_BACK);
-
-        for (int i = 0; i < menuNamesAndImages.size(); i++){
-            HashMap<String, String> hashMap = new HashMap<>();
-            hashMap.put("menuName",menuNamesAndImages.get(i));
-            hashMap.put("menuImageUri",menuNamesAndImages.get(++i));
-            arrayList.add(hashMap);
-        }
 
         String[] from = {"menuName","menuImageUri"};
         int[] value = {R.id.menuName,R.id.menuImageView};
         simpleAdapter =
                 new SimpleAdapter(getContext(), arrayList, R.layout.menu_list_layout, from, value);
-        simpleAdapter.setViewBinder(new SimpleAdapter.ViewBinder() {
-            @Override
-            public boolean setViewValue(View view, Object data, String textRepresentation) {
-                if (view instanceof ImageView && data instanceof Uri) {
-                    ImageView imageView = (ImageView) view;
-                    Uri imageUri = (Uri) data;
-                    imageView.setImageURI(imageUri);
-                    return true;
-                }
-                return false;
-            }
-        });
         menuListView.setAdapter(simpleAdapter);
 
         menuListView.setOnItemClickListener(onItemClickListener);
@@ -155,6 +127,29 @@ public class TrainMenuFragment extends Fragment {
 
         return view;
     };
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        System.out.println("TMF on Resume");
+        menuNames = tm.getAllTrainMenuName();
+        arrayList.clear();
+        for (String menuName:menuNames){
+            HashMap<String, String> hashMap = new HashMap<>();
+            hashMap.put("menuName",menuName);
+            Uri imageUri = getImageUri(menuName);
+            hashMap.put("menuImageUri",imageUri.toString());
+            arrayList.add(hashMap);
+        }
+        simpleAdapter.notifyDataSetChanged();
+    }
+
+    public Uri getImageUri(String menuName){
+        File imageFile = new File(getActivity().getFilesDir(),menuName+".jpg");
+        String imageFilePath = imageFile.getAbsolutePath();
+        Uri imageUri = Uri.parse(imageFilePath);
+        return imageUri;
+    }
 
     private final AdapterView.OnItemClickListener onItemClickListener = new AdapterView.OnItemClickListener(){
         @Override

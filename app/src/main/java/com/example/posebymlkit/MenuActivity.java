@@ -235,7 +235,7 @@ public class MenuActivity extends AppCompatActivity {
                             hashMap.put("poseName",trainMenu.getPose(i));
                             hashMap.put("poseTime",trainMenu.getTime(i) + getResources().getString(R.string.second));
                             arrayList.add(hashMap);
-                            menuLength = i - 1;
+                            menuLength = i;
                         }
                         myAdapter.notifyItemRemoved(position);
                         myAdapter.notifyDataSetChanged();
@@ -257,11 +257,6 @@ public class MenuActivity extends AppCompatActivity {
         btn_cancel = viewStartDialog.findViewById(R.id.cancel);
         btn_check  = viewStartDialog.findViewById(R.id.check);
         bundle = getIntent().getExtras();
-        menuLength = bundle.getInt("menuLength");
-        menu = bundle.getIntArray("myMenu");
-        for(int i=0;i<menuLength;i++){
-            Log.i("MenuActivity", ""+menu[i]);
-        }
 
         startDialog.show();
         btn_easy.setOnClickListener(new View.OnClickListener() {
@@ -301,7 +296,7 @@ public class MenuActivity extends AppCompatActivity {
     private void getSetPoseDialog(String mode,String pose,String time,int position) {
         setPoseDialog = new Dialog(MenuActivity.this);
 
-        String[] poses = {"Warrior2", "Plank", "Goddess", "Chair", "Downdog", "Four_Limbed_staff",
+        String[] poses = {"Warrior2", "Plank", "Goddess", "Chair", "DownDog", "Four_Limbed_Staff",
                 "Boat", "Rejuvenation", "Star", "Tree", "Rest"};
         String[] selectedPose = new String[1];
 
@@ -344,7 +339,6 @@ public class MenuActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) {
 
             }
-
             @Override
             public void onItemSelected(AdapterView parent, View view, int position, long id) {
                 selectedPose[0] = parent.getSelectedItem().toString();
