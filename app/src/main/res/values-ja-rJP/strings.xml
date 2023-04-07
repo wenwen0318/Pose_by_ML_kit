@@ -211,8 +211,8 @@
     <string name="add_list">リストに追加する</string>
     <string name="list_name">リスト名</string>
     <string name="list_ill">説明</string>
-    <string name="enter_menu_name">リスト名を入力してください</string>
-    <string name="menu_exists">リストが既に存在します。名前を変更してください。</string>
+    <string name="enter_list_name">リスト名を入力してください</string>
+    <string name="list_exists">リストが既に存在します。名前を変更してください。</string>
     <string name="list_full">リストはいっぱいです</string>
     <string name="Choose_difficulty">難易度を選択してください</string>
     <string name="easy">簡易</string>
@@ -251,4 +251,12 @@
     <string name="training_completed">トレーニングが完了しました</string>
     <string name="seconds">秒</string>
     <string name="rest_time_remaining">休憩時間が残り</string>
+    <string name="and">と</string>
+    <string name="in_line_with_body">と体を一直線に保つ</string>
+    <string name="perpendicular_to_the_body">は体に垂直です</string>
+    <string name="to_90_degree">を90度に曲げる</string>
+    <string name="heels_on_the_ground">かかとをつける</string>
+    <string name="raise_arms">腕を上げる</string>
+    <string name="extend_arms_forward">腕を前に伸ばす</string>
+    <string name="delete_list">リストを削除しますか？</string>
 </resources>

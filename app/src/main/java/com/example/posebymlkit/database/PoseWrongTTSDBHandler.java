@@ -138,25 +138,32 @@ public class PoseWrongTTSDBHandler extends SQLiteOpenHelper{
 
     public void poseWrongTTSInit(){
 
-        String right = mContext.getString(R.string.right);
-        String left  = mContext.getString(R.string.left);
-        String arm = mContext.getString(R.string.arm);
-        String hip = mContext.getString(R.string.hip);
-        String knee = mContext.getString(R.string.knee);
-        String elbow = mContext.getString(R.string.elbow);
-        String armpit = mContext.getString(R.string.armpit);
-        String shoulder = mContext.getString(R.string.shoulder);
-        String tiptop = mContext.getString(R.string.tiptop);
-        String thigh = mContext.getString(R.string.thigh);
+        String right = mContext.getString(R.string.right);      //右
+        String left  = mContext.getString(R.string.left);       //左
+        String arm = mContext.getString(R.string.arm);          //手臂
+        String hip = mContext.getString(R.string.hip);          //臀部
+        String knee = mContext.getString(R.string.knee);        //膝
+        String elbow = mContext.getString(R.string.elbow);      //手肘
+        String armpit = mContext.getString(R.string.armpit);    //腋下
+        String shoulder = mContext.getString(R.string.shoulder);//肩
+        String tiptop = mContext.getString(R.string.tiptop);    //腳尖
+        String thigh = mContext.getString(R.string.thigh);      //大腿
         String crotch = mContext.getString(R.string.crotch);
-        String leg = mContext.getString(R.string.leg);
+        String leg = mContext.getString(R.string.leg);          //腿
         String both = mContext.getString(R.string.both);
-        String body = mContext.getString(R.string.body);
-        String parallel_to_the_floor = mContext.getString(R.string.parallel_to_the_floor);
-        String perpendicular_to_the_floor = mContext.getString(R.string.perpendicular_to_the_floor);
-        String not_exceed_the_toes = mContext.getString(R.string.not_exceed_the_toes);
-        String keep_flat = mContext.getString(R.string.keep_flat);
-        String straight = mContext.getString(R.string.straight);
+        String body = mContext.getString(R.string.body);        //身體
+        String parallel_floor = mContext.getString(R.string.parallel_to_the_floor);              //與地板平行
+        String perpendicular_floor = mContext.getString(R.string.perpendicular_to_the_floor);    //與地板垂直
+        String not_exceed_the_toes = mContext.getString(R.string.not_exceed_the_toes);                //不要超過腳尖
+        String keep_flat = mContext.getString(R.string.keep_flat);      //保持平坦
+        String straight = mContext.getString(R.string.straight);        //伸直
+        String and = mContext.getString(R.string.and);
+        String in_line_with_body = mContext.getString(R.string.in_line_with_body);              //與身體呈直線
+        String perpendicular_body = mContext.getString(R.string.perpendicular_to_the_body);     //與身體垂直
+        String degree_90 = mContext.getString(R.string.to_90_degree);//成90度角
+        String heels_ground = mContext.getString(R.string.heels_on_the_ground);
+        String raise_arm = mContext.getString(R.string.raise_arms);
+        String forward_arm = mContext.getString(R.string.extend_arms_forward);
 
         this.updatePoseWrongTTS(new PoseWrongTTS("Warrior2",
                 null,null,
@@ -171,7 +178,7 @@ public class PoseWrongTTSDBHandler extends SQLiteOpenHelper{
                 left + shoulder + keep_flat, left + shoulder + keep_flat,
                 right + knee + not_exceed_the_toes, right + knee + not_exceed_the_toes,
                 null, null,
-                right + thigh + parallel_to_the_floor, right + thigh + parallel_to_the_floor,
+                right + thigh + parallel_floor, right + thigh + parallel_floor,
                 null, null,
                 null, null,
                 "左腳張開往下坐", "左腳張太開",
@@ -181,16 +188,16 @@ public class PoseWrongTTSDBHandler extends SQLiteOpenHelper{
                 null, null,
                 null, null,
                 null, null,
-                body + perpendicular_to_the_floor
+                body + perpendicular_floor
         ));
 
         this.addPoseWrongTTS(new PoseWrongTTS("Plank",
                 null,null,
-                "臀部與身體呈直線","臀部與身體呈直線",
+                hip + in_line_with_body,hip + in_line_with_body,
                 null,null,
-                "膝蓋與身體呈直線","膝蓋與身體呈直線",
+                knee + in_line_with_body,knee + in_line_with_body,
                 null,null,
-                "手臂伸直", "手臂伸直",
+                arm + straight, arm + straight,
                 null, null,
                 null, null,
                 null, null,
@@ -202,7 +209,7 @@ public class PoseWrongTTSDBHandler extends SQLiteOpenHelper{
                 null, null,
                 null, null,
                 null, null,
-                "手臂伸太出去", "手臂太進去",
+                arm + perpendicular_floor, arm + perpendicular_floor,
                 null, null,
                 null, null,
                 null, null,
@@ -212,18 +219,18 @@ public class PoseWrongTTSDBHandler extends SQLiteOpenHelper{
         this.addPoseWrongTTS(new PoseWrongTTS("Goddess",
                 null,null,
                 null,null,
-                "右膝蹲太下去","右膝蹲不夠下去",
-                "左膝蹲太下去","左膝蹲不夠下去",
-                "右手肘張不夠開","右手肘張太開",
-                "左手肘張不夠開", "左手肘張太開",
+                right + leg + degree_90,right + leg + degree_90,
+                left + leg + degree_90,left + leg + degree_90,
+                right + arm + degree_90,right + arm + degree_90,
+                left + arm + degree_90, left + arm + degree_90,
                 null, null,
                 null, null,
-                right + arm + parallel_to_the_floor, right + arm + parallel_to_the_floor,
-                left + arm + parallel_to_the_floor, left + arm + parallel_to_the_floor,
+                right + arm + parallel_floor, right + arm + parallel_floor,
+                left + arm + parallel_floor, left + arm + parallel_floor,
                 right+ knee + not_exceed_the_toes, right+ knee + not_exceed_the_toes,
                 left+ knee + not_exceed_the_toes, left+ knee + not_exceed_the_toes,
-                right + thigh + parallel_to_the_floor, right + thigh + parallel_to_the_floor,
-                left + thigh + parallel_to_the_floor, left + thigh + parallel_to_the_floor,
+                right + thigh + parallel_floor, right + thigh + parallel_floor,
+                left + thigh + parallel_floor, left + thigh + parallel_floor,
                 null, null,
                 null, null,
                 null, null,
@@ -232,28 +239,28 @@ public class PoseWrongTTSDBHandler extends SQLiteOpenHelper{
                 null, null,
                 null, null,
                 null, null,
-                body + perpendicular_to_the_floor
+                body + perpendicular_floor
         ));
         this.addPoseWrongTTS(new PoseWrongTTS("Chair",
                 null,null,
                 null,null,
-                "膝蓋蹲太低","膝蓋蹲不夠低",
+                thigh + degree_90,thigh + degree_90,
                 null,null,
-                "手肘伸直","手肘伸直",
+                arm + straight,arm + straight,
                 null, null,
-                "身體與大腿垂直", "身體與大腿垂直",
-                null, null,
-                null, null,
-                null, null,
-                "膝蓋不超過腳尖", "膝蓋不超過腳尖",
+                leg + perpendicular_body, leg + perpendicular_body,
                 null, null,
                 null, null,
+                null, null,
+                knee + not_exceed_the_toes, knee + not_exceed_the_toes,
                 null, null,
                 null, null,
                 null, null,
                 null, null,
                 null, null,
-                "手臂舉高點", "手臂舉高點",
+                null, null,
+                null, null,
+                raise_arm, raise_arm,
                 null, null,
                 null, null,
                 null, null,
@@ -262,13 +269,11 @@ public class PoseWrongTTSDBHandler extends SQLiteOpenHelper{
         this.addPoseWrongTTS(new PoseWrongTTS("DownDog",
                 null,null,
                 null,null,
-                "膝蓋挺直","膝蓋挺直",
+                thigh + straight,thigh + straight,
                 null,null,
-                "手肘伸直","手肘伸直",
+                arm + straight,arm + straight,
                 null, null,
-                "手臂往前伸", "手臂往前伸",
-                null, null,
-                null, null,
+                forward_arm, forward_arm,
                 null, null,
                 null, null,
                 null, null,
@@ -280,16 +285,18 @@ public class PoseWrongTTSDBHandler extends SQLiteOpenHelper{
                 null, null,
                 null, null,
                 null, null,
-                "腳跟卓第", "腳跟卓第",
+                null, null,
+                null, null,
+                heels_ground, heels_ground,
                 null, null,
                 null
         ));
         this.addPoseWrongTTS(new PoseWrongTTS("Four_Limbed_Staff",
-                "臀部與地板平行","臀部與地板平行",
+                body + parallel_floor,body + parallel_floor,
                 null,null,
-                "膝蓋挺直","膝蓋挺直",
+                knee + straight,knee + straight,
                 null,null,
-                "手臂與手肘夾90度","右臂與手肘夾90度",
+                arm + degree_90,arm + degree_90,
                 null, null,
                 null, null,
                 null, null,
@@ -312,9 +319,9 @@ public class PoseWrongTTSDBHandler extends SQLiteOpenHelper{
         this.addPoseWrongTTS(new PoseWrongTTS("Boat",
                 null,null,
                 null,null,
-                "膝蓋挺直","膝蓋挺直",
+                thigh + straight,thigh + straight,
                 null,null,
-                "手肘伸直","手肘伸直",
+                arm + straight,arm + straight,
                 null, null,
                 null, null,
                 null, null,
@@ -335,9 +342,9 @@ public class PoseWrongTTSDBHandler extends SQLiteOpenHelper{
                 null
         ));
         this.addPoseWrongTTS(new PoseWrongTTS("Rejuvenation",
-                "雙腳與地板垂直","雙腳與地板垂直",
+                thigh + perpendicular_floor,thigh + perpendicular_floor,
                 null,null,
-                "膝蓋挺直","膝蓋挺直",
+                thigh + straight,thigh + straight,
                 null,null,
                 null,null,
                 null, null,
@@ -362,17 +369,14 @@ public class PoseWrongTTSDBHandler extends SQLiteOpenHelper{
         this.addPoseWrongTTS(new PoseWrongTTS("Star",
                 null,null,
                 null,null,
-                "右膝挺直","右膝挺直",
-                "左膝挺直","左膝挺直",
-                "右手伸直","右手伸直",
-                "左手伸直", "左手伸直",
+                right + leg + straight,right + leg + straight,
+                left + leg + straight,left + leg + straight,
+                right + arm + straight,right + arm + straight,
+                left + arm + straight, left + arm + straight,
                 null, null,
                 null, null,
-                "右手與地板平行", "右手與地板平行",
-                "左手與地板平行", "左手與地板平行",
-                null, null,
-                null, null,
-                null, null,
+                right + arm + parallel_floor,right + arm + parallel_floor ,
+                left + arm + parallel_floor, left + arm + parallel_floor,
                 null, null,
                 null, null,
                 null, null,
@@ -382,17 +386,20 @@ public class PoseWrongTTSDBHandler extends SQLiteOpenHelper{
                 null, null,
                 null, null,
                 null, null,
-                "身體與地板垂直"
+                null, null,
+                null, null,
+                null, null,
+                body + perpendicular_floor
         ));
         this.addPoseWrongTTS(new PoseWrongTTS("Tree",
                 null,null,
-                "左臀保持一直線","左臀保持一直線",
+                left + arm + straight,left + arm + straight,
                 null,null,
-                "左膝挺直","左膝挺直",
-                "右手肘伸直","右手肘伸直",
-                "左手肘伸直", "左手肘伸直",
-                "右手伸直", "右手伸直",
-                "左手伸直", "左手伸直",
+                left + knee + straight, left + knee + straight,
+                right + elbow + straight,right + elbow + straight,
+                left + elbow + straight, left + elbow + straight,
+                right + arm + straight, right + arm + straight,
+                left + arm + straight, left + arm + straight,
                 null, null,
                 null, null,
                 null, null,
@@ -407,7 +414,7 @@ public class PoseWrongTTSDBHandler extends SQLiteOpenHelper{
                 null, null,
                 null, null,
                 null, null,
-                "身體保持垂直"
+                body + perpendicular_floor
         ));
     }
 

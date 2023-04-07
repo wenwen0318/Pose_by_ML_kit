@@ -3,6 +3,8 @@ package com.example.posebymlkit;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.ContentResolver;
+import android.content.ContentUris;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -22,6 +24,7 @@ import androidx.fragment.app.Fragment;
 import androidx.preference.PreferenceManager;
 
 import android.os.ParcelFileDescriptor;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -148,6 +151,14 @@ public class TrainMenuFragment extends Fragment {
         File imageFile = new File(getActivity().getFilesDir(),menuName+".jpg");
         String imageFilePath = imageFile.getAbsolutePath();
         Uri imageUri = Uri.parse(imageFilePath);
+        if (menuName.equals("大腿訓練清單")){
+            imageUri = Uri.parse("android.resource://" + getContext().getPackageName() + "/" + R.drawable.leg);
+        } else if (menuName.equals("手臂訓練清單")) {
+            imageUri = Uri.parse("android.resource://" + getContext().getPackageName() + "/" + R.drawable.arm);
+        } else if (menuName.equals("核心訓練清單")) {
+            imageUri = Uri.parse("android.resource://" + getContext().getPackageName() + "/" + R.drawable.core);
+        }
+        System.out.println(menuName + " " + imageUri);
         return imageUri;
     }
 
@@ -168,18 +179,21 @@ public class TrainMenuFragment extends Fragment {
         public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setMessage("刪除清單?");
+            builder.setMessage(getString(R.string.delete_list));
 
-            builder.setPositiveButton("確定", new DialogInterface.OnClickListener() {
+            builder.setPositiveButton(getString(R.string.confirm), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     String menuName = arrayList.get(position).get("menuName");
                     tm.deleteTrainMenu(menuName);
                     arrayList.remove(position);
                     simpleAdapter.notifyDataSetChanged();
+                    Uri imageUri = getImageUri(menuName);
+                    File imageFile = new File(imageUri.getPath());
+                    imageFile.delete();
                 }
             });
-            builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            builder.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
 

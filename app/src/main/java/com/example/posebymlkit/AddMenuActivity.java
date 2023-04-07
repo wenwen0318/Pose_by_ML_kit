@@ -75,11 +75,11 @@ public class AddMenuActivity extends AppCompatActivity {
                 String menuName = editMenuName.getText().toString();
                 String menuIll = editMenuIll.getText().toString();
                 if (menuName.equals("")) {
-                    Toast.makeText(AddMenuActivity.this, "請輸入清單名稱", Toast.LENGTH_LONG).show();
+                    Toast.makeText(AddMenuActivity.this, getString(R.string.enter_list_name), Toast.LENGTH_LONG).show();
                 } else {
                     ArrayList<String> menuNames = tm.getAllTrainMenuName();
                     if (menuNames.contains(menuName)) {
-                        Toast.makeText(AddMenuActivity.this, "清單名已存在，請重新命名", Toast.LENGTH_LONG).show();
+                        Toast.makeText(AddMenuActivity.this, getString(R.string.list_exists), Toast.LENGTH_LONG).show();
                     } else {
                         tm.addTrainMenu(new TrainMenu(menuName,
                                 null, 0,

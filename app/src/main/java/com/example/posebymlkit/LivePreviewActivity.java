@@ -241,9 +241,6 @@ public class LivePreviewActivity extends AppCompatActivity {
                 // TTS 初始化成功
                 if( arg0 == TextToSpeech.SUCCESS ) {
                     switch (getString(R.string.language)){
-                        case "English":
-                            tts.setLanguage(Locale.ENGLISH);
-                            break;
                         case "简体中文":
                             tts.setLanguage(Locale.CHINA);
                             break;

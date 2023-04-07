@@ -94,13 +94,12 @@ public class HistoryListActivity extends AppCompatActivity {
             hashMap.put("poseImage", "android.resource://" + getPackageName() + "/" + resId);
             hashMap.put("poseName", record.getPoseName());
             hashMap.put("date", record.getDate());
-            hashMap.put("level", "");
             hashMap.put("complete", record.getAllComplete() + "%");
             arrayList.add(hashMap);
 
         }
-        String[] from = {"poseImage", "poseName", "date", "level", "complete"};
-        int[] value = {R.id.poseImage, R.id.poseName, R.id.date, R.id.poseLevel, R.id.allComplete};
+        String[] from = {"poseImage", "poseName", "date", "complete"};
+        int[] value = {R.id.poseImage, R.id.poseName, R.id.date, R.id.allComplete};
         simpleAdapter =
                 new SimpleAdapter(this, arrayList, R.layout.history_list_layout, from, value);
         listView.setAdapter(simpleAdapter);

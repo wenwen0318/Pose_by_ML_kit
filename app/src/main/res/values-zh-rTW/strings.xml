@@ -211,8 +211,8 @@
     <string name="add_list">添加清單</string>
     <string name="list_ill">說明</string>
     <string name="list_name">清單名稱</string>
-    <string name="enter_menu_name">請輸入清單名稱</string>
-    <string name="menu_exists">清單已存在，請重新命名</string>
+    <string name="enter_list_name">請輸入清單名稱</string>
+    <string name="list_exists">清單已存在，請重新命名</string>
     <string name="list_full">清單已滿</string>
     <string name="Choose_difficulty">選擇難易度</string>
     <string name="easy">簡易</string>
@@ -228,7 +228,7 @@
     <string name="left">左</string>
     <string name="right">右</string>
     <string name="hip">臀部</string>
-    <string name="knee">膝</string>
+    <string name="knee">膝蓋</string>
     <string name="elbow">手肘</string>
     <string name="armpit">腋下</string>
     <string name="shoulder">肩</string>
@@ -251,5 +251,13 @@
     <string name="training_completed">訓練完成</string>
     <string name="rest_time_remaining">休息時間還剩</string>
     <string name="seconds">秒</string>
+    <string name="and">與</string>
+    <string name="in_line_with_body">與身體呈直線</string>
+    <string name="perpendicular_to_the_body">與身體垂直</string>
+    <string name="to_90_degree">成 90 度</string>
+    <string name="heels_on_the_ground">腳跟卓第</string>
+    <string name="raise_arms">手臂舉高</string>
+    <string name="extend_arms_forward">手臂往前伸直</string>
+    <string name="delete_list">刪除清單?</string>
 
 </resources>

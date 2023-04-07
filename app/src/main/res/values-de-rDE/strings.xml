@@ -211,8 +211,8 @@
     <string name="add_list">Zur Liste hinzufügen</string>
     <string name="list_name">Listenname</string>
     <string name="list_ill">Erklärung</string>
-    <string name="enter_menu_name">Bitte Listenname eingeben.</string>
-    <string name="menu_exists">Liste existiert bereits. Bitte umbenennen.</string>
+    <string name="enter_list_name">Bitte Listenname eingeben.</string>
+    <string name="list_exists">Liste existiert bereits. Bitte umbenennen.</string>
     <string name="list_full">Liste ist voll.</string>
     <string name="Choose_difficulty">Schwierigkeitsgrad auswählen.</string>
     <string name="easy">Mäßig</string>
@@ -251,4 +251,12 @@
     <string name="training_completed">Training abgeschlossen</string>
     <string name="rest_time_remaining">Verbleibende Ruhezeit</string>
     <string name="seconds">Sekunden</string>
+    <string name="and">und</string>
+    <string name="in_line_with_body">in einer Linie mit Körper</string>
+    <string name="perpendicular_to_the_body">sind senkrecht zum Körper</string>
+    <string name="to_90_degree">bilden einen 90-Grad-Winkel</string>
+    <string name="heels_on_the_ground">Fersen am Boden</string>
+    <string name="raise_arms">Arme heben</string>
+    <string name="extend_arms_forward">Die Arme nach vorne strecken</string>
+    <string name="delete_list">Liste löschen?</string>
 </resources>

@@ -226,6 +226,7 @@ public class MenuActivity extends AppCompatActivity {
                         trainMenu.remove(position);
                         tm.updateTrainMenu(trainMenu);
                         arrayList.clear();
+                        menuLength = 0;
                         for (int i = 1;i<=20;i++){
                             HashMap<String,String> hashMap = new HashMap<>();
                             if (trainMenu.getPose(i) == null){

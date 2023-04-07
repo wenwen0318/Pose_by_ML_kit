@@ -7,8 +7,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 
 import com.example.posebymlkit.database.HistoricalRecord;
 import com.example.posebymlkit.database.HistoricalRecordDBHandler;
@@ -32,6 +35,8 @@ public class PracticeResultActivity extends AppCompatActivity {
     ListView listView;
     SimpleAdapter simpleAdapter;
 
+    List<HistoricalRecord> historicalRecord;
+
     HistoricalRecordDBHandler hr = new HistoricalRecordDBHandler(this);
 
     Intent intent;
@@ -53,7 +58,7 @@ public class PracticeResultActivity extends AppCompatActivity {
         System.out.println("cardView : "+cardView);
         System.out.println("date : "+date);
 
-        List<HistoricalRecord> historicalRecord = hr.getHistoricalRecordByPoseName(cardView,8);
+        historicalRecord = hr.getHistoricalRecordByPoseName(cardView,8);
         Collections.reverse(historicalRecord);
 
         lineChart = findViewById(R.id.lineChart);
@@ -69,8 +74,25 @@ public class PracticeResultActivity extends AppCompatActivity {
         lineChartData.initY(0F,100F);
         lineChartData.initDataSet(yData);
 
+        setTitle();
         displayListView();
     }
+    private void setTitle() {
+        View poseTitleView = findViewById(R.id.poseTitleView);
+        ImageView poseImage = poseTitleView.findViewById(R.id.poseImage);
+        TextView poseName = poseTitleView.findViewById(R.id.poseName);
+        TextView poseDate = poseTitleView.findViewById(R.id.date);
+        TextView allComplete = poseTitleView.findViewById(R.id.allComplete);
+        int imageId = getApplicationContext().getResources().getIdentifier(
+                cardView.toLowerCase(),
+                "drawable",
+                getPackageName());
+        poseImage.setImageResource(imageId);
+        poseName.setText(cardView);
+        poseDate.setText(date);
+        allComplete.setText(historicalRecord.get(0).get(5) + "%");
+    }
+
     private void displayListView() {
 
         String[] joint = {"右臀", "左臀", "右膝", "左膝", "右手肘", "左手肘", "右腋下", "左腋下", "右肩", "左肩",
