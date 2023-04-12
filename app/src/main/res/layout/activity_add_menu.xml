@@ -29,8 +29,9 @@
         <ImageView
             android:id="@+id/menuImageView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="200dp"
             android:layout_margin="10dp"
+            android:scaleType="fitCenter"
             app:srcCompat="@drawable/ic_baseline_image_search_24" />
 
         <EditText
@@ -39,6 +40,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:ems="10"
+            android:maxLength="10"
             android:inputType="textPersonName"
             android:hint="@string/list_name"/>
 

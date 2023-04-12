@@ -77,7 +77,7 @@ public class LineChartData {
         rightAxis.setEnabled(false);//不顯示右側Y軸
         YAxis leftAxis = lineChart.getAxisLeft();//獲取左側的軸線
 
-        leftAxis.setLabelCount(4);//Y軸標籤個數
+        leftAxis.setLabelCount(6);//Y軸標籤個數
         leftAxis.setTextColor(Color.GRAY);//Y軸標籤顏色
         leftAxis.setTextSize(12);//Y軸標籤大小
 

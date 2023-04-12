@@ -23,15 +23,57 @@
             android:layout_height="1dp"
             android:background="#303F9F"/>
 
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="近8次訓練準確度" />
+
         <com.github.mikephil.charting.charts.LineChart
             android:id="@+id/lineChart"
             android:layout_width="match_parent"
-            android:layout_height="200dp" />
+            android:layout_height="200dp" >
 
-        <ListView
-        android:id="@+id/listView"
-            tools:listitem="@layout/result_list_layout"
-        android:layout_width="match_parent"
-        android:layout_height="700dp" />
+        </com.github.mikephil.charting.charts.LineChart>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="#303F9F"/>
+
+        <TextView
+            android:id="@+id/textView12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="訓練建議：" />
+
+        <TextView
+            android:id="@+id/textView13"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Suggest" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            android:background="#303F9F"/>
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:layout_weight="5"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="vertical">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/jointCompleteRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                tools:listitem="@layout/result_list_layout"/>
+
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
     </LinearLayout>
 </ScrollView>

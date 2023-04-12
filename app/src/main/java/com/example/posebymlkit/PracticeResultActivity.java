@@ -2,15 +2,21 @@ package com.example.posebymlkit;
 
 import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.example.posebymlkit.database.HistoricalRecord;
@@ -18,9 +24,7 @@ import com.example.posebymlkit.database.HistoricalRecordDBHandler;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.Entry;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -32,11 +36,12 @@ public class PracticeResultActivity extends AppCompatActivity {
     ArrayList<String> xData = new ArrayList<>();
     ArrayList<Entry> yData = new ArrayList<>();
 
-    ListView listView;
-    SimpleAdapter simpleAdapter;
+    RecyclerView jointRecycleView;
+    MyListAdapter jointListAdapter;
+    ArrayList<HashMap<String,String>> arrayList = new ArrayList<>();
 
-    List<HistoricalRecord> historicalRecord;
-
+    List<HistoricalRecord> historicalRecords;
+    HistoricalRecord historicalRecord;
     HistoricalRecordDBHandler hr = new HistoricalRecordDBHandler(this);
 
     Intent intent;
@@ -58,15 +63,15 @@ public class PracticeResultActivity extends AppCompatActivity {
         System.out.println("cardView : "+cardView);
         System.out.println("date : "+date);
 
-        historicalRecord = hr.getHistoricalRecordByPoseName(cardView,8);
-        Collections.reverse(historicalRecord);
+        historicalRecords = hr.getHistoricalRecordByPoseName(cardView,8);
+        Collections.reverse(historicalRecords);
 
         lineChart = findViewById(R.id.lineChart);
         lineChartData = new LineChartData(lineChart,this);
 
         int i = 0;
-        for (HistoricalRecord h : historicalRecord) {
-            xData.add(i+"");
+        for (HistoricalRecord h : historicalRecords) {
+            xData.add((i+1)+"");
             yData.add(new Entry(i,h.getAllComplete()));
             i++;
         }
@@ -74,8 +79,14 @@ public class PracticeResultActivity extends AppCompatActivity {
         lineChartData.initY(0F,100F);
         lineChartData.initDataSet(yData);
 
+        getPracticeInfo();
         setTitle();
-        displayListView();
+
+        jointRecycleView = findViewById(R.id.jointCompleteRecyclerView);
+        jointRecycleView.setLayoutManager(new LinearLayoutManager(this));
+        jointRecycleView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+        jointListAdapter = new MyListAdapter();
+        jointRecycleView.setAdapter(jointListAdapter);
     }
     private void setTitle() {
         View poseTitleView = findViewById(R.id.poseTitleView);
@@ -90,16 +101,13 @@ public class PracticeResultActivity extends AppCompatActivity {
         poseImage.setImageResource(imageId);
         poseName.setText(cardView);
         poseDate.setText(date);
-        allComplete.setText(historicalRecord.get(0).get(5) + "%");
+        allComplete.setText(historicalRecord.getAllComplete()+ "%");
     }
 
-    private void displayListView() {
-
-        String[] joint = {"右臀", "左臀", "右膝", "左膝", "右手肘", "左手肘", "右腋下", "左腋下", "右肩", "左肩",
+    private void getPracticeInfo() {
+        String[] poseStandards = {"右臀", "左臀", "右膝", "左膝", "右手肘", "左手肘", "右腋下", "左腋下", "右肩", "左肩",
                 "右膝不超過腳趾", "左膝不超過腳趾", "右大腿平行地面", "左大腿平行地面", "右胯下", "左胯下",
                 "右手臂垂直地面", "左手臂垂直地面", "右手斜上舉", "左手斜上舉", "右腳腳跟著地", "左腳腳跟著地", "身體垂直"};
-        listView = findViewById(R.id.listView);
-        HistoricalRecord historicalRecord;
         Log.d("date",date + " ");
         if (date == null){
             historicalRecord = hr.getHistoricalRecordByPoseName(cardView,1).get(0);
@@ -107,25 +115,57 @@ public class PracticeResultActivity extends AppCompatActivity {
         else {
             historicalRecord = hr.getHistoricalRecordByDate(date);
         }
-
-        final ArrayList<HashMap<String, String>> arrayList = new ArrayList<>();
-
         for (int i = 6; i <= 28; i++) {
             HashMap<String, String> hashMap = new HashMap<>();
             String complete = historicalRecord.get(i);
             Log.d("joint_complete",i + " " + complete);
             if (historicalRecord.get(i) != null){
-                hashMap.put("joint", joint[i-6]);
-                hashMap.put("complete", complete);
+                hashMap.put("poseStandardName", poseStandards[i-6]);
+                hashMap.put("jointComplete", complete);
                 arrayList.add(hashMap);
             }
         }
-        Log.d("arr:",arrayList.toString());
-        String[] from = {"joint", "complete"};
-        int[] value = {R.id.textView, R.id.textView2};
-        simpleAdapter =
-                new SimpleAdapter(this, arrayList, R.layout.result_list_layout, from, value);
-        listView.setAdapter(simpleAdapter);
+    }
+
+    private class MyListAdapter extends RecyclerView.Adapter<MyListAdapter.ViewHolder>{
+
+        class ViewHolder extends RecyclerView.ViewHolder{
+
+            private final TextView poseStandardName,jointComplete;
+
+            public ViewHolder(@NonNull View itemView) {
+                super(itemView);
+                poseStandardName = itemView.findViewById(R.id.poseStandardName);
+                jointComplete = itemView.findViewById(R.id.jointComplete);
+            }
+        }
+
+        @NonNull
+        @Override
+        public MyListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.result_list_layout,parent,false);
+            return new MyListAdapter.ViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull MyListAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
+            float jointComplete = Float.parseFloat(arrayList.get(position).get("jointComplete").replaceFirst(".$",""));
+            if (jointComplete < 30){
+                holder.poseStandardName.setTextColor(Color.RED);
+                holder.jointComplete.setTextColor(Color.RED);
+            } else if (jointComplete < 60){
+                holder.poseStandardName.setTextColor(Color.rgb(255,152,0));
+                holder.jointComplete.setTextColor(Color.rgb(255,152,0));
+            }
+            holder.poseStandardName.setText(arrayList.get(position).get("poseStandardName"));
+            holder.jointComplete.setText(arrayList.get(position).get("jointComplete"));
+        }
+
+        @Override
+        public int getItemCount() {
+            return arrayList.size();
+        }
 
     }
 }
