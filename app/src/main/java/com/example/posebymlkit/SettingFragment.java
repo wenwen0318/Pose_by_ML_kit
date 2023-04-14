@@ -22,6 +22,7 @@ import android.widget.Switch;
 import android.widget.Toast;
 
 import com.example.posebymlkit.database.HistoricalRecordDBHandler;
+import com.google.common.escape.UnicodeEscaper;
 import com.example.posebymlkit.database.MenuHistory;
 import com.example.posebymlkit.database.MenuHistoryDBHandler;
 
@@ -70,6 +71,7 @@ public class SettingFragment extends Fragment {
     Switch sw;
     Button illBtn;
     Button mailBtn;
+    Button notificationBtn;
     SharedPreferences cameraSource;
     SharedPreferences.Editor editor;
     int camera_facing = CameraCharacteristics.LENS_FACING_BACK;

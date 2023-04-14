@@ -79,6 +79,7 @@
             android:textSize="20sp"
             android:text="@string/Instructions_for_use"
             android:background="@drawable/roundbtn" />
+
         <Button
             android:id="@+id/mailBtn"
             android:layout_width="match_parent"
@@ -90,6 +91,7 @@
             android:textSize="20sp"
             android:text="@string/Contact_us"
             android:background="@drawable/roundbtn" />
+
     </LinearLayout>
 
 </FrameLayout>

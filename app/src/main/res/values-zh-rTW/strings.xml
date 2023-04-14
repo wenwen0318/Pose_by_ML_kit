@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Basic YogaPose Train System</string>
+    <string name="app_name">基礎瑜珈姿勢訓練系統</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <!-- Preference Titles -->
@@ -193,10 +193,11 @@
     <string name="star_ill">Star：\n\n開始步驟：\nstep1. 保持站姿呈山式\nstep2. 右腳向右跨一大步，腳尖朝向斜前方\nstep3. 雙手側平舉，目光直視前方\n\n結束步驟：\nstep1. 雙手雙腳收回，還原成山式(站姿)\n\n優點：\n改善姿勢，減少背部和肩膀疼痛、改善血液循環和呼吸、拉伸身體\n\n姿勢標準：\n1.手臂側平舉，掌心朝下。\n2.下巴內收，目光平視鏡頭。\n3.身體與地板保持垂直。\n4.膝蓋挺直。\n5.雙腳張開，與肩同寬。\n6.腳尖朝向鏡頭。\n</string>
     <string name="tree_ill">Tree：\n\n開始步驟：\nstep1. 保持站姿呈山式\nstep2. 右腳向右側轉90度，腳底板踩在左腳大腿內側\nstep3. 雙手直上舉，合掌\n\n結束步驟：\nstep1. 右腳踩回地板，腳尖朝前\nstep2. 雙手放下回到山式(站姿)\n\n優點：\n提高平衡感、增加血液循環、強化膝關節及放鬆髖關節、增加雙腿穩定性\n\n姿勢標準：\n1.下巴內收，目光平視前方。\n2.身體與地板垂直。\n3.手臂直上舉，手臂平行，掌心相對。\n4.左臀保持直線。\n5.左膝挺直。\n6.右腳腳掌置於左腳大腿，左膝上方。\n7.右膝向右轉90度\n</string>
     <string name="History_Record">\n歷史紀錄\n</string>
-    <string name="Clear_Data">\n清除資料\n</string>
+    <string name="Clear_Data">\n清除紀錄\n</string>
     <string name="Instructions_for_use">\n使用說明\n</string>
     <string name="Instructions_for_use_content">\n\n</string>
-    <string name="Contact_us">"\n聯絡我們\n "</string>
+    <string name="notification">\n通知\n</string>
+    <string name="Contact_us">"\n意見反饋\n "</string>
     <string name="cameraLen_transform">\n相機鏡頭轉換\n</string>
     <string name="delete_record">清除歷史紀錄</string>
     <string name="delete_record_question">將刪除所有歷史紀錄，是否繼續？</string>

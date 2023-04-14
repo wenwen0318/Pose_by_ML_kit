@@ -81,7 +81,7 @@ public class HistoryListActivity extends AppCompatActivity {
         listView = findViewById(R.id.listView);
 
         List<HistoricalRecord> historicalRecord = hr.getHistoricalRecordByMode("pose", 29);
-        Collections.reverse(historicalRecord);
+//        Collections.reverse(historicalRecord);
 
         final ArrayList<HashMap<String, String>> arrayList = new ArrayList<>();
 

@@ -139,6 +139,9 @@ public class MenuResultActivity extends AppCompatActivity {
             holder.poseName.setText(arrayList.get(position).get("poseName"));
             holder.poseTime.setText(arrayList.get(position).get("poseTime"));
             holder.poseCompleteness.setText(arrayList.get(position).get("poseCompleteness"));
+            if(arrayList.get(position).get("poseName").equals("Rest")){
+                holder.poseCompleteness.setVisibility(View.INVISIBLE);
+            }
             holder.poseImage.setImageResource(resId);
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {

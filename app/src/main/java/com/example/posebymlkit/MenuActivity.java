@@ -63,7 +63,7 @@ public class MenuActivity extends AppCompatActivity {
 
     int userLevel = 3;
     int[] menu;
-    int menuLength = 0;
+    int menuLength;
     String MODE = "menu";
     int cameraFacing;
 
@@ -94,7 +94,7 @@ public class MenuActivity extends AppCompatActivity {
             arrayList.add(hashMap);
             menuLength = i;
         }
-
+        System.out.println("myMenuLength : "+menuLength);
         menuIllTextView = findViewById(R.id.menuIllTextView);
         menuIllTextView.setText(trainMenu.getIll());
 
@@ -282,14 +282,14 @@ public class MenuActivity extends AppCompatActivity {
         btn_check.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                intent.setClass(MenuActivity.this, LivePreviewActivity.class);
-                bundle.putString("menuName", menuName);
-                bundle.putInt("userLevel", userLevel);
-                bundle.putString("mode", MODE);
-                bundle.putInt("camera_facing", cameraFacing);
-                intent.putExtras(bundle);
-                startActivity(intent);
-                startDialog.dismiss();
+                    intent.setClass(MenuActivity.this, LivePreviewActivity.class);
+                    bundle.putString("menuName", menuName);
+                    bundle.putInt("userLevel", userLevel);
+                    bundle.putString("mode", MODE);
+                    bundle.putInt("camera_facing", cameraFacing);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                    startDialog.dismiss();
             }
         });
     }

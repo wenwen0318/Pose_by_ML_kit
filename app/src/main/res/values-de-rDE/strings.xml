@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Basic YogaPose Train System</string>
+    <string name="app_name">Fundamentales Yoga-Posen-Übungssystem</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <!-- Preference Titles -->
@@ -196,6 +196,7 @@
     <string name="Clear_Data">\nDaten löschen\n</string>
     <string name="Instructions_for_use">\nGebrauchsanweisung\n</string>
     <string name="Instructions_for_use_content">\nInstructions for use\n</string>
+    <string name="notification">\nbenachrichtigen\n</string>
     <string name="Contact_us">\nKontaktiere uns\n</string>
     <string name="cameraLen_transform">\nKameraobjektiv Konvertieren\n</string>
     <string name="delete_record">Verlaufsprotokoll löschen</string>

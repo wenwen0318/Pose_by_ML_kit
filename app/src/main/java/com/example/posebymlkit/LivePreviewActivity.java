@@ -432,6 +432,10 @@ public class LivePreviewActivity extends AppCompatActivity {
                 tts.speak(getResources().getString(R.string.next_pose)+"Warrior"+"two",TextToSpeech.QUEUE_ADD,null,null);
                 tts.speak(getResources().getString(R.string.ready),TextToSpeech.QUEUE_ADD,null,null);
             }
+            else if(poseList.get(0).equals("Four_Limbed_Staff")){
+                tts.speak(getResources().getString(R.string.next_pose)+"Four"+"Limb"+"Staff",TextToSpeech.QUEUE_ADD,null,null);
+                tts.speak(getResources().getString(R.string.ready),TextToSpeech.QUEUE_ADD,null,null);
+            }
             else if(poseList.get(0).equals("Rest")){
                 tts.speak(getResources().getString(R.string.rest_time),TextToSpeech.QUEUE_ADD,null,null);
             }
@@ -508,6 +512,9 @@ public class LivePreviewActivity extends AppCompatActivity {
         handler.removeCallbacks(personDetection);
         handler.removeCallbacks(TTSWrongHint);
         handler.removeCallbacks(timeCountdown);
+        handler.removeCallbacks(remindPose);
+        handler.removeCallbacks(restRemind);
+        handler.removeCallbacks(readyTime);
     }
 
 }
