@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import com.example.posebymlkit.database.HistoricalRecord;
 import com.example.posebymlkit.database.HistoricalRecordDBHandler;
+import com.example.posebymlkit.database.PoseWrongTTSDBHandler;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.Entry;
 
@@ -28,6 +29,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 public class PracticeResultActivity extends AppCompatActivity {
 
@@ -43,6 +45,10 @@ public class PracticeResultActivity extends AppCompatActivity {
     List<HistoricalRecord> historicalRecords;
     HistoricalRecord historicalRecord;
     HistoricalRecordDBHandler hr = new HistoricalRecordDBHandler(this);
+    PoseWrongTTSDBHandler pwt = new PoseWrongTTSDBHandler(this);
+
+    String suggest = "";
+    TextView suggestTextView;
 
     Intent intent;
     Bundle bundle;
@@ -78,6 +84,8 @@ public class PracticeResultActivity extends AppCompatActivity {
         lineChartData.initX(xData);
         lineChartData.initY(0F,100F);
         lineChartData.initDataSet(yData);
+
+        suggestTextView = findViewById(R.id.suggestTextView);
 
         getPracticeInfo();
         setTitle();
@@ -122,9 +130,13 @@ public class PracticeResultActivity extends AppCompatActivity {
             if (historicalRecord.get(i) != null){
                 hashMap.put("poseStandardName", poseStandards[i-6]);
                 hashMap.put("jointComplete", complete);
+                if (Float.parseFloat(complete) < 60){
+                    suggest += pwt.getPoseWrongTTS(cardView).getWrongTTS().get((i-6)*2) + "\n";
+                }
                 arrayList.add(hashMap);
             }
         }
+        suggestTextView.setText(suggest);
     }
 
     private class MyListAdapter extends RecyclerView.Adapter<MyListAdapter.ViewHolder>{
@@ -148,9 +160,10 @@ public class PracticeResultActivity extends AppCompatActivity {
             return new MyListAdapter.ViewHolder(view);
         }
 
+        @SuppressLint("SetTextI18n")
         @Override
         public void onBindViewHolder(@NonNull MyListAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
-            float jointComplete = Float.parseFloat(arrayList.get(position).get("jointComplete").replaceFirst(".$",""));
+            float jointComplete = Float.parseFloat(Objects.requireNonNull(arrayList.get(position).get("jointComplete")));
             if (jointComplete < 30){
                 holder.poseStandardName.setTextColor(Color.RED);
                 holder.jointComplete.setTextColor(Color.RED);
@@ -159,7 +172,7 @@ public class PracticeResultActivity extends AppCompatActivity {
                 holder.jointComplete.setTextColor(Color.rgb(255,152,0));
             }
             holder.poseStandardName.setText(arrayList.get(position).get("poseStandardName"));
-            holder.jointComplete.setText(arrayList.get(position).get("jointComplete"));
+            holder.jointComplete.setText(arrayList.get(position).get("jointComplete") + "%");
         }
 
         @Override

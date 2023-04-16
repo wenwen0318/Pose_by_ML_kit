@@ -50,7 +50,7 @@
             android:text="訓練建議：" />
 
         <TextView
-            android:id="@+id/textView13"
+            android:id="@+id/suggestTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Suggest" />

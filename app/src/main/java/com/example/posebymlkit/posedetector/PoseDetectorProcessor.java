@@ -279,7 +279,7 @@ public class PoseDetectorProcessor
             }
             else{
                 jointCompleteness[i] = Float.toString(completeness[i]);
-                jointCompleteness[i] = jointCompleteness[i]+"%";
+                jointCompleteness[i] = jointCompleteness[i];
             }
         }
         return jointCompleteness;
