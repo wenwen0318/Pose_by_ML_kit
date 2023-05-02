@@ -4,6 +4,10 @@ import com.example.posebymlkit.database.PoseStandardDBHandler;
 import com.google.mlkit.vision.pose.Pose;
 import com.google.mlkit.vision.pose.PoseLandmark;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -11,12 +15,14 @@ import java.util.List;
 import static java.lang.Math.atan2;
 
 import android.content.Context;
+import android.net.Uri;
+import android.os.Environment;
 import android.util.Log;
 
 /** Draw the detected pose in preview. */
 public class PoseCalculate{
 
-    private Context context;
+    private static Context context;
     private final Pose pose;
     private final String cardView;
     private final int userLevel;
@@ -224,9 +230,24 @@ public class PoseCalculate{
                 }
             }
         }
+        exportAngleLog();
     }
 
     public int[] getAngleStatus(){
         return status;
+    }
+
+    public static void exportAngleLog() {
+        String fileName = "AngleLog";
+        try {
+            File fileLocation = new File(context.getFilesDir(), fileName + ".txt");
+            fileLocation.createNewFile();
+            FileOutputStream fos = new FileOutputStream(fileLocation,true);
+            String wr = Arrays.toString(angleArray) + System.getProperty("line.separator");
+            fos.write(wr.getBytes());
+            fos.close();
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

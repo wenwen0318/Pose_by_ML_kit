@@ -4,7 +4,13 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.content.Context;
 import android.content.DialogInterface;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
+import android.icu.text.DecimalFormat;
 import android.media.MediaRecorder;
 import android.os.Bundle;
 
@@ -12,6 +18,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
+import android.view.Display;
 import android.view.SurfaceHolder;
 import android.view.WindowManager;
 import android.widget.CompoundButton;
@@ -62,11 +69,6 @@ public class LivePreviewActivity extends AppCompatActivity {
     private CameraSource cameraSource = null;
     private CameraSourcePreview preview;
     private GraphicOverlay graphicOverlay;
-    private MediaRecorder mediaRecorder;
-    private SurfaceHolder surfaceHolder;
-
-    private boolean isRecording = false;
-    private boolean isSurfaceCreated = false;
 
     private TextToSpeech tts = null;
     private Handler handler = new Handler();
@@ -110,7 +112,7 @@ public class LivePreviewActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         Calendar calendar= Calendar.getInstance();
-        SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd   hh:mm:ss");
+        SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd   HH:mm:ss");
         date = dateFormat.format(calendar.getTime());
 
         if (getSupportActionBar() != null) {
@@ -507,7 +509,6 @@ public class LivePreviewActivity extends AppCompatActivity {
         if (cameraSource != null) {
             cameraSource.release();
         }
-
         tts.shutdown();
         handler.removeCallbacks(personDetection);
         handler.removeCallbacks(TTSWrongHint);
