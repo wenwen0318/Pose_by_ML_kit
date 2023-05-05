@@ -16,7 +16,11 @@ import com.google.mlkit.vision.pose.PoseDetection;
 import com.google.mlkit.vision.pose.PoseDetector;
 import com.google.mlkit.vision.pose.PoseDetectorOptionsBase;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /** A processor to run pose detector. */
 public class PoseDetectorProcessor
@@ -25,6 +29,7 @@ public class PoseDetectorProcessor
 
     private final PoseDetector detector;
 
+    private final boolean isCalc;
     private final boolean showInFrameLikelihood;
     private final boolean visualizeZ;
     private final boolean rescaleZForVisualization;
@@ -53,6 +58,8 @@ public class PoseDetectorProcessor
     float deviation = 0;
     static ArrayList<String> poseStandard;
 
+    double[] angleArray;
+
     /** Internal class to hold Pose and classification results. */
 
     protected static class GetPose {
@@ -76,6 +83,7 @@ public class PoseDetectorProcessor
     public PoseDetectorProcessor(
             Context context,
             PoseDetectorOptionsBase options,
+            boolean isCalc,
             boolean showInFrameLikelihood,
             boolean visualizeZ,
             boolean rescaleZForVisualization,
@@ -84,6 +92,7 @@ public class PoseDetectorProcessor
             String cardView,
             int userLevel) {
         super(context);
+        this.isCalc = isCalc;
         this.showInFrameLikelihood = showInFrameLikelihood;
         this.visualizeZ = visualizeZ;
         this.rescaleZForVisualization = rescaleZForVisualization;
@@ -150,16 +159,20 @@ public class PoseDetectorProcessor
                         showInFrameLikelihood,
                         visualizeZ,
                         rescaleZForVisualization));
-        PoseCalculate Calculate = new PoseCalculate(
-                context,
-                getPose.getPose(),
-                cardView,
-                userLevel);
-        angleStatus = Calculate.getAngleStatus();
-        isGetSkeleton = Calculate.isGetSkeleton();
-        calWrongSum();
-        calWrongTem();
-        calDeviation();
+        if (isCalc){
+            PoseCalculate Calculate = new PoseCalculate(
+                    context,
+                    getPose.getPose(),
+                    cardView,
+                    userLevel);
+            angleStatus = Calculate.getAngleStatus();
+            angleArray = Calculate.getAngle();
+            isGetSkeleton = Calculate.isGetSkeleton();
+            calWrongSum();
+            calWrongTem();
+            calDeviation();
+            exportAngleLog();
+        }
     }
 
     @Override
@@ -283,5 +296,19 @@ public class PoseDetectorProcessor
             }
         }
         return jointCompleteness;
+    }
+
+    public void exportAngleLog() {
+        String fileName = "AngleLog";
+        try {
+            File fileLocation = new File(context.getFilesDir(), fileName + ".txt");
+            fileLocation.createNewFile();
+            FileOutputStream fos = new FileOutputStream(fileLocation,true);
+            String wr = Arrays.toString(angleArray) + System.getProperty("line.separator");
+            fos.write(wr.getBytes());
+            fos.close();
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

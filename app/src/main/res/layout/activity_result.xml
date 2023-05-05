@@ -27,7 +27,7 @@
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="近8次訓練準確度" />
+            android:text="@string/eight_training" />
 
         <com.github.mikephil.charting.charts.LineChart
             android:id="@+id/lineChart"
@@ -47,13 +47,13 @@
             android:id="@+id/textView12"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="訓練建議：" />
+            android:text="@string/training_suggestion" />
 
         <TextView
             android:id="@+id/suggestTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Suggest" />
+            android:text="-----" />
 
         <View
             android:layout_width="match_parent"

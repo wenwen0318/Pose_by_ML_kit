@@ -279,9 +279,34 @@
     <string name="extend_arms_forward">Extend arms forward</string>
     <string name="delete_list">delete list?</string>
 
-    <string-array name="jointResult">
+    <string-array name="poseStandards">
+        <item>Right Hip</item>
         <item>Left Hip</item>
-
+        <item>Right Knee</item>
+        <item>Left Knee</item>
+        <item>Right Elbow</item>
+        <item>Left Elbow</item>
+        <item>Right Armpit</item>
+        <item>Left Armpit</item>
+        <item>Right Shoulder</item>
+        <item>Left Shoulder</item>
+        <item>Right Toe</item>
+        <item>Left Toe</item>
+        <item>Right Thigh</item>
+        <item>Left Thigh</item>
+        <item>Right Crotch</item>
+        <item>Left Crotch</item>
+        <item>Right Arm</item>
+        <item>Left Arm</item>
+        <item>Right Arm</item>
+        <item>Left Arm</item>
+        <item>Right Heel</item>
+        <item>Left Heel</item>
+        <item>Body Vertical</item>
     </string-array>
+    <string name="front_lens">front lens</string>
+    <string name="back_lens">back lens</string>
+    <string name="training_suggestion">training suggestion：</string>
+    <string name="eight_training">Accuracy in the last 8 training sessions</string>
 
 </resources>

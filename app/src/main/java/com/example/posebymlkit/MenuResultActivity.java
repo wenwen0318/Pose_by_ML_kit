@@ -73,7 +73,7 @@ public class MenuResultActivity extends AppCompatActivity {
         menuDateTextView.setText(date);
 
         menuDataTextView = findViewById(R.id.menuDataTextView);
-        menuDataTextView.setText(sumTime+"秒鐘‧"+poseNum+"運動");
+        menuDataTextView.setText(sumTime+getResources().getString(R.string.second) +"‧"+poseNum+getResources().getString(R.string.posture));
 
         getMenuToList();
         menuHistoryRecyclerView = findViewById(R.id.menuHistoryRecycleView);

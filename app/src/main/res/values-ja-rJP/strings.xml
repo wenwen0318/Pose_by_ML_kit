@@ -260,4 +260,34 @@
     <string name="raise_arms">腕を上げる</string>
     <string name="extend_arms_forward">腕を前に伸ばす</string>
     <string name="delete_list">リストを削除しますか？</string>
+    <string name="back_lens">" バックレンズ"</string>
+    <string name="front_lens">フロントレンズ</string>
+
+    <string-array name="poseStandards">
+        <item>右ヒップ</item>
+        <item>左ヒップ</item>
+        <item>右膝</item>
+        <item>左膝</item>
+        <item>右ひじ</item>
+        <item>左ひじ</item>
+        <item>右脇の下</item>
+        <item>左脇の下</item>
+        <item>右肩</item>
+        <item>左肩</item>
+        <item>右つま先</item>
+        <item>左つま先</item>
+        <item>右太もも</item>
+        <item>左太もも</item>
+        <item>右股関節</item>
+        <item>左股関節</item>
+        <item>右腕</item>
+        <item>左腕</item>
+        <item>右腕</item>
+        <item>左腕</item>
+        <item>右かかと</item>
+        <item>左かかと</item>
+        <item>身体垂直</item>
+    </string-array>
+    <string name="training_suggestion">トレーニングの提案：</string>
+    <string name="eight_training">最近の8回のトレーニングセッションの正確度</string>
 </resources>

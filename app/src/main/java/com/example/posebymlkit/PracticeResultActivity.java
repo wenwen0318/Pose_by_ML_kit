@@ -113,9 +113,7 @@ public class PracticeResultActivity extends AppCompatActivity {
     }
 
     private void getPracticeInfo() {
-        String[] poseStandards = {"右臀", "左臀", "右膝", "左膝", "右手肘", "左手肘", "右腋下", "左腋下", "右肩", "左肩",
-                "右膝不超過腳趾", "左膝不超過腳趾", "右大腿平行地面", "左大腿平行地面", "右胯下", "左胯下",
-                "右手臂垂直地面", "左手臂垂直地面", "右手斜上舉", "左手斜上舉", "右腳腳跟著地", "左腳腳跟著地", "身體垂直"};
+        String[] poseStandards = getResources().getStringArray(R.array.poseStandards);
         Log.d("date",date + " ");
         if (date == null){
             historicalRecord = hr.getHistoricalRecordByPoseName(cardView,1).get(0);

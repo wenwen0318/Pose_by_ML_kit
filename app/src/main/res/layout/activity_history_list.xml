@@ -21,14 +21,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="單一訓練" />
+                android:text="@string/posture" />
 
             <Button
                 android:id="@+id/toMenuBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="清單訓練" />
+                android:text="@string/menu" />
         </LinearLayout>
 
         <ListView

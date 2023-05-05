@@ -260,4 +260,34 @@
     <string name="raise_arms">手臂舉高</string>
     <string name="extend_arms_forward">向前伸展手臂</string>
     <string name="delete_list">刪除清單?</string>
+    <string name="front_lens">前镜头</string>
+    <string name="back_lens">后镜头</string>
+
+    <string-array name="poseStandards">
+        <item>右臀</item>
+        <item>左臀</item>
+        <item>右膝</item>
+        <item>左膝</item>
+        <item>右肘</item>
+        <item>左肘</item>
+        <item>右腋下</item>
+        <item>左腋下</item>
+        <item>右肩</item>
+        <item>左肩</item>
+        <item>右脚趾</item>
+        <item>左脚趾</item>
+        <item>右大腿</item>
+        <item>左大腿</item>
+        <item>右股</item>
+        <item>左股</item>
+        <item>右手臂</item>
+        <item>左手臂</item>
+        <item>右手臂</item>
+        <item>左手臂</item>
+        <item>右脚跟</item>
+        <item>左脚跟</item>
+        <item>身体垂直</item>
+    </string-array>
+    <string name="training_suggestion">訓練建議：</string>
+    <string name="eight_training">近8次訓練準確度</string>
 </resources>

@@ -62,7 +62,7 @@ public class LivePreviewActivity extends AppCompatActivity {
     private static final String POSE_DETECTION = "Pose Detection";
     private static final String OBJECT_DETECTION = "Object Detection";
 
-    private String model = OBJECT_DETECTION;
+    private String model = POSE_DETECTION;
 
     private static final String TAG = "LivePreviewActivity";
 
@@ -101,6 +101,12 @@ public class LivePreviewActivity extends AppCompatActivity {
     MenuHistory menuHistory;
     int index;
 
+    SensorManager sensorManager;
+    Sensor accelerometer;
+    Sensor magnetometer;
+
+    boolean isCalc = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -128,6 +134,12 @@ public class LivePreviewActivity extends AppCompatActivity {
         if (graphicOverlay == null) {
             Log.d(TAG, "graphicOverlay is null");
         }
+
+        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        magnetometer = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
+        sensorManager.registerListener(sensorEventListener, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+        sensorManager.registerListener(sensorEventListener, magnetometer, SensorManager.SENSOR_DELAY_NORMAL);
 
         bundle = getIntent().getExtras();
         MODE = bundle.getString("mode");
@@ -169,17 +181,6 @@ public class LivePreviewActivity extends AppCompatActivity {
 
         try {
             switch (model) {
-                case OBJECT_DETECTION:
-                    LocalModel localModel =
-                            new LocalModel.Builder()
-                                    .setAssetFilePath("custom_models/object_labeler.tflite")
-                                    .build();
-                    CustomObjectDetectorOptions customObjectDetectorOptions =
-                            PreferenceUtils.getCustomObjectDetectorOptionsForLivePreview(this, localModel);
-//                    cameraSource.setMachineLearningFrameProcessor(
-//                            odp = new ObjectDetectorProcessor(this, customObjectDetectorOptions));
-//                    handler.postDelayed(personDetection,100);
-                    break;
                 case POSE_DETECTION:
                     PoseDetectorOptionsBase poseDetectorOptions =
                             PreferenceUtils.getPoseDetectorOptionsForLivePreview(this);
@@ -197,11 +198,12 @@ public class LivePreviewActivity extends AppCompatActivity {
                                 pdp = new PoseDetectorProcessor(
                                         this,
                                         poseDetectorOptions,
+                                        isCalc,
                                         shouldShowInFrameLikelihood,
                                         visualizeZ,
                                         rescaleZ,
                                         runClassification,
-                                        /* isStreamMode = */ true,
+                                        /* isStreamMode = */ false,
                                         poseList.get(0),
                                         userLevel));
                         handler.postDelayed(TTSWrongHint,5000);
@@ -409,6 +411,7 @@ public class LivePreviewActivity extends AppCompatActivity {
             poseName = poseList.get(0);
             time = timeList.get(0);
             model = POSE_DETECTION;
+            isCalc = true;
             createCameraSource(model);
         }
     };
@@ -478,11 +481,44 @@ public class LivePreviewActivity extends AppCompatActivity {
             }
             else {
                 startCameraSource();
-                model = OBJECT_DETECTION;
+                model = POSE_DETECTION;
                 createCameraSource(model);
                 handler.postDelayed(remindPose, 3000);
                 handler.postDelayed(readyTime, 10000);
             }
+        }
+    };
+
+    private SensorEventListener sensorEventListener = new SensorEventListener() {
+        float[] gravity;
+        float[] magnetic;
+
+        @Override
+        public void onSensorChanged(SensorEvent event) {
+            if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER)
+                gravity = event.values.clone();
+            float x = event.values[0];
+            float y = event.values[1];
+            float z = event.values[2];
+
+            // 計算重力向量
+            float norm_Of_g = (float) Math.sqrt(x * x + y * y + z * z);
+            x = x / norm_Of_g;
+            y = y / norm_Of_g;
+            z = z / norm_Of_g;
+
+            // 將重力向量保存到一個陣列中
+            float[] gravity = new float[3];
+            gravity[0] = x;
+            gravity[1] = y;
+            gravity[2] = z;
+
+            //System.out.println("gravity:" + gravity[0] + gravity[1] + gravity[2]);
+        }
+
+        @Override
+        public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
         }
     };
 

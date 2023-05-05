@@ -183,10 +183,10 @@
     <string name="rejuvenation">Rejuvanation</string>
     <string name="star">Star</string>
     <string name="tree">Tree</string>
-    <string name="plank_ill">plank</string>
-    <string name="goddess_ill">goddess</string>
-    <string name="chair_ill">chair</string>
-    <string name="downdog_ill">downdog</string>
+    <string name="plank_ill">Plank: Starting Position: Step 1. Begin in a quadruped position. Step 2. Extend both legs backwards, with the shoulder joints, hip joints, and ankle joints forming a diagonal line. Step 3. Look slightly forward and down. Ending Position: Step 1. Return your gaze to the ground. Step 2. Lower your knees back to the quadruped position. Benefits: Strengthens the core muscles, improves balance, and improves posture. Proper Form: 1. Keep your arms vertical to the ground. 2. The shoulders and wrists should be in a straight line. 3. The neck, back, hips, knees, and ankles should form a diagonal line, with an angle of about 45 degrees with the ground. 4. Keep your shoulders straight, avoid shrugging. 5. Keep your hips straight, avoid raising or lowering them. 6. Keep your knees at a 180-degree angle. 7. Keep your neck straight, avoid lifting or lowering your head.</string>
+    <string name="goddess_ill">Goddess:  Starting Position: Step 1. Stand in a mountain pose. Step 2. Take a big step to the right with your right foot, squat down with your thighs parallel to the floor. Step 3. Raise your arms to shoulder height, palms facing down.  Ending Position: Step 1. Lower your arms, bring your right foot back to mountain pose. Benefits: Improves lower body circulation, reduces swelling, strengthens leg muscles and ankles, exercises the waist and abdominal muscles, improves knee joint flexibility. Posture Standard:  Keep your body perpendicular to the floor. Look straight ahead with your chin tucked in. Bend your elbows, keeping your upper arms parallel to the floor. Make a 90-degree angle between your hands and upper arms, fingers pointing towards the ceiling, palms facing the camera. Keep your thighs parallel to the floor. Make a 90-degree angle between your lower legs and thighs. Keep your knees behind your toes. Keep your feet shoulder-width apart. Point your toes to the left and right.</string>
+    <string name="chair_ill">Chair pose:  Starting position:  Stand in mountain pose. Bend both knees slightly and lean back slightly, making sure the knees do not extend beyond the toes. Bring your palms together and lift them up diagonally. Ending position:  Lower your arms and straighten your legs back to mountain pose. Benefits: Stabilize the pelvis, improve back stiffness, and sculpt the buttocks.  Proper form:  Lift the arms diagonally. Lean the body forward, with the angle between the thighs and the floor between 45-90 degrees. Keep the thighs and feet together. Ensure that the knees do not protrude beyond the toes. The thighs and calves should form an angle of about 90 degrees.</string>
+    <string name="downdog_ill">DownDog：Anfangsschritte: Schritt 1. Halten Sie eine Vierfüßerposition. Schritt 2. Heben Sie die Knie von beiden Füßen vom Boden und ziehen Sie die Zehen nach hinten. Schritt 3. Drücken Sie den Körper nach unten und drücken Sie das Gesäß nach oben. Endschritte: Schritt 1. Legen Sie beide Füße und Knie auf den Boden und kehren Sie zur Vierfüßerposition zurück. Vorteile: Dehnt die hinteren Beinmuskeln aus, streckt die Wirbelsäule, reguliert die unregelmäßige Atmung, erhöht die Knochendichte, stärkt die Brustkraft. Standardhaltung: 1. Die Arme sind gerade und in Schulterbreite. 2. Die Ellbogen, der Nacken, die Schultern und das Gesäß sind in einer Linie. 3. Der Rücken bleibt flach. 4. Das Gesäß, die Knie und die Fersen bilden eine Linie. 5. Die Knie sind gerade. 6. Die Fersen bleiben auf dem Boden.</string>
     <string name="four_limbed_staff_ill">four_limbed_staff</string>
     <string name="boat_ill">boat</string>
     <string name="rejuvenation_ill">rejuvenation</string>
@@ -260,4 +260,34 @@
     <string name="raise_arms">Arme heben</string>
     <string name="extend_arms_forward">Die Arme nach vorne strecken</string>
     <string name="delete_list">Liste löschen?</string>
+    <string name="front_lens">Frontlinse</string>
+    <string name="back_lens">hintere Linse</string>
+
+    <string-array name="poseStandards">
+        <item>Rechte Hüfte</item>
+        <item>Linke Hüfte</item>
+        <item>Rechtes Knie</item>
+        <item>Linkes Knie</item>
+        <item>Rechter Ellbogen</item>
+        <item>Linker Ellbogen</item>
+        <item>Rechte Achselhöhle</item>
+        <item>Linke Achselhöhle</item>
+        <item>Rechte Schulter</item>
+        <item>Linke Schulter</item>
+        <item>Rechter Zeh</item>
+        <item>Linker Zeh</item>
+        <item>Rechter Oberschenkel</item>
+        <item>Linker Oberschenkel</item>
+        <item>Rechter Schritt</item>
+        <item>Linker Schritt</item>
+        <item>Rechter Arm</item>
+        <item>Linker Arm</item>
+        <item>Rechter Arm</item>
+        <item>Linker Arm</item>
+        <item>Rechte Ferse</item>
+        <item>Linke Ferse</item>
+        <item>Körper Vertikal</item>
+    </string-array>
+    <string name="training_suggestion">Trainingsvorschläge：</string>
+    <string name="eight_training">Genauigkeit in den letzten 8 Trainingssitzungen</string>
 </resources>
