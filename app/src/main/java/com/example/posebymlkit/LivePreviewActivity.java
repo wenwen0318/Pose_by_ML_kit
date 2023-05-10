@@ -107,6 +107,8 @@ public class LivePreviewActivity extends AppCompatActivity {
 
     boolean isCalc = false;
 
+    float[] gravity = new float[3];
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -473,6 +475,7 @@ public class LivePreviewActivity extends AppCompatActivity {
             handler.removeCallbacks(remindPose);
             handler.removeCallbacks(readyTime);
             handler.removeCallbacks(restRemind);
+            sensorManager.unregisterListener(sensorEventListener);
             if (poseList.isEmpty()) {
                 if(MODE.equals("menu")){
                     tts.speak(getResources().getString(R.string.training_completed),TextToSpeech.QUEUE_ADD,null,null);
@@ -490,30 +493,27 @@ public class LivePreviewActivity extends AppCompatActivity {
     };
 
     private SensorEventListener sensorEventListener = new SensorEventListener() {
-        float[] gravity;
-        float[] magnetic;
 
         @Override
         public void onSensorChanged(SensorEvent event) {
-            if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER)
-                gravity = event.values.clone();
-            float x = event.values[0];
-            float y = event.values[1];
-            float z = event.values[2];
+            if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER){
+                float x = event.values[0];
+                float y = event.values[1];
+                float z = event.values[2];
 
-            // 計算重力向量
-            float norm_Of_g = (float) Math.sqrt(x * x + y * y + z * z);
-            x = x / norm_Of_g;
-            y = y / norm_Of_g;
-            z = z / norm_Of_g;
+                // 計算重力向量
+                float norm_Of_g = (float) Math.sqrt(x * x + y * y + z * z);
+                x = x / norm_Of_g;
+                y = y / norm_Of_g;
+                z = z / norm_Of_g;
 
-            // 將重力向量保存到一個陣列中
-            float[] gravity = new float[3];
-            gravity[0] = x;
-            gravity[1] = y;
-            gravity[2] = z;
+                // 將重力向量保存到一個陣列中
+                gravity[0] = x;
+                gravity[1] = y;
+                gravity[2] = z;
 
-            //System.out.println("gravity:" + gravity[0] + gravity[1] + gravity[2]);
+                System.out.println("gravity:" + gravity[0] + gravity[1] + gravity[2]);
+            }
         }
 
         @Override
