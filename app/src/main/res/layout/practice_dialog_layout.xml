@@ -11,7 +11,7 @@
         android:layout_marginEnd="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/Choose_difficulty"
+        android:text="@string/train_set"
         android:textSize="16sp"
         android:gravity="center"
         android:textColor="#000000"/>
@@ -23,6 +23,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/train_timeset"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:textColor="#000000"/>
 
         <Button
             android:id="@+id/btn_timeSub"
@@ -50,29 +58,42 @@
             android:text="+" />
     </LinearLayout>
 
-    <RadioGroup
+    <LinearLayout
         android:layout_marginTop="10dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/train_difficulty_setting"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:textColor="#000000"/>
 
-        <RadioButton
-            android:id="@+id/btn_easy"
-            android:layout_width="0dp"
+        <RadioGroup
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/easy"
-            android:checked="true"/>
+            android:orientation="horizontal">
 
-        <RadioButton
-            android:id="@+id/btn_hard"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/hard" />
-    </RadioGroup>
+            <RadioButton
+                android:id="@+id/btn_easy"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/easy"
+                android:checked="true"/>
+
+            <RadioButton
+                android:id="@+id/btn_hard"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/hard" />
+        </RadioGroup>
+    </LinearLayout>
 
     <LinearLayout
         android:layout_marginTop="10dp"
@@ -89,7 +110,7 @@
             android:text="@string/cancel"
             android:textSize="16sp"
             android:layout_gravity="center"
-            android:textColor="#ffffff"/>
+            android:textColor="#000000"/>
 
         <Button
             android:id="@+id/check"
@@ -100,7 +121,7 @@
             android:text="@string/confirm"
             android:textSize="16sp"
             android:layout_gravity="center"
-            android:textColor="#ffffff" />
+            android:textColor="#000000" />
     </LinearLayout>
 
 </LinearLayout>

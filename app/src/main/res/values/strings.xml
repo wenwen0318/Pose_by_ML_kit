@@ -233,7 +233,7 @@
     <string name="enter_list_name">Please enter menu name.</string>
     <string name="list_exists">List already exists. Please rename it.</string>
     <string name="list_full">List is full.</string>
-    <string name="Choose_difficulty">Choose the difficulty level.</string>
+    <string name="train_set">Training settings</string>
     <string name="easy">Easy</string>
     <string name="hard">Difficult</string>
     <string name="second">s</string>
@@ -308,5 +308,7 @@
     <string name="back_lens">back lens</string>
     <string name="training_suggestion">training suggestion：</string>
     <string name="eight_training">Accuracy in the last 8 training sessions</string>
+    <string name="train_timeset">Duration：</string>
+    <string name="train_difficulty_setting">Difficulty：</string>
 
 </resources>

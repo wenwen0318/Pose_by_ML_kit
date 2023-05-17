@@ -215,7 +215,7 @@
     <string name="enter_list_name">请输入列表名称</string>
     <string name="list_exists">列表已存在，请重新命名。</string>
     <string name="list_full">列表已满</string>
-    <string name="Choose_difficulty">选择难度级别</string>
+    <string name="train_set">訓練設定</string>
     <string name="easy">简易</string>
     <string name="hard">严谨</string>
     <string name="second">秒</string>
@@ -290,4 +290,7 @@
     </string-array>
     <string name="training_suggestion">訓練建議：</string>
     <string name="eight_training">近8次訓練準確度</string>
+    <string name="train_timeset">訓練時長：</string>
+    <string name="train_difficulty_setting">難易度：</string>
+    <string name="train_timeSet">訓練時間：</string>
 </resources>

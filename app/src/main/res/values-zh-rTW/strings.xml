@@ -215,7 +215,7 @@
     <string name="enter_list_name">請輸入清單名稱</string>
     <string name="list_exists">清單已存在，請重新命名</string>
     <string name="list_full">清單已滿</string>
-    <string name="Choose_difficulty">選擇難易度</string>
+    <string name="train_set">訓練設定</string>
     <string name="easy">簡易</string>
     <string name="hard">嚴謹</string>
     <string name="second">秒</string>
@@ -290,5 +290,8 @@
     </string-array>
     <string name="training_suggestion">訓練建議：</string>
     <string name="eight_training">近8次訓練準確度</string>
+    <string name="train_timeset">訓練時長：</string>
+    <string name="train_difficulty_setting">難易度：</string>
+    <string name="train_timeSet">訓練時間</string>
 
 </resources>

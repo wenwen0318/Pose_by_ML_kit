@@ -215,7 +215,7 @@
     <string name="enter_list_name">リスト名を入力してください</string>
     <string name="list_exists">リストが既に存在します。名前を変更してください。</string>
     <string name="list_full">リストはいっぱいです</string>
-    <string name="Choose_difficulty">難易度を選択してください</string>
+    <string name="train_set">トレーニング設定</string>
     <string name="easy">簡易</string>
     <string name="hard">難しい</string>
     <string name="second">秒</string>
@@ -290,4 +290,7 @@
     </string-array>
     <string name="training_suggestion">トレーニングの提案：</string>
     <string name="eight_training">最近の8回のトレーニングセッションの正確度</string>
+    <string name="train_timeset">かんかく：</string>
+    <string name="train_difficulty_setting">難易度：</string>
+    <string name="train_timeSet">期間：</string>
 </resources>
