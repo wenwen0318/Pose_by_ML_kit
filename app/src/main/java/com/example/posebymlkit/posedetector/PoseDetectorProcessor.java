@@ -52,8 +52,7 @@ public class PoseDetectorProcessor
     float[] wrongSum = {0, 0, 0, 0, 0,  0, 0, 0, 0, 0,
                         0, 0, 0, 0, 0,  0, 0, 0, 0, 0,
                         0, 0, 0};
-    String classificationResult ;
-    Boolean isCorrectPose;
+    double[] gravity;
     Boolean isGetSkeleton;
     float deviation = 0;
     static ArrayList<String> poseStandard;
@@ -89,6 +88,7 @@ public class PoseDetectorProcessor
             boolean rescaleZForVisualization,
             boolean runClassification,
             boolean isStreamMode,
+            double[] gravity,
             String cardView,
             int userLevel) {
         super(context);
@@ -99,6 +99,7 @@ public class PoseDetectorProcessor
         detector = PoseDetection.getClient(options);
         this.runClassification = runClassification;
         this.isStreamMode = isStreamMode;
+        this.gravity = gravity;
         this.context = context;
         this.cardView = cardView;
         this.userLevel = userLevel;
@@ -163,6 +164,7 @@ public class PoseDetectorProcessor
             PoseCalculate Calculate = new PoseCalculate(
                     context,
                     getPose.getPose(),
+                    gravity,
                     cardView,
                     userLevel);
             angleStatus = Calculate.getAngleStatus();

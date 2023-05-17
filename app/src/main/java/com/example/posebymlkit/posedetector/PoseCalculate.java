@@ -18,6 +18,7 @@ public class PoseCalculate{
 
     private static Context context;
     private final Pose pose;
+    private static double[] gravity = {0,0,0};
     private final String cardView;
     private final int userLevel;
     static int level;
@@ -32,10 +33,12 @@ public class PoseCalculate{
     PoseCalculate(
             Context context,
             Pose pose,
+            double[] gravity,
             String cardView,
             int userLevel) {
         this.context = context;
         this.pose = pose;
+        this.gravity = gravity;
         this.cardView = cardView;
         this.userLevel = userLevel;
         level = userLevel;
@@ -142,18 +145,10 @@ public class PoseCalculate{
 //        angleArray[22] = getAngle(rElbowX, rElbowY, rWristX, rPinkyY, rPinkyX, rPinkyY) + angleArray[4]; // rArmHorizontal
 //        angleArray[23] = getAngle(lElbowX, lElbowY, lWristX, lPinkyY, lPinkyX, lPinkyY) + angleArray[5]; // lArmHorizontal
         // bodyVertical (shoulderGroundHorizontal, hipGroundHorizontal)
-        angleArray[22] = bodyVertical(
-                (getAngle(lShoulderX, lShoulderY, (lShoulderX+rShoulderX)/2, (lShoulderY+rShoulderY)/2, (lShoulderX+rShoulderX)/2, lFootIndexY)
-                    + getAngle(rShoulderX, lFootIndexY, (lShoulderX+rShoulderX)/2, lFootIndexY, (lShoulderX+rShoulderX)/2, (lShoulderY+rShoulderY)/2)
-                ),
-                (getAngle(lHipX, lHipY, (lHipX+rHipX)/2, (lHipY+rHipY)/2, (lHipX+rHipX)/2, lFootIndexY)
-                        + getAngle(rHipX, lFootIndexY, (lHipX+rHipX)/2, lFootIndexY, (lHipX+rHipX)/2, (lHipY+rHipY)/2)
-                )
-        );
+        angleArray[22] = bodyVertical((rShoulderX + lShoulderX)/2 - (rHipX + lHipX)/2,(rShoulderY + lShoulderY)/2 -(rHipY + lHipY)/2);
         if (cardView.equals("DownDog")){
             if (angleArray[0] > 80) angleArray[0] = 80;
         }
-        System.out.println("X:" + rWristX + "Y:"  + rWristY);
         System.out.println("upperBodyGround : "+getAngle(rShoulderX, rShoulderY, rHipX, rHipY, rShoulderX, rHipY));
         System.out.println("lowerBodyGround : "+getAngle(rKneeX, rKneeY, rHipX, rHipY, rHeelX, rHipY));
     }
@@ -195,13 +190,33 @@ public class PoseCalculate{
         else return 180;
     }
 
-    static double bodyVertical(double shoulderGroundHorizontal, double hipGroundHorizontal){
-        System.out.println("shoulderGroundHorizontal : "+shoulderGroundHorizontal);
-        System.out.println("hipGroundHorizontal : "+hipGroundHorizontal);
-        if(shoulderGroundHorizontal > (185+5*level) || shoulderGroundHorizontal < (185-5*level)){
-            return 0;
+    static double bodyVertical(double bodyVecX, double bodyVecY){
+        //標準化
+        double bodyLen = Math.sqrt(bodyVecX * bodyVecX + bodyVecY * bodyVecY);
+        bodyVecX = bodyVecX / bodyLen;
+        bodyVecY = bodyVecY / bodyLen;
+        double graLen = Math.sqrt(gravity[0] * gravity[0] + gravity[1] * gravity[1]);
+        gravity[0] = gravity[0] / graLen;
+        gravity[1] = gravity[1] / graLen;
+
+        //求重力與手機y軸夾角
+        double angle = getAngle(0,1,0,0,gravity[0],gravity[1]);
+        angle = Math.toRadians(angle * 2);
+        //body_vec.  rotate
+        double bodyVecXr;
+        double bodyVecYr;
+        if (gravity[0] > 0){
+            bodyVecXr = bodyVecX * Math.cos(angle) + bodyVecY * Math.sin(angle);
+            bodyVecYr = bodyVecY * Math.cos(angle) - bodyVecX * Math.sin(angle);
         }
-        if(hipGroundHorizontal > (185+5*level) || hipGroundHorizontal < (185-5*level)){
+        else {
+            bodyVecXr = bodyVecX * Math.cos(angle) - bodyVecY * Math.sin(angle);
+            bodyVecYr = bodyVecX * Math.sin(angle) + bodyVecY * Math.cos(angle);
+        }
+
+        //gra & body angle
+        angle = getAngle(bodyVecXr,bodyVecYr,0,0,gravity[0],gravity[1]);
+        if(angle > 15 && angle < 165){
             return 0;
         }
         return 90;

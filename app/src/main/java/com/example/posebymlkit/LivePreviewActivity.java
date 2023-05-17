@@ -107,7 +107,7 @@ public class LivePreviewActivity extends AppCompatActivity {
 
     boolean isCalc = false;
 
-    float[] gravity = new float[3];
+    double[] gravity = new double[3];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -206,6 +206,7 @@ public class LivePreviewActivity extends AppCompatActivity {
                                         rescaleZ,
                                         runClassification,
                                         /* isStreamMode = */ false,
+                                        gravity,
                                         poseList.get(0),
                                         userLevel));
                         handler.postDelayed(TTSWrongHint,5000);
@@ -497,12 +498,12 @@ public class LivePreviewActivity extends AppCompatActivity {
         @Override
         public void onSensorChanged(SensorEvent event) {
             if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER){
-                float x = event.values[0];
-                float y = event.values[1];
-                float z = event.values[2];
+                double x = event.values[0];
+                double y = event.values[1];
+                double z = event.values[2];
 
                 // 計算重力向量
-                float norm_Of_g = (float) Math.sqrt(x * x + y * y + z * z);
+                double norm_Of_g = Math.sqrt(x * x + y * y + z * z);
                 x = x / norm_Of_g;
                 y = y / norm_Of_g;
                 z = z / norm_Of_g;
