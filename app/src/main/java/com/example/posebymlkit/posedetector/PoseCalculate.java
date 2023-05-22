@@ -127,9 +127,9 @@ public class PoseCalculate{
         angleArray[10] = isKneeOverToe(getAngle(rKneeX, rKneeY, rFootIndexX, rFootIndexY, rHeelX, rHeelY)); //rightKneeOverToe
         angleArray[11] = isKneeOverToe(getAngle(lKneeX, lKneeY, lFootIndexX, lFootIndexY, lHeelX, lHeelY));  //leftKneeOverToe
         // rThighHorizontal
-        angleArray[12] = getAngle(rHipX, rHipY, rKneeX, rKneeY, rKneeX, rFootIndexY) + getAngle(rKneeX, rKneeY, rKneeX, rFootIndexY, rFootIndexX, rFootIndexY);
+        angleArray[12] = getAngleGround( rKneeX - rHipX , rKneeY - rHipY);
         // lThighHorizontal
-        angleArray[13] = getAngle(lHipX, lHipY, lKneeX, lKneeY, lKneeX, lFootIndexY) + getAngle(lKneeX, lKneeY, lKneeX, lFootIndexY, lFootIndexX, lFootIndexY);
+        angleArray[13] = getAngleGround( lKneeX - lHipX , lKneeY - lHipY);
         angleArray[14] = getAngle(rHipX, lFootIndexY, rHipX, rHipY, rKneeX, rKneeY); // rightCrotch
         angleArray[15] = getAngle(lHipX, rFootIndexY, lHipX, lHipY, lKneeX, lKneeY); // leftCrotch
         // rightShoulderGround (shoulderGroundFootIndex)
@@ -145,12 +145,14 @@ public class PoseCalculate{
 //        angleArray[22] = getAngle(rElbowX, rElbowY, rWristX, rPinkyY, rPinkyX, rPinkyY) + angleArray[4]; // rArmHorizontal
 //        angleArray[23] = getAngle(lElbowX, lElbowY, lWristX, lPinkyY, lPinkyX, lPinkyY) + angleArray[5]; // lArmHorizontal
         // bodyVertical (shoulderGroundHorizontal, hipGroundHorizontal)
-        angleArray[22] = bodyVertical((rShoulderX + lShoulderX)/2 - (rHipX + lHipX)/2,(rShoulderY + lShoulderY)/2 -(rHipY + lHipY)/2);
+        angleArray[22] = getAngleGround((rShoulderX + lShoulderX)/2 - (rHipX + lHipX)/2,(rShoulderY + lShoulderY)/2 -(rHipY + lHipY)/2);
         if (cardView.equals("DownDog")){
             if (angleArray[0] > 80) angleArray[0] = 80;
         }
-        System.out.println("upperBodyGround : "+getAngle(rShoulderX, rShoulderY, rHipX, rHipY, rShoulderX, rHipY));
-        System.out.println("lowerBodyGround : "+getAngle(rKneeX, rKneeY, rHipX, rHipY, rHeelX, rHipY));
+        System.out.println("rShoulder:" + rShoulderX + "," + rShoulderY);
+        System.out.println("lShoulder:" + lShoulderX + "," + lShoulderY);
+        System.out.println("rHip:" + rHipX + "," + rHipY);
+        System.out.println("lHip:" + lHipX + "," + lHipY);
     }
 
     static double getAngle(double firstPointX, double firstPointY, double midPointX, double midPointY, double lastPointX, double lastPointY) {
@@ -190,11 +192,11 @@ public class PoseCalculate{
         else return 180;
     }
 
-    static double bodyVertical(double bodyVecX, double bodyVecY){
+    static double getAngleGround(double vecX, double vecY){
         //標準化
-        double bodyLen = Math.sqrt(bodyVecX * bodyVecX + bodyVecY * bodyVecY);
-        bodyVecX = bodyVecX / bodyLen;
-        bodyVecY = bodyVecY / bodyLen;
+        double vecLen = Math.sqrt(vecX * vecX + vecY * vecY);
+        vecX = vecX / vecLen;
+        vecY = vecY / vecLen;
         double graLen = Math.sqrt(gravity[0] * gravity[0] + gravity[1] * gravity[1]);
         gravity[0] = gravity[0] / graLen;
         gravity[1] = gravity[1] / graLen;
@@ -202,24 +204,29 @@ public class PoseCalculate{
         //求重力與手機y軸夾角
         double angle = getAngle(0,1,0,0,gravity[0],gravity[1]);
         angle = Math.toRadians(angle * 2);
-        //body_vec.  rotate
-        double bodyVecXr;
-        double bodyVecYr;
+        //vec. rotate
+        double vecXr;
+        double vecYr;
         if (gravity[0] > 0){
-            bodyVecXr = bodyVecX * Math.cos(angle) + bodyVecY * Math.sin(angle);
-            bodyVecYr = bodyVecY * Math.cos(angle) - bodyVecX * Math.sin(angle);
+            vecXr = vecX * Math.cos(angle) + vecY * Math.sin(angle);
+            vecYr = vecY * Math.cos(angle) - vecX * Math.sin(angle);
         }
         else {
-            bodyVecXr = bodyVecX * Math.cos(angle) - bodyVecY * Math.sin(angle);
-            bodyVecYr = bodyVecX * Math.sin(angle) + bodyVecY * Math.cos(angle);
+            vecXr = vecX * Math.cos(angle) - vecY * Math.sin(angle);
+            vecYr = vecX * Math.sin(angle) + vecY * Math.cos(angle);
         }
 
-        //gra & body angle
-        angle = getAngle(bodyVecXr,bodyVecYr,0,0,gravity[0],gravity[1]);
-        if(angle > 15 && angle < 165){
-            return 0;
+        //gra & vec angle
+        angle = getAngle(vecXr,vecYr,0,0,gravity[0],gravity[1]);
+
+        if (angle >= 75 && angle <= 105){
+            return 90;
         }
-        return 90;
+        else if(angle < 15 || angle > 165){
+            return 180;
+        }
+        else
+            return 0;
     }
 
     static void check() {

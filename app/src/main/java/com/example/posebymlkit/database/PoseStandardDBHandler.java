@@ -92,12 +92,12 @@ public class PoseStandardDBHandler extends SQLiteOpenHelper {
             null,null,
             "170","170",
             "90", null,
-            "185", null,
+            "90", null,
             null, "55",
             null, null,
             null, null,
             null, null,
-            "90"));
+            "180"));
         }
         if (!poseStandardExist("Plank")){
             this.addPoseStandard(new PoseStandard("Plank",
@@ -122,12 +122,12 @@ public class PoseStandardDBHandler extends SQLiteOpenHelper {
             null,null,
             "170","170",
             "90", "90",
-            "185", "185",
+            "90", "90",
             null, null,
             null, null,
             null, null,
             null, null,
-            "90"));}
+            "180"));}
         if (!poseStandardExist("Chair")){
             this.addPoseStandard(new PoseStandard("Chair",
             null,null,
@@ -211,7 +211,7 @@ public class PoseStandardDBHandler extends SQLiteOpenHelper {
             null, null,
             null, null,
             null, null,
-            "90"));}
+            "180"));}
         if (!poseStandardExist("Tree")){
             this.addPoseStandard(new PoseStandard("Tree",
             null,"170",
@@ -225,7 +225,7 @@ public class PoseStandardDBHandler extends SQLiteOpenHelper {
             null, null,
             null, null,
             null, null,
-            "90"));}
+            "180"));}
     }
 
     // code to add the new contact

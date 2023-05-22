@@ -169,6 +169,7 @@ public class PoseGraphic extends Graphic {
         drawLine(canvas, rightAnkle, rightHeel, rightPaint);
         drawLine(canvas, rightHeel, rightFootIndex, rightPaint);
 
+        drawPoint(canvas, 0, 0, rightPaint);
         // Draw inFrameLikelihood for all points
         if (showInFrameLikelihood) {
             for (PoseLandmark landmark : landmarks) {
@@ -190,6 +191,10 @@ public class PoseGraphic extends Graphic {
     void drawPoint(Canvas canvas, PoseLandmark landmark1, PoseLandmark landmark2, Paint paint) {
         float x = (landmark1.getPosition3D().getX()+landmark2.getPosition3D().getX())/2;
         float y = (landmark1.getPosition3D().getY()+landmark2.getPosition3D().getY())/2;
+        canvas.drawCircle(translateX(x), translateY(y), DOT_RADIUS, paint);
+    }
+
+    void drawPoint(Canvas canvas, float x, float y, Paint paint) {
         canvas.drawCircle(translateX(x), translateY(y), DOT_RADIUS, paint);
     }
 
