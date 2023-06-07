@@ -66,6 +66,7 @@ public class PoseWrongTTSDBHandler extends SQLiteOpenHelper{
     private static final String KEY_LEFT_HEEL_ON_GROUND_1 = "LHeelOnGround1";
     private static final String KEY_LEFT_HEEL_ON_GROUND_2 = "LHeelOnGround2";
     private static final String KEY_BODY_VERTICAL = "bodyVertical";
+    private static final String KEY_ANKLE_LONG_THEN_SHOULDER = "ankleLongThenShoulder";
 
     public PoseWrongTTSDBHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -121,7 +122,8 @@ public class PoseWrongTTSDBHandler extends SQLiteOpenHelper{
                 + KEY_RIGHT_HEEL_ON_GROUND_2 + " TEXT,"
                 + KEY_LEFT_HEEL_ON_GROUND_1 + " TEXT,"
                 + KEY_LEFT_HEEL_ON_GROUND_2 + " TEXT,"
-                + KEY_BODY_VERTICAL + " TEXT"
+                + KEY_BODY_VERTICAL + " TEXT,"
+                + KEY_ANKLE_LONG_THEN_SHOULDER + " TEXT"
                 + ")";
         db.execSQL(CREATE_CONTACTS_TABLE);
     }
@@ -188,7 +190,8 @@ public class PoseWrongTTSDBHandler extends SQLiteOpenHelper{
                 null, null,
                 null, null,
                 null, null,
-                body + perpendicular_floor
+                body + perpendicular_floor,
+                null
         ));
 
         this.addPoseWrongTTS(new PoseWrongTTS("Plank",
@@ -214,7 +217,7 @@ public class PoseWrongTTSDBHandler extends SQLiteOpenHelper{
                 null, null,
                 null, null,
                 null, null,
-                null
+                null,null
         ));
         this.addPoseWrongTTS(new PoseWrongTTS("Goddess",
                 null,null,
@@ -239,7 +242,7 @@ public class PoseWrongTTSDBHandler extends SQLiteOpenHelper{
                 null, null,
                 null, null,
                 null, null,
-                body + perpendicular_floor
+                body + perpendicular_floor,"腳與肩同寬"
         ));
         this.addPoseWrongTTS(new PoseWrongTTS("Chair",
                 null,null,
@@ -264,7 +267,7 @@ public class PoseWrongTTSDBHandler extends SQLiteOpenHelper{
                 null, null,
                 null, null,
                 null, null,
-                null
+                null,null
         ));
         this.addPoseWrongTTS(new PoseWrongTTS("DownDog",
                 null,null,
@@ -289,7 +292,7 @@ public class PoseWrongTTSDBHandler extends SQLiteOpenHelper{
                 null, null,
                 heels_ground, heels_ground,
                 null, null,
-                null
+                null,null
         ));
         this.addPoseWrongTTS(new PoseWrongTTS("Four_Limbed_Staff",
                 body + parallel_floor,body + parallel_floor,
@@ -314,7 +317,7 @@ public class PoseWrongTTSDBHandler extends SQLiteOpenHelper{
                 null, null,
                 null, null,
                 null, null,
-                null
+                null,null
         ));
         this.addPoseWrongTTS(new PoseWrongTTS("Boat",
                 null,null,
@@ -339,7 +342,7 @@ public class PoseWrongTTSDBHandler extends SQLiteOpenHelper{
                 null, null,
                 null, null,
                 null, null,
-                null
+                null,null
         ));
         this.addPoseWrongTTS(new PoseWrongTTS("Rejuvenation",
                 thigh + perpendicular_floor,thigh + perpendicular_floor,
@@ -364,7 +367,7 @@ public class PoseWrongTTSDBHandler extends SQLiteOpenHelper{
                 null, null,
                 null, null,
                 null, null,
-                null
+                null,null
         ));
         this.addPoseWrongTTS(new PoseWrongTTS("Star",
                 null,null,
@@ -389,7 +392,7 @@ public class PoseWrongTTSDBHandler extends SQLiteOpenHelper{
                 null, null,
                 null, null,
                 null, null,
-                body + perpendicular_floor
+                body + perpendicular_floor,"腳與肩同寬"
         ));
         this.addPoseWrongTTS(new PoseWrongTTS("Tree",
                 null,null,
@@ -414,7 +417,7 @@ public class PoseWrongTTSDBHandler extends SQLiteOpenHelper{
                 null, null,
                 null, null,
                 null, null,
-                body + perpendicular_floor
+                body + perpendicular_floor,null
         ));
     }
 
@@ -469,6 +472,7 @@ public class PoseWrongTTSDBHandler extends SQLiteOpenHelper{
         values.put(KEY_LEFT_HEEL_ON_GROUND_1, poseWrongTTS.getLHeelOnGround1());
         values.put(KEY_LEFT_HEEL_ON_GROUND_2, poseWrongTTS.getLHeelOnGround2());
         values.put(KEY_BODY_VERTICAL, poseWrongTTS.getBodyVertical());
+        values.put(KEY_ANKLE_LONG_THEN_SHOULDER, poseWrongTTS.getAnkleLongThenShoulder());
 
         // Inserting Row
         db.insert(TABLE_POSE_WRONG_TTS, null, values);
@@ -503,7 +507,7 @@ public class PoseWrongTTSDBHandler extends SQLiteOpenHelper{
                         KEY_LEFT_ELBOW_RAISE_1, KEY_LEFT_ELBOW_RAISE_2,
                         KEY_RIGHT_HEEL_ON_GROUND_1, KEY_RIGHT_HEEL_ON_GROUND_2,
                         KEY_LEFT_HEEL_ON_GROUND_1, KEY_LEFT_HEEL_ON_GROUND_2,
-                        KEY_BODY_VERTICAL
+                        KEY_BODY_VERTICAL,KEY_ANKLE_LONG_THEN_SHOULDER
                 }, KEY_POSE_NAME + "=?",
                 new String[] { String.valueOf(poseName) }, null, null, null, null);
         if (cursor != null)
@@ -554,7 +558,8 @@ public class PoseWrongTTSDBHandler extends SQLiteOpenHelper{
                 cursor.getString(42),
                 cursor.getString(43),
                 cursor.getString(44),
-                cursor.getString(45)
+                cursor.getString(45),
+                cursor.getString(46)
         );
         // return contact
         return poseWrongTTS;
@@ -611,6 +616,7 @@ public class PoseWrongTTSDBHandler extends SQLiteOpenHelper{
         values.put(KEY_LEFT_HEEL_ON_GROUND_1, poseWrongTTS.getLHeelOnGround1());
         values.put(KEY_LEFT_HEEL_ON_GROUND_2, poseWrongTTS.getLHeelOnGround2());
         values.put(KEY_BODY_VERTICAL, poseWrongTTS.getBodyVertical());
+        values.put(KEY_ANKLE_LONG_THEN_SHOULDER, poseWrongTTS.getAnkleLongThenShoulder());
 
         if (!poseWrongTTSExist(poseWrongTTS.getPoseName())){
             addPoseWrongTTS(poseWrongTTS);

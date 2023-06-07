@@ -48,10 +48,10 @@ public class PoseDetectorProcessor
                             {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0},
                             {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0},
                             {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0},
-                            {0, 0, 0}, {0, 0, 0}, {0, 0}};
+                            {0, 0, 0}, {0, 0, 0}, {0, 0}, {0, 0}};
     float[] wrongSum = {0, 0, 0, 0, 0,  0, 0, 0, 0, 0,
                         0, 0, 0, 0, 0,  0, 0, 0, 0, 0,
-                        0, 0, 0};
+                        0, 0, 0, 0};
     double[] gravity;
     Boolean isGetSkeleton;
     float deviation = 0;
@@ -247,13 +247,13 @@ public class PoseDetectorProcessor
         switch (cardView){
             case "Warrior2": standardNum = 9;break;
             case "Plank": standardNum = 4;break;
-            case "Goddess": standardNum = 11;break;
+            case "Goddess": standardNum = 12;break;
             case "Chair": standardNum = 5;break;
             case "DownDog": standardNum = 5;break;
             case "Four_Limbed_Staff": standardNum = 3;break;
             case "Boat": standardNum = 2;break;
             case "Rejuvenation": standardNum = 2;break;
-            case "Star": standardNum = 7;break;
+            case "Star": standardNum = 8;break;
             case "Tree": standardNum = 7;break;
         }
         for(float num : wrongSum){
@@ -274,9 +274,10 @@ public class PoseDetectorProcessor
     }
 
     public String[] getJointsCompleteness(){
-        float[] unCompleteness = new float[23];
-        float[] completeness = new float[23];
-        String[] jointCompleteness = new String[23];
+        int jointNum = 24;
+        float[] unCompleteness = new float[jointNum];
+        float[] completeness = new float[jointNum];
+        String[] jointCompleteness = new String[jointNum];
         PoseStandardDBHandler db = new PoseStandardDBHandler(context);
         poseStandard = db.getPoseStandard(cardView).getPoseStandard();
         for(int i=0;i<wrongSum.length;i++){

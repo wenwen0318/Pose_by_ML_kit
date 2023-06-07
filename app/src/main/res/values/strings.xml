@@ -303,6 +303,7 @@
         <item>Right Heel</item>
         <item>Left Heel</item>
         <item>Body Vertical</item>
+        <item>Feet shoulder-width apart</item>
     </string-array>
     <string name="front_lens">front lens</string>
     <string name="back_lens">back lens</string>

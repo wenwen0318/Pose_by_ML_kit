@@ -22,12 +22,11 @@ public class PoseCalculate{
     private final String cardView;
     private final int userLevel;
     static int level;
+    private final static int standardNum = 24;
     static Boolean getPose;
     //各角度狀態 0:正確 1:小於 2:大於
-    static int[] status = {0, 0, 0, 0, 0,   0, 0, 0, 0, 0,
-                            0, 0, 0, 0, 0,  0, 0, 0, 0, 0,
-                            0, 0, 0};
-    static double[] angleArray = new double[23];
+    static int[] status = new int[standardNum];
+    static double[] angleArray = new double[standardNum];
     static ArrayList<String> poseStandard;
 
     PoseCalculate(
@@ -45,6 +44,7 @@ public class PoseCalculate{
         //取關節點，如果有關節點就取得位置計算角度 存至angleList;
         angle();
         PoseStandardDBHandler db = new PoseStandardDBHandler(context);
+        System.out.println("cardview:"+cardView);
         poseStandard = db.getPoseStandard(cardView).getPoseStandard();
         if (getPose){
             check();
@@ -122,8 +122,8 @@ public class PoseCalculate{
         angleArray[5] = getAngle(lShoulderX, lShoulderY, lElbowX, lElbowY, lWristX, lWristY); //leftElbow
         angleArray[6] = getAngle(rElbowX, rElbowY, rShoulderX, rShoulderY, rHipX, rHipY); //rightArmpit
         angleArray[7] = getAngle(lElbowX, lElbowY, lShoulderX, lShoulderY, lHipX, lHipY); //leftArmpit
-        angleArray[8] = getAngle(rElbowX, rElbowY, rShoulderX, rElbowY, lShoulderX, lShoulderY); //rightShoulder
-        angleArray[9] = getAngle(lElbowX, lElbowY, lShoulderX, lShoulderY, rShoulderX, rShoulderY); //leftShoulder
+        angleArray[8] = getAngleGround( rShoulderX - rElbowX , rShoulderY - rElbowY); //rightShoulder
+        angleArray[9] = getAngleGround( lShoulderX - lElbowX , lShoulderY - lElbowY); //leftShoulder
         angleArray[10] = isKneeOverToe(getAngle(rKneeX, rKneeY, rFootIndexX, rFootIndexY, rHeelX, rHeelY)); //rightKneeOverToe
         angleArray[11] = isKneeOverToe(getAngle(lKneeX, lKneeY, lFootIndexX, lFootIndexY, lHeelX, lHeelY));  //leftKneeOverToe
         // rThighHorizontal
@@ -146,13 +146,10 @@ public class PoseCalculate{
 //        angleArray[23] = getAngle(lElbowX, lElbowY, lWristX, lPinkyY, lPinkyX, lPinkyY) + angleArray[5]; // lArmHorizontal
         // bodyVertical (shoulderGroundHorizontal, hipGroundHorizontal)
         angleArray[22] = getAngleGround((rShoulderX + lShoulderX)/2 - (rHipX + lHipX)/2,(rShoulderY + lShoulderY)/2 -(rHipY + lHipY)/2);
+        angleArray[23] = twoLenCompare(getAngle(rShoulderX, rShoulderY, rAnkleX, rAnkleY, lAnkleX, lAnkleY),getAngle(lShoulderX, lShoulderY, lAnkleX, lAnkleY, rAnkleX, rAnkleY));
         if (cardView.equals("DownDog")){
             if (angleArray[0] > 80) angleArray[0] = 80;
         }
-        System.out.println("rShoulder:" + rShoulderX + "," + rShoulderY);
-        System.out.println("lShoulder:" + lShoulderX + "," + lShoulderY);
-        System.out.println("rHip:" + rHipX + "," + rHipY);
-        System.out.println("lHip:" + lHipX + "," + lHipY);
     }
 
     static double getAngle(double firstPointX, double firstPointY, double midPointX, double midPointY, double lastPointX, double lastPointY) {
@@ -190,6 +187,13 @@ public class PoseCalculate{
             return 90;
         }
         else return 180;
+    }
+
+    static double twoLenCompare(double angle1,double angle2){
+        if (angle1 <= 90 && angle2 <= 90){
+            return 180;
+        }
+        return 0;
     }
 
     static double getAngleGround(double vecX, double vecY){
@@ -230,6 +234,7 @@ public class PoseCalculate{
     }
 
     static void check() {
+        Arrays.fill(status, 0);
         for (int i = 0; i < poseStandard.size(); i++) {
             String standardAngle = poseStandard.get(i);
             Log.d("calc.check(): ", i + ":" + poseStandard.get(i) + "&" + angleArray[i]);

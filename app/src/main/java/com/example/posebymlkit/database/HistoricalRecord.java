@@ -19,6 +19,7 @@ public class HistoricalRecord {
     String RElbowRaise, LElbowRaise;
     String RHeelOnGround, LHeelOnGround;
     String bodyVertical;
+    String ankleLongThenShoulder;
 
     public HistoricalRecord(){}
     public HistoricalRecord(
@@ -39,7 +40,8 @@ public class HistoricalRecord {
             String RShoulderGround, String LShoulderGround,
             String RElbowRaise, String LElbowRaise,
             String RHeelOnGround, String LHeelOnGround,
-            String bodyVertical
+            String bodyVertical,
+            String ankleLongThenShoulder
     ){
         this.mode = mode;
         this.poseName = poseName;
@@ -59,6 +61,7 @@ public class HistoricalRecord {
         this.RElbowRaise = RElbowRaise; this.LElbowRaise = LElbowRaise;
         this.RHeelOnGround = RHeelOnGround; this.LHeelOnGround = LHeelOnGround;
         this.bodyVertical = bodyVertical;
+        this.ankleLongThenShoulder = ankleLongThenShoulder;
     }
 
     public String get(int i){
@@ -150,6 +153,9 @@ public class HistoricalRecord {
                 break;
             case 28:
                 item = this.bodyVertical;
+                break;
+            case 29:
+                item = this.ankleLongThenShoulder;
                 break;
             default:
                 item = "null";
@@ -243,4 +249,7 @@ public class HistoricalRecord {
 
     public String getBodyVertical(){ return this.bodyVertical;}
     public void setBodyVertical(String bodyVertical){ this.bodyVertical = bodyVertical;}
+
+    public String getAnkleLongThenShoulder(){ return this.ankleLongThenShoulder;}
+    public void setAnkleLongThenShoulder(String ankleLongThenShoulder){ this.ankleLongThenShoulder = ankleLongThenShoulder;}
 }

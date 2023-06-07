@@ -38,6 +38,8 @@ public class PoseStandardDBHandler extends SQLiteOpenHelper {
     private static final String KEY_RIGHT_HEEL_ON_GROUND = "RHeelOnGround";
     private static final String KEY_LEFT_HEEL_ON_GROUND = "LHeelOnGround";
     private static final String KEY_BODY_VERTICAL = "bodyVertical";
+    private static final String KEY_ANKLE_LONG_THAN_SHOULDER = "ankleLongThanShoulder";
+    //put new KEY here
 
     public PoseStandardDBHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -70,7 +72,8 @@ public class PoseStandardDBHandler extends SQLiteOpenHelper {
                 + KEY_LEFT_ELBOW_RAISE + " TEXT,"
                 + KEY_RIGHT_HEEL_ON_GROUND + " TEXT,"
                 + KEY_LEFT_HEEL_ON_GROUND + " TEXT,"
-                + KEY_BODY_VERTICAL + " TEXT"
+                + KEY_BODY_VERTICAL + " TEXT,"
+                + KEY_ANKLE_LONG_THAN_SHOULDER + " TEXT"
                 + ")";
         db.execSQL(CREATE_CONTACTS_TABLE);
     }
@@ -90,14 +93,14 @@ public class PoseStandardDBHandler extends SQLiteOpenHelper {
             null,"170",
             "170","170",
             null,null,
-            "170","170",
+            "90","90",
             "90", null,
             "90", null,
             null, "55",
             null, null,
             null, null,
             null, null,
-            "180"));
+            "180", null));
         }
         if (!poseStandardExist("Plank")){
             this.addPoseStandard(new PoseStandard("Plank",
@@ -112,7 +115,7 @@ public class PoseStandardDBHandler extends SQLiteOpenHelper {
             null, "90",
             null, null,
             null, null,
-            null));
+            null,null));
         }
         if (!poseStandardExist("Goddess")){
             this.addPoseStandard(new PoseStandard("Goddess",
@@ -120,14 +123,14 @@ public class PoseStandardDBHandler extends SQLiteOpenHelper {
             "90","90",
             "90","90",
             null,null,
-            "170","170",
+            "90","90",
             "90", "90",
             "90", "90",
             null, null,
             null, null,
             null, null,
             null, null,
-            "180"));}
+            "180","180"));}
         if (!poseStandardExist("Chair")){
             this.addPoseStandard(new PoseStandard("Chair",
             null,null,
@@ -141,7 +144,7 @@ public class PoseStandardDBHandler extends SQLiteOpenHelper {
             null, null,
             "120", null,
             null, null,
-            null));}
+            null,null));}
         if (!poseStandardExist("DownDog")){
             this.addPoseStandard(new PoseStandard("DownDog",
             "80",null,
@@ -155,7 +158,7 @@ public class PoseStandardDBHandler extends SQLiteOpenHelper {
             null, null,
             null, null,
             "90", null,
-            null));}
+            null,null));}
         if (!poseStandardExist("Four_Limbed_Staff")){
             this.addPoseStandard(new PoseStandard("Four_Limbed_Staff",
             "170",null,
@@ -169,7 +172,7 @@ public class PoseStandardDBHandler extends SQLiteOpenHelper {
             null, null,
             null, null,
             null, null,
-            null));}
+            null,null));}
         if (!poseStandardExist("Boat")){
             this.addPoseStandard(new PoseStandard("Boat",
             null,null,
@@ -183,7 +186,7 @@ public class PoseStandardDBHandler extends SQLiteOpenHelper {
             null, null,
             null, null,
             null, null,
-            null));}
+            null,null));}
         if (!poseStandardExist("Rejuvenation")){
             this.addPoseStandard(new PoseStandard("Rejuvenation",
             "90",null,
@@ -197,21 +200,21 @@ public class PoseStandardDBHandler extends SQLiteOpenHelper {
             null, null,
             null, null,
             null, null,
-            null));}
+            null,null));}
         if (!poseStandardExist("Star")){
             this.addPoseStandard(new PoseStandard("Star",
             null,null,
             "170","170",
             "170","170",
             null,null,
-            "170","170",
+            "90","90",
             null, null,
             null, null,
             null, null,
             null, null,
             null, null,
             null, null,
-            "180"));}
+            "180","180"));}
         if (!poseStandardExist("Tree")){
             this.addPoseStandard(new PoseStandard("Tree",
             null,"170",
@@ -225,7 +228,7 @@ public class PoseStandardDBHandler extends SQLiteOpenHelper {
             null, null,
             null, null,
             null, null,
-            "180"));}
+            "180",null));}
     }
 
     // code to add the new contact
@@ -257,6 +260,8 @@ public class PoseStandardDBHandler extends SQLiteOpenHelper {
         values.put(KEY_RIGHT_HEEL_ON_GROUND, poseStandard.getRHeelOnGround());
         values.put(KEY_LEFT_HEEL_ON_GROUND, poseStandard.getLHeelOnGround());
         values.put(KEY_BODY_VERTICAL, poseStandard.getBodyVertical());
+        values.put(KEY_ANKLE_LONG_THAN_SHOULDER, poseStandard.getAnkleLongThanShoulder());
+        // put new value
 
         // Inserting Row
         db.insert(TABLE_POSE_STANDARD, null, values);
@@ -280,7 +285,7 @@ public class PoseStandardDBHandler extends SQLiteOpenHelper {
                         KEY_RIGHT_SHOULDER_GROUND, KEY_LEFT_SHOULDER_GROUND,
                         KEY_RIGHT_ELBOW_RAISE, KEY_LEFT_ELBOW_RAISE,
                         KEY_RIGHT_HEEL_ON_GROUND, KEY_LEFT_HEEL_ON_GROUND,
-                        KEY_BODY_VERTICAL
+                        KEY_BODY_VERTICAL,KEY_ANKLE_LONG_THAN_SHOULDER
                 }, KEY_POSE_NAME + "=?",
                 new String[] { String.valueOf(poseName) }, null, null, null, null);
         if (cursor != null)
@@ -309,7 +314,8 @@ public class PoseStandardDBHandler extends SQLiteOpenHelper {
                     cursor.getString(20),
                     cursor.getString(21),
                     cursor.getString(22),
-                    cursor.getString(23)
+                    cursor.getString(23),
+                    cursor.getString(24)
         );
         // return contact
         return poseStandard;
@@ -365,6 +371,7 @@ public class PoseStandardDBHandler extends SQLiteOpenHelper {
         values.put(KEY_RIGHT_HEEL_ON_GROUND, poseStandard.getRHeelOnGround());
         values.put(KEY_LEFT_HEEL_ON_GROUND, poseStandard.getLHeelOnGround());
         values.put(KEY_BODY_VERTICAL, poseStandard.getBodyVertical());
+        values.put(KEY_ANKLE_LONG_THAN_SHOULDER, poseStandard.getAnkleLongThanShoulder());
 
         // updating row
         return db.update(TABLE_POSE_STANDARD, values, KEY_POSE_NAME + " = ?",

@@ -121,7 +121,7 @@ public class PracticeResultActivity extends AppCompatActivity {
         else {
             historicalRecord = hr.getHistoricalRecordByDate(date);
         }
-        for (int i = 6; i <= 28; i++) {
+        for (int i = 6; i <= 29; i++) {
             HashMap<String, String> hashMap = new HashMap<>();
             String complete = historicalRecord.get(i);
             Log.d("joint_complete",i + " " + complete);
@@ -129,7 +129,15 @@ public class PracticeResultActivity extends AppCompatActivity {
                 hashMap.put("poseStandardName", poseStandards[i-6]);
                 hashMap.put("jointComplete", complete);
                 if (Float.parseFloat(complete) < 60){
-                    suggest += pwt.getPoseWrongTTS(cardView).getWrongTTS().get((i-6)*2) + "\n";
+                    if (i-6 <= 21){
+                        suggest += pwt.getPoseWrongTTS(cardView).getWrongTTS().get((i-6)*2) + "\n";
+                    }
+                    else if (i-6 == 22){
+                        suggest += pwt.getPoseWrongTTS(cardView).getWrongTTS().get(44) + "\n";
+                    }
+                    else {
+                        suggest += pwt.getPoseWrongTTS(cardView).getWrongTTS().get(45) + "\n";
+                    }
                 }
                 arrayList.add(hashMap);
             }

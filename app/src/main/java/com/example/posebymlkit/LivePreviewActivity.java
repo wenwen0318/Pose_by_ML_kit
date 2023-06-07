@@ -62,7 +62,8 @@ public class LivePreviewActivity extends AppCompatActivity {
     private static final String POSE_DETECTION = "Pose Detection";
     private static final String OBJECT_DETECTION = "Object Detection";
 
-    private String model = POSE_DETECTION;
+    private String model = OBJECT_DETECTION;
+    private final int jointNum = 24;
 
     private static final String TAG = "LivePreviewActivity";
 
@@ -183,6 +184,33 @@ public class LivePreviewActivity extends AppCompatActivity {
 
         try {
             switch (model) {
+                case OBJECT_DETECTION:
+                    PoseDetectorOptionsBase poseDetectorOptionss =
+                            PreferenceUtils.getPoseDetectorOptionsForLivePreview(this);
+                    boolean shouldShowInFrameLikelihoods =
+                            PreferenceUtils.shouldShowPoseDetectionInFrameLikelihoodLivePreview(this);
+                    boolean visualizeZs = PreferenceUtils.shouldPoseDetectionVisualizeZ(this);
+                    boolean rescaleZs = PreferenceUtils.shouldPoseDetectionRescaleZForVisualization(this);
+                    boolean runClassifications = PreferenceUtils.shouldPoseDetectionRunClassification(this);
+                    if(poseList.get(0).equals("Rest")){
+
+                    }
+                    else{
+                        cameraSource.setMachineLearningFrameProcessor(
+                                pdp = new PoseDetectorProcessor(
+                                        this,
+                                        poseDetectorOptionss,
+                                        isCalc,
+                                        shouldShowInFrameLikelihoods,
+                                        visualizeZs,
+                                        rescaleZs,
+                                        runClassifications,
+                                        /* isStreamMode = */ true,
+                                        gravity,
+                                        poseList.get(0),
+                                        userLevel));
+                    }
+                    break;
                 case POSE_DETECTION:
                     PoseDetectorOptionsBase poseDetectorOptions =
                             PreferenceUtils.getPoseDetectorOptionsForLivePreview(this);
@@ -205,7 +233,7 @@ public class LivePreviewActivity extends AppCompatActivity {
                                         visualizeZ,
                                         rescaleZ,
                                         runClassification,
-                                        /* isStreamMode = */ false,
+                                        /* isStreamMode = */ true,
                                         gravity,
                                         poseList.get(0),
                                         userLevel));
@@ -294,9 +322,9 @@ public class LivePreviewActivity extends AppCompatActivity {
 
     private void getHistoricalRecord(){
         if(poseName.equals("Rest")){
-            jointCompleteness = new String[23];
+            jointCompleteness = new String[jointNum];
             overallCompleteness = 100;
-            for(int i=0;i<23;i++){
+            for(int i=0;i<jointNum;i++){
                 jointCompleteness[i] = "100";
             }
         }
@@ -322,7 +350,7 @@ public class LivePreviewActivity extends AppCompatActivity {
                 jointCompleteness[16], jointCompleteness[17],
                 jointCompleteness[18], jointCompleteness[19],
                 jointCompleteness[20], jointCompleteness[21],
-                jointCompleteness[22]));
+                jointCompleteness[22], jointCompleteness[23]));
         handler.removeCallbacks(timeCountdown);
     }
 
@@ -485,7 +513,7 @@ public class LivePreviewActivity extends AppCompatActivity {
             }
             else {
                 startCameraSource();
-                model = POSE_DETECTION;
+                model = OBJECT_DETECTION;
                 createCameraSource(model);
                 handler.postDelayed(remindPose, 3000);
                 handler.postDelayed(readyTime, 10000);
@@ -512,8 +540,6 @@ public class LivePreviewActivity extends AppCompatActivity {
                 gravity[0] = x;
                 gravity[1] = y;
                 gravity[2] = z;
-
-                System.out.println("gravity:" + gravity[0] + gravity[1] + gravity[2]);
             }
         }
 

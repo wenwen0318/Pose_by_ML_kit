@@ -27,6 +27,7 @@ public class PoseWrongTTS {
     String RHeelOnGround1, RHeelOnGround2;
     String LHeelOnGround1, LHeelOnGround2;
     String bodyVertical;
+    String ankleLongThenShoulder;
     public PoseWrongTTS(){}
     public PoseWrongTTS(
             String poseName,
@@ -52,7 +53,8 @@ public class PoseWrongTTS {
             String LElbowRaise1, String LElbowRaise2,
             String RHeelOnGround1, String RHeelOnGround2,
             String LHeelOnGround1, String LHeelOnGround2,
-            String bodyVertical){
+            String bodyVertical,
+            String ankleLongThenShoulder){
         this.poseName = poseName;
         this.RHip1 = RHip1; this.RHip2 = RHip2;
         this.LHip1 = LHip1; this.LHip2 = LHip2;
@@ -77,6 +79,7 @@ public class PoseWrongTTS {
         this.RHeelOnGround1 = RHeelOnGround1;   this.RHeelOnGround2 = RHeelOnGround2;
         this.LHeelOnGround1 = LHeelOnGround1;   this.LHeelOnGround2 = LHeelOnGround2;
         this.bodyVertical = bodyVertical;
+        this.ankleLongThenShoulder = ankleLongThenShoulder;
     }
 
     // code to get all contacts in a list view
@@ -104,7 +107,7 @@ public class PoseWrongTTS {
         wrongTTS.add(this.LElbowRaise1);    wrongTTS.add(this.LElbowRaise2);
         wrongTTS.add(this.RHeelOnGround1);  wrongTTS.add(this.RHeelOnGround2);
         wrongTTS.add(this.LHeelOnGround1);  wrongTTS.add(this.LHeelOnGround2);
-        wrongTTS.add(this.bodyVertical);
+        wrongTTS.add(this.bodyVertical);    wrongTTS.add(this.ankleLongThenShoulder);
         return wrongTTS;
     }
 
@@ -245,4 +248,7 @@ public class PoseWrongTTS {
 
     public String getBodyVertical(){ return this.bodyVertical;}
     public void setBodyVertical(String bodyVertical){ this.bodyVertical = bodyVertical;}
+
+    public String getAnkleLongThenShoulder(){ return this.ankleLongThenShoulder;}
+    public void setAnkleLongThenShoulder(String ankleLongThenShoulder){ this.ankleLongThenShoulder = ankleLongThenShoulder;}
 }

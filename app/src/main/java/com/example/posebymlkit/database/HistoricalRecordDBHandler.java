@@ -42,6 +42,7 @@ public class HistoricalRecordDBHandler extends SQLiteOpenHelper {
     private static final String KEY_RIGHT_HEEL_ON_GROUND = "RHeelOnGround";
     private static final String KEY_LEFT_HEEL_ON_GROUND = "LHeelOnGround";
     private static final String KEY_BODY_VERTICAL = "bodyVertical";
+    private static final String KEY_ANKLE_LONG_THEN_SHOULDER = "AnkleLongThenShoulder";
 
     public HistoricalRecordDBHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -78,7 +79,8 @@ public class HistoricalRecordDBHandler extends SQLiteOpenHelper {
                 + KEY_LEFT_ELBOW_RAISE + " TEXT,"
                 + KEY_RIGHT_HEEL_ON_GROUND + " TEXT,"
                 + KEY_LEFT_HEEL_ON_GROUND + " TEXT,"
-                + KEY_BODY_VERTICAL + " TEXT"
+                + KEY_BODY_VERTICAL + " TEXT,"
+                + KEY_ANKLE_LONG_THEN_SHOULDER + " TEXT"
                 + ")";
         db.execSQL(CREATE_HISTORICAL_RECORD_TABLE);
     }
@@ -122,6 +124,7 @@ public class HistoricalRecordDBHandler extends SQLiteOpenHelper {
         values.put(KEY_RIGHT_HEEL_ON_GROUND, historicalRecord.getRHeelOnGround());
         values.put(KEY_LEFT_HEEL_ON_GROUND, historicalRecord.getLHeelOnGround());
         values.put(KEY_BODY_VERTICAL, historicalRecord.getBodyVertical());
+        values.put(KEY_ANKLE_LONG_THEN_SHOULDER, historicalRecord.getAnkleLongThenShoulder());
 
         // Inserting Row
         db.insert(TABLE_HISTORICAL_RECORD, null, values);
@@ -169,6 +172,7 @@ public class HistoricalRecordDBHandler extends SQLiteOpenHelper {
                 historicalRecord.setRHeelOnGround(cursor.getString(26));
                 historicalRecord.setLHeelOnGround(cursor.getString(27));
                 historicalRecord.setBodyVertical(cursor.getString(28));
+                historicalRecord.setAnkleLongThenShoulder(cursor.getString(29));
                 historicalRecords.add(historicalRecord);
             } while (cursor.moveToNext());
         }
@@ -220,6 +224,7 @@ public class HistoricalRecordDBHandler extends SQLiteOpenHelper {
                 historicalRecord.setRHeelOnGround(cursor.getString(26));
                 historicalRecord.setLHeelOnGround(cursor.getString(27));
                 historicalRecord.setBodyVertical(cursor.getString(28));
+                historicalRecord.setAnkleLongThenShoulder(cursor.getString(29));
                 // Adding contact to list
                 historicalRecords.add(historicalRecord);
             } while (cursor.moveToNext());
@@ -269,6 +274,7 @@ public class HistoricalRecordDBHandler extends SQLiteOpenHelper {
                 historicalRecord.setRHeelOnGround(cursor.getString(26));
                 historicalRecord.setLHeelOnGround(cursor.getString(27));
                 historicalRecord.setBodyVertical(cursor.getString(28));
+                historicalRecord.setAnkleLongThenShoulder(cursor.getString(29));
                 // Adding contact to list
             } while (cursor.moveToNext());
         }
@@ -320,6 +326,7 @@ public class HistoricalRecordDBHandler extends SQLiteOpenHelper {
                 historicalRecord.setRHeelOnGround(cursor.getString(26));
                 historicalRecord.setLHeelOnGround(cursor.getString(27));
                 historicalRecord.setBodyVertical(cursor.getString(28));
+                historicalRecord.setAnkleLongThenShoulder(cursor.getString(29));
                 // Adding contact to list
                 historicalRecords.add(historicalRecord);
             } while (cursor.moveToNext());

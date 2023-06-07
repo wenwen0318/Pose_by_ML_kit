@@ -16,6 +16,8 @@ public class PoseStandard {
     String RElbowRaise, LElbowRaise;
     String RHeelOnGround, LHeelOnGround;
     String bodyVertical;
+    String ankleLongThanShoulder;
+    //key new standard here
     public PoseStandard(){}
     public PoseStandard(
             String poseName,
@@ -30,7 +32,8 @@ public class PoseStandard {
             String RShoulderGround, String LShoulderGround,
             String RElbowRaise, String LElbowRaise,
             String RHeelOnGround, String LHeelOnGround,
-            String bodyVertical){
+            String bodyVertical,
+            String ankleLongThanShoulder){//key new standard here
         this.poseName = poseName;
         this.RHip = RHip;   this.LHip = LHip;
         this.RKnee = RKnee; this.LKnee = LKnee;
@@ -44,6 +47,8 @@ public class PoseStandard {
         this.RElbowRaise = RElbowRaise; this.LElbowRaise = LElbowRaise;
         this.RHeelOnGround = RHeelOnGround; this.LHeelOnGround = LHeelOnGround;
         this.bodyVertical = bodyVertical;
+        this.ankleLongThanShoulder = ankleLongThanShoulder;
+        //key new standard here
     }
 
     public ArrayList<String> getPoseStandard(){
@@ -71,6 +76,8 @@ public class PoseStandard {
         standard.add(this.RHeelOnGround);
         standard.add(this.LHeelOnGround);
         standard.add(this.bodyVertical);
+        standard.add(this.ankleLongThanShoulder);
+        //key new standard here
         return standard;
     }
 
@@ -138,11 +145,15 @@ public class PoseStandard {
     public void setLElbowRaise(String LElbowRaise){ this.LElbowRaise = LElbowRaise;}
 
     public String getRHeelOnGround(){ return this.RHeelOnGround;}
-    public void setRHeelOnGround(String RHeelOnGround){ this.RHeelOnGround = PoseStandard.this.RHeelOnGround;}
+    public void setRHeelOnGround(String RHeelOnGround){ this.RHeelOnGround = RHeelOnGround;}
 
     public String getLHeelOnGround(){ return this.LHeelOnGround;}
-    public void setLHeelOnGround(String LHeelOnGround){ this.LHeelOnGround = PoseStandard.this.LHeelOnGround;}
+    public void setLHeelOnGround(String LHeelOnGround){ this.LHeelOnGround = LHeelOnGround;}
 
     public String getBodyVertical(){ return this.bodyVertical;}
     public void setBodyVertical(String bodyVertical){ this.bodyVertical = bodyVertical;}
+
+    public String getAnkleLongThanShoulder(){ return this.ankleLongThanShoulder;}
+    public void setAnkleLongThanShoulder(String ankleLongThanShoulder){ this.ankleLongThanShoulder = ankleLongThanShoulder;}
+    //key new standard here
 }
