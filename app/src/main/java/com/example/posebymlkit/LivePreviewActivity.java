@@ -2,7 +2,6 @@ package com.example.posebymlkit;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -10,18 +9,12 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.icu.text.DecimalFormat;
-import android.media.MediaRecorder;
 import android.os.Bundle;
 
-import android.os.Environment;
 import android.os.Handler;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
-import android.view.Display;
-import android.view.SurfaceHolder;
 import android.view.WindowManager;
-import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,17 +30,13 @@ import com.google.android.gms.common.annotation.KeepName;
 import com.example.posebymlkit.preference.PreferenceUtils;
 
 import android.content.Intent;
-import android.widget.ToggleButton;
 
-import com.google.mlkit.common.model.LocalModel;
-import com.google.mlkit.vision.objects.custom.CustomObjectDetectorOptions;
 import com.example.posebymlkit.objectdetector.ObjectDetectorProcessor;
 
 import com.example.posebymlkit.posedetector.PoseDetectorProcessor;
 
 import com.google.mlkit.vision.pose.PoseDetectorOptionsBase;
 
-import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -89,7 +78,7 @@ public class LivePreviewActivity extends AppCompatActivity {
     TextView currentPoseName;
 
     String label = "";
-    int[] wrongHint;
+    int wrongHint;
     float overallCompleteness;
     String[] jointCompleteness;
 
@@ -299,25 +288,11 @@ public class LivePreviewActivity extends AppCompatActivity {
 
     private void TTS(){
         List<String> poseWrongTTSList = pwt.getPoseWrongTTS(poseList.get(0)).getWrongTTS();
-        String wrongStr = "";
-        for(int i=0;i<poseWrongTTSList.size();i+=2){
-            if(wrongHint[0] == (poseWrongTTSList.size()/2)){
-                wrongStr += poseWrongTTSList.get(poseWrongTTSList.size()-1);
-                wrongHint[0] = 0;
-                wrongHint[1] = 0;
-            }
-            else if(wrongHint[0] == (i/2) && wrongHint[1]==1){
-                wrongStr += poseWrongTTSList.get(i);
-                wrongHint[0] = 0;
-                wrongHint[1] = 0;
-            }
-            else if(wrongHint[0] == (i/2) && wrongHint[1]==2){
-                wrongStr += poseWrongTTSList.get(i+1);
-                wrongHint[0] = 0;
-                wrongHint[1] = 0;
-            }
+        if (wrongHint != -1){
+            String wrongStr = poseWrongTTSList.get(wrongHint);
+            System.out.println("wrongHint:"+(wrongHint) + " " +wrongStr);
+            tts.speak(wrongStr,TextToSpeech.QUEUE_ADD,null,null);
         }
-        tts.speak(wrongStr,TextToSpeech.QUEUE_ADD,null,null);
     }
 
     private void getHistoricalRecord(){
@@ -452,12 +427,8 @@ public class LivePreviewActivity extends AppCompatActivity {
         public void run() {
             handler.postDelayed(this, 5000);
             wrongHint = pdp.getWrongForTTS();
-            System.out.print("wrongHint : ");
-            for (int a: wrongHint) {
-                System.out.print(a+" ");
-            }
             TTS();
-            pdp.clearWrongTem();
+            pdp.clearTemp();
         }
     };
 

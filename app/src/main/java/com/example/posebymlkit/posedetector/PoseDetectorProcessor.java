@@ -38,20 +38,23 @@ public class PoseDetectorProcessor
     private final Context context;
     private final String cardView;
     private final int userLevel;
-//    private final Executor classificationExecutor;
+    //private final Executor classificationExecutor;
 
     private PoseClassifierProcessor poseClassifierProcessor;
 
+    private final int angleNum = 24;
+
+    //一幀中所有關節點正確(0)錯誤(1)
     int[] angleStatus;
-    float frameNum = 0;
-    int[][] wrongFre =  {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0},
-                            {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0},
-                            {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0},
-                            {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0},
-                            {0, 0, 0}, {0, 0, 0}, {0, 0}, {0, 0}};
-    float[] wrongSum = {0, 0, 0, 0, 0,  0, 0, 0, 0, 0,
-                        0, 0, 0, 0, 0,  0, 0, 0, 0, 0,
-                        0, 0, 0, 0};
+
+    //紀錄總幀數及總關節點錯誤數量
+    int frameNum = 0;
+    int[] wrongSum = new int[angleNum];
+
+    //紀錄5秒幀數及關節點錯誤數量
+    int frameNumTemp = 0;
+    int[] wrongTemp = new int[angleNum];
+
     double[] gravity;
     Boolean isGetSkeleton;
     float deviation = 0;
@@ -153,6 +156,7 @@ public class PoseDetectorProcessor
             @NonNull GetPose getPose,
             @NonNull GraphicOverlay graphicOverlay) {
         frameNum += 1;
+        frameNumTemp += 1;
         graphicOverlay.add(
                 new PoseGraphic(
                         graphicOverlay,
@@ -171,7 +175,7 @@ public class PoseDetectorProcessor
             angleArray = Calculate.getAngle();
             isGetSkeleton = Calculate.isGetSkeleton();
             calWrongSum();
-            calWrongTem();
+            calWrongTemp();
             calDeviation();
             exportAngleLog();
         }
@@ -188,56 +192,58 @@ public class PoseDetectorProcessor
     }
 
     public void calDeviation(){
-        if(isGetSkeleton == false){
+        if(!isGetSkeleton){
             deviation++;
         }
     }
 
     public void calWrongSum(){
-        for(int i=0;i<angleStatus.length;i++){
-            if(angleStatus[i] != 0){
-                wrongSum[i] += 1;
-            }
+        for(int i = 0; i < angleStatus.length; i++){
+            wrongSum[i] += angleStatus[i];
         }
     }
 
-    public void calWrongTem(){
-        for(int i=0;i<wrongFre.length;i++){
-            for(int j=1;j<wrongFre[i].length;j++){
-                if(angleStatus[i] == j){
-                    wrongFre[i][j] += 1;
-                }
-            }
+    public void calWrongTemp(){
+        for(int i = 0; i < wrongTemp.length; i++){
+            wrongTemp[i] += angleStatus[i];
         }
     }
 
-    public void clearWrongTem(){
-        for(int i=0;i<wrongFre.length;i++){
-            for(int j=0;j<wrongFre[i].length;j++){
-                wrongFre[i][j] = 0;
-            }
-        }
+    public void clearTemp(){
+        Arrays.fill(wrongTemp, 0);
+        frameNumTemp = 0;
     }
 
-    public int[] getWrongForTTS(){
-        int max = wrongFre[0][0];
-        // wrongAngle wrongStatus;
-        int[] wrongInf = new int[2];
-        for(int i=0;i<wrongFre.length;i++){
-            for(int j=0;j<wrongFre[i].length;j++){
-                if(wrongFre[i][j] >= max){
-                    max = wrongFre[i][j];
-                    wrongInf[0] = i;// wrongAngle
-                    wrongInf[1] = j;// wrongStatus
-                }
+    public int getWrongForTTS(){
+        int wrongAngleId = -1;
+        int[] wrongOver90 = new int[angleNum];
+        int index90 = 0;
+        int[] wrongOver70 = new int[angleNum];
+        int index70 = 0;
+        int[] wrongOver20 = new int[angleNum];
+        int index20 = 0;
+        for (int i = 0; i < wrongTemp.length; i++){
+            if (wrongTemp[i] >= frameNumTemp*0.9){
+                wrongOver90[index90++] = i;
+            }
+            if (wrongTemp[i] >= frameNumTemp*0.7){
+                wrongOver70[index70++] = i;
+            }
+            if (wrongTemp[i] >= frameNumTemp*0.2){
+                wrongOver20[index20++] = i;
             }
         }
-        // when completeness == 100%
-        if(wrongFre[wrongInf[0]][wrongInf[1]] == 0){
-            wrongInf[0] = 0;// wrongAngle
-            wrongInf[1] = 0;// wrongStatus
+        if (index20 != 0){
+            wrongAngleId = wrongOver20[(int)(Math.random() * (index20+1))];
         }
-        return wrongInf;
+        if (index70 != 0){
+            wrongAngleId = wrongOver70[(int)(Math.random() * (index70+1))];
+        }
+        if (index90 != 0){
+            wrongAngleId = wrongOver90[(int)(Math.random() * (index90+1))];
+        }
+        System.out.println("wrongAngleId" + wrongAngleId);
+        return wrongAngleId;
     }
 
     public float getOverallCompleteness(){

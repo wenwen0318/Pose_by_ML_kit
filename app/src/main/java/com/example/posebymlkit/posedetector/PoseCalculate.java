@@ -240,12 +240,9 @@ public class PoseCalculate{
             Log.d("calc.check(): ", i + ":" + poseStandard.get(i) + "&" + angleArray[i]);
             if (standardAngle != null) {
                 int angle = Integer.parseInt(standardAngle);
-                if (angle - 5 * level > angleArray[i]) {
+                if (angle - 5 * level > angleArray[i] || angle + 5 * level < angleArray[i]) { //錯
                     Log.d("status:", i + "=1");
                     status[i] = 1;
-                } else if (angle + 5 * level < angleArray[i]) {
-                    Log.d("status:", i + "=2");
-                    status[i] = 2;
                 } else {
                     Log.d("status:", i + "=0");
                     status[i] = 0;
