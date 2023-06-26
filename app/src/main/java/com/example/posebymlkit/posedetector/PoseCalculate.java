@@ -147,9 +147,17 @@ public class PoseCalculate{
         // bodyVertical (shoulderGroundHorizontal, hipGroundHorizontal)
         angleArray[22] = getAngleGround((rShoulderX + lShoulderX)/2 - (rHipX + lHipX)/2,(rShoulderY + lShoulderY)/2 -(rHipY + lHipY)/2);
         angleArray[23] = twoLenCompare(getAngle(rShoulderX, rShoulderY, rAnkleX, rAnkleY, lAnkleX, lAnkleY),getAngle(lShoulderX, lShoulderY, lAnkleX, lAnkleY, rAnkleX, rAnkleY));
+        printXY(pose.getPoseLandmark(PoseLandmark.RIGHT_SHOULDER));
+        printXY(pose.getPoseLandmark(PoseLandmark.LEFT_SHOULDER));
+        printXY(pose.getPoseLandmark(PoseLandmark.RIGHT_HIP));
+        printXY(pose.getPoseLandmark(PoseLandmark.LEFT_HIP));
         if (cardView.equals("DownDog")){
             if (angleArray[0] > 80) angleArray[0] = 80;
         }
+    }
+
+    static void printXY(PoseLandmark body){
+        System.out.println(body.toString() + "x:"  + body.getPosition().x + "y:" + body.getPosition().y);
     }
 
     static double getAngle(double firstPointX, double firstPointY, double midPointX, double midPointY, double lastPointX, double lastPointY) {
@@ -198,12 +206,12 @@ public class PoseCalculate{
 
     static double getAngleGround(double vecX, double vecY){
         //標準化
-        double vecLen = Math.sqrt(vecX * vecX + vecY * vecY);
-        vecX = vecX / vecLen;
-        vecY = vecY / vecLen;
-        double graLen = Math.sqrt(gravity[0] * gravity[0] + gravity[1] * gravity[1]);
-        gravity[0] = gravity[0] / graLen;
-        gravity[1] = gravity[1] / graLen;
+//        double vecLen = Math.sqrt(vecX * vecX + vecY * vecY);
+//        vecX = vecX / vecLen;
+//        vecY = vecY / vecLen;
+//        double graLen = Math.sqrt(gravity[0] * gravity[0] + gravity[1] * gravity[1]);
+//        gravity[0] = gravity[0] / graLen;
+//        gravity[1] = gravity[1] / graLen;
 
         //求重力與手機y軸夾角
         double angle = getAngle(0,1,0,0,gravity[0],gravity[1]);
