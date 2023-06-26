@@ -1,13 +1,16 @@
 package com.example.posebymlkit;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatImageButton;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -15,6 +18,9 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.VideoView;
 
+import java.util.Locale;
+
+import java.util.List;
 import java.util.Locale;
 
 public class VideoActivity extends AppCompatActivity {
@@ -27,12 +33,14 @@ public class VideoActivity extends AppCompatActivity {
     int time;
     String MODE = "pose";
     int camera_facing;
+    boolean ttsIsPlay;
 
     Dialog dialog;
     View viewDialog;
     TextView timeSet;
     RadioButton btn_easy,btn_hard;
     Button btn_timeSub,btn_timeAdd,btn_cancel,btn_check;
+    private TextToSpeech tts = null;
 
     Intent intent;
     Bundle bundle;
@@ -44,6 +52,7 @@ public class VideoActivity extends AppCompatActivity {
 
         Button btn_backToHome = findViewById(R.id.btn_backToHome);
         Button btn_startPractice = findViewById(R.id.btn_startPractice);
+        @SuppressLint("WrongViewCast") AppCompatImageButton btn_poseIllSound = findViewById(R.id.poseIllSound);
 
         intent = new Intent();
         bundle = getIntent().getExtras();
@@ -57,6 +66,9 @@ public class VideoActivity extends AppCompatActivity {
         getIllustrate(cardView);
         poseIllustrate.setMovementMethod(new ScrollingMovementMethod());
         getVideo(cardView);
+        createTTSSource();
+        ttsIsPlay = false;
+//        getPoseIllTTS(cardView);
 
         videoView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,7 +111,47 @@ public class VideoActivity extends AppCompatActivity {
                 finish();
             }
         });
+        btn_poseIllSound.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ttsIsPlay = !ttsIsPlay;
+                String poseIll = poseIllustrate.getText().toString();
+                if(ttsIsPlay){
+                    tts.speak(poseIll,TextToSpeech.QUEUE_ADD,null,null);
+                }
+                else{
+                    tts.stop();
+                }
+            }
+        });
 
+    }
+
+    private void createTTSSource() {
+        if( tts == null ) {
+            tts = new TextToSpeech(this, arg0 -> {
+                // TTS 初始化成功
+                if( arg0 == TextToSpeech.SUCCESS ) {
+                    switch (getString(R.string.language)){
+                        case "简体中文":
+                            tts.setLanguage(Locale.CHINA);
+                            break;
+                        case "繁體中文":
+                            tts.setLanguage(Locale.CHINESE);
+                            break;
+                        case "Deutsch":
+                            tts.setLanguage(Locale.GERMAN);
+                            break;
+                        case "日本語":
+                            tts.setLanguage(Locale.JAPANESE);
+                            break;
+                        default :
+                            tts.setLanguage(Locale.ENGLISH);
+                            break;
+                    }
+                }
+            });
+        }
     }
 
     private void getVideo(String poseName){
@@ -123,6 +175,31 @@ public class VideoActivity extends AppCompatActivity {
             poseIllustrate.setText(stringID);
         }
     }
+
+//    private void getPoseIllTTS(String poseName){
+//        viewDialog = getLayoutInflater().inflate(R.layout.activity_video , null);
+//        btn_poseIllSound = viewDialog.findViewById(R.id.poseIllSound);
+//        btn_poseIllSound.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                int stringID = getApplicationContext().getResources().getIdentifier(
+//                        poseName.toLowerCase() + "_ill",
+//                        "string",
+//                        getPackageName());
+//                String poseIll = Integer.toString(stringID);
+//                System.out.println("poseIll : "+poseIll);
+//                if(ttsIsPlay){
+//                    tts.speak(poseIll,TextToSpeech.QUEUE_ADD,null,null);
+//                    ttsIsPlay = false;
+//                }
+//                else{
+//                    tts.stop();
+//                    ttsIsPlay = true;
+//                }
+//            }
+//        });
+//
+//    }
 
     private void getDialog() {
         dialog = new Dialog(VideoActivity.this);
@@ -197,5 +274,24 @@ public class VideoActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        //createTTSSource();
+    }
+
+    /** Stops the camera. */
+    @Override
+    protected void onPause() {
+        super.onPause();
+        tts.stop();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        tts.shutdown();
     }
 }
